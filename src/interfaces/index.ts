@@ -4,7 +4,7 @@ export interface IButtonProps {
   buttonColor: Color;
   buttonSize: Size;
   buttonType: 'button' | 'submit' | 'reset';
-  buttonStyle: 'primary' | 'secondary';
+  buttonStyle: 'primary' | 'secondary' | 'main-cta';
   buttonText: string;
   buttonHref?: string;
   buttonTarget?: string;

@@ -31,15 +31,9 @@ export default {
         options: ['small', 'regular', 'large', 'extra-large'],
       },
     },
-    buttonStyle: {
-      control: {
-        type: 'select',
-        options: ['primary', 'secondary'],
-      },
-    },
     hasShadow: false,
     buttonFullWidth: false,
-    buttonType: 'primary',
+    buttonType: 'button',
   },
 } as unknown as ComponentMeta<typeof Button>;
 
@@ -59,7 +53,7 @@ Primary.args = {
 };
 
 export const PrimaryLink = Template.bind({});
-// More on args: https://storybook.js.org/docs/react/writing-stories/args
+
 PrimaryLink.args = {
   buttonText: 'Primary CTA',
   buttonColor: Color.Brick,
@@ -69,4 +63,41 @@ PrimaryLink.args = {
   buttonFullWidth: false,
   buttonType: 'button',
   buttonStyle: 'primary',
+};
+
+export const Secondary = Template.bind({});
+Secondary.args = {
+  buttonText: 'Secondary CTA',
+  buttonColor: Color.Brick,
+  buttonSize: Size.Regular,
+  hasShadow: false,
+  buttonFullWidth: false,
+  buttonType: 'button',
+  buttonStyle: 'secondary',
+};
+
+export const SecondaryLink = Template.bind({});
+SecondaryLink.args = {
+  buttonText: 'Secondary CTA',
+  buttonColor: Color.Brick,
+  buttonSize: Size.Regular,
+  buttonHref: 'https://www.google.com',
+  buttonTarget: '_blank',
+  hasShadow: false,
+  buttonFullWidth: false,
+  buttonType: 'button',
+  buttonStyle: 'secondary',
+};
+
+export const MainCta = Template.bind({});
+MainCta.args = {
+  buttonText: 'Main CTA',
+  buttonColor: Color.Brick,
+  buttonSize: Size.Regular,
+  buttonHref: 'https://www.google.com',
+  buttonTarget: '_blank',
+  hasShadow: true,
+  buttonFullWidth: false,
+  buttonType: 'button',
+  buttonStyle: 'main-cta',
 };
