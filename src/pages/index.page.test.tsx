@@ -7,14 +7,12 @@ import { act } from 'react-dom/test-utils';
 expect.extend(toHaveNoViolations);
 
 describe('Home', () => {
-  it('renders a heading', () => {
+  it('renders a heading (h1 - title)', () => {
     render(<Home />);
 
-    const heading = screen.getByRole('heading', {
-      name: /welcome to next\.js!/i,
-    });
+    const heading = screen.getAllByRole('heading');
 
-    expect(heading).toBeInTheDocument();
+    expect(heading[0]).toBeInTheDocument();
   });
 
   it('renders homepage unchanged', () => {
@@ -22,7 +20,7 @@ describe('Home', () => {
     expect(container).toMatchSnapshot();
   });
 
-  test('home page has no axe violations', async () => {
+  test('has no axe violations', async () => {
     const { container } = render(<Home />);
     await act(async () => {
       expect(await axe(container)).toHaveNoViolations();

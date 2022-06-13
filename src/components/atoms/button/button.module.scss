@@ -157,7 +157,7 @@
   &:global.main-cta {
     font-family: 'Mulish', sans-serif;
     font-weight: 800;
-    font-size: 25px;
+    font-size: 16px;
     text-decoration: none;
     padding: 18px 25px;
     background: #fcaf96;
@@ -166,6 +166,14 @@
     &:hover {
       background-color: #f98f7f;
       color: map-get($map: $gray, $key: 800);
+    }
+
+    @include breakpoint(768) {
+      font-size: 18px;
+    }
+
+    @include breakpoint(1140) {
+      font-size: 18px;
     }
   }
 

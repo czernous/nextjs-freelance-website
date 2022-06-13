@@ -96,9 +96,9 @@ $info: (
 
 $paper: #fefbfb;
 
-$gradient-1: gradient(79.89deg, #d8ac9c 9.35%, #979797 77.72%);
+$gradient-1: linear-gradient(79.89deg, #d8ac9c 9.35%, #979797 77.72%);
 
-@mixin post-feature-text-color() {
+@mixin feature-text-color() {
   color: map-get($map: $bark, $key: 100);
   text-shadow: 2px 4px 8px rgba(0, 0, 0, 0.14);
 }

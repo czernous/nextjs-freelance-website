@@ -2,7 +2,6 @@ import React from 'react';
 import { IButtonProps } from '../../../interfaces';
 import style from './button.module.scss';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function Button({ ...props }: IButtonProps) {
   const { buttonColor, buttonSize, hasShadow } = props;
   const buttonClasses = `${style.button} ${buttonColor} ${buttonSize} ${
