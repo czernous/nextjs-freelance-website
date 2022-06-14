@@ -1,3 +1,5 @@
+@use 'sass:map';
+
 $olive: (
   100: #f1f6e8,
   200: #dcded0,
@@ -9,7 +11,6 @@ $olive: (
   800: #454637,
   900: #2a2a1e,
 );
-
 $gray: (
   100: #f4f1e8,
   200: #dbdad2,
@@ -21,7 +22,6 @@ $gray: (
   800: #44443b,
   900: #292921,
 );
-
 $bark: (
   100: #f5f0ef,
   200: #dcd4d3,
@@ -33,7 +33,6 @@ $bark: (
   800: #494134,
   900: #2b281f,
 );
-
 $brick: (
   100: #ffeee7,
   200: #ecd0c6,
@@ -45,7 +44,6 @@ $brick: (
   800: #5b3324,
   900: #381d15,
 );
-
 $danger: (
   100: #ffe9e9,
   200: #f0c6c6,
@@ -57,7 +55,6 @@ $danger: (
   800: #5e2323,
   900: #3a1313,
 );
-
 $success: (
   100: #eef8e8,
   200: #d8e4cc,
@@ -69,7 +66,6 @@ $success: (
   800: #3f502e,
   900: #253019,
 );
-
 $warning: (
   100: #fffadd,
   200: #faefb4,
@@ -81,7 +77,6 @@ $warning: (
   800: #766507,
   900: #473d01,
 );
-
 $info: (
   100: #e1f9fb,
   200: #c5e6e9,
@@ -93,20 +88,18 @@ $info: (
   800: #255458,
   900: #113436,
 );
-
 $paper: #fefbfb;
-
-$gradient-1: linear-gradient(79.89deg, #d8ac9c 9.35%, #979797 77.72%);
+$gradient-1: linear-gradient(79.89deg,#979797 9.35%,#d8ac9c 77.72%);
 
 @mixin feature-text-color() {
-  color: map-get($map: $bark, $key: 100);
-  text-shadow: 2px 4px 8px rgba(0, 0, 0, 0.14);
+  color: map.get($map: $bark, $key: 100);
+  text-shadow: 2px 4px 8px hsl(0deg 0 0 / 15%);
 }
 
 @mixin box-shadow-1 {
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.18);
+  box-shadow: 0px 4px 8px hsl(0deg 0 0 / 18%);
 }
 
 @mixin drop-shadow-1 {
-  filter: drop-shadow(2px 10px 25px rgba(216, 172, 156, 0.15));
+  filter: drop-shadow(2px 10px 25px hsl(216deg 172 156 / 15%));
 }

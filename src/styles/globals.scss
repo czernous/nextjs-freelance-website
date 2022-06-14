@@ -1,12 +1,13 @@
-// @import './libs/bootstrap/bootstrap-reboot.scss';
-// @import './libs/bootstrap/bootstrap-utilities.scss';
-// @import './libs/bootstrap/bootstrap-grid.scss';
+@use 'sass:map';
+@import './utilities/containers';
+@import './theme/palette';
 
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: 'Sanchez', serif;
+  font-family: Sanchez, serif;
+  color: map.get($map: $gray, $key: 700);
 }
 
 a {

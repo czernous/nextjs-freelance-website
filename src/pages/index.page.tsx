@@ -1,6 +1,5 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import Image from 'next/image';
 import Button from '../components/atoms/button';
 import { Color, Size } from '../enums';
 import styles from '../styles/Home.module.scss';
@@ -14,11 +13,11 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={`${styles.main} container`}>
-        <h1 className={`${styles.title} col-sm-10 col-md-8 col-lg-10`}>
+      <main className={`${styles.main} custom-container`}>
+        <h1 className={`${styles.title} col-sm-10 col-md-11 col-lg-10`}>
           Looking for awesome marketing?
         </h1>
-        <h2 className={`${styles.subtitle} col-sm-10 col-lg-11`}>
+        <h2 className={`${styles.subtitle} col-sm-10 col-xl-9 col-xxl-11`}>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam ab
           esse culpa expedita nam aut officia quod consectetur corporis mollitia
           quidem totam aliquid error asperiores nihil, maiores dolorum debitis

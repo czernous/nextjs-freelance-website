@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "rimraf .next && npm run lint && npm run format:fix && npm run test && next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "next lint && stylelint 'src/**/*.scss' --fix",
     "format": "prettier --check .",
     "format:fix": "prettier --write .",
     "build-static": "rimraf .next && rimraf out  && next lint && next build && next export",

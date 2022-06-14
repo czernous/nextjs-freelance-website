@@ -1,10 +1,9 @@
 @import '../styles/theme/palette';
 @import '../styles/mixins/breakpoints';
-@import '../styles/utilities/containers';
 
 .gradient {
-  background-image: $gradient-1;
   min-height: 100vh;
+  background-image: $gradient-1;
 }
 
 .main {
@@ -27,9 +26,9 @@
 }
 
 .title {
-  font-family: 'Mulish', sans-serif;
-  font-weight: 800;
+  font-family: Mulish, sans-serif;
   font-size: 40px;
+  font-weight: 800;
   line-height: 50px;
 
   @include breakpoint(768) {
@@ -51,6 +50,7 @@
 }
 
 .subtitle {
+  margin: 24px 0;
   font-size: 20px;
   line-height: 30px;
 
@@ -70,5 +70,4 @@
   }
 
   @include feature-text-color;
-  margin: 24px 0;
 }

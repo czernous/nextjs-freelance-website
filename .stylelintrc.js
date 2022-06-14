@@ -11,5 +11,12 @@ module.exports = {
         ignoreAtRules: ['apply', 'layer', 'responsive', 'screen'],
       },
     ],
+    'length-zero-no-unit': null,
+    'selector-pseudo-class-no-unknown': [
+      true,
+      {
+        ignorePseudoClasses: ['global'],
+      },
+    ],
   },
 };
