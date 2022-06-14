@@ -89,7 +89,7 @@ $info: (
   900: #113436,
 );
 $paper: #fefbfb;
-$gradient-1: linear-gradient(79.89deg,#979797 9.35%,#d8ac9c 77.72%);
+$gradient-1: linear-gradient(79.89deg, #979797 9.35%, #d8ac9c 77.72%);
 
 @mixin feature-text-color() {
   color: map.get($map: $bark, $key: 100);
