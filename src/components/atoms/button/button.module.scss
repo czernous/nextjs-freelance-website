@@ -165,47 +165,47 @@
 
     &:global.secondary.small {
       font-size: 12px;
-  
+
       @include breakpoint(768) {
         font-size: 14px;
       }
-  
+
       @include breakpoint(1140) {
         font-size: 16px;
       }
     }
-  
+
     &:global.secondary.regular {
       font-size: 14px;
-  
+
       @include breakpoint(768) {
         font-size: 16px;
       }
-  
+
       @include breakpoint(1140) {
         font-size: 18px;
       }
     }
-  
+
     &:global.secondary.large {
       font-size: 16px;
-  
+
       @include breakpoint(768) {
         font-size: 18px;
       }
-  
+
       @include breakpoint(1140) {
         font-size: 20px;
       }
     }
-  
+
     &:global.secondary.extra-large {
-       font-size: 20px;
-  
-       @include breakpoint(768) {
+      font-size: 20px;
+
+      @include breakpoint(768) {
         font-size: 22px;
       }
-  
+
       @include breakpoint(1140) {
         font-size: 24px;
       }
