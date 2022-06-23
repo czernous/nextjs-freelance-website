@@ -12,12 +12,16 @@ function Button({ ...props }: IButtonProps) {
     <a
       href={props.buttonHref}
       target={props.buttonTarget}
-      className={buttonClasses}
+      className={`${buttonClasses} ${props.isDisabled ? 'disabled' : ''}`}
     >
       {props.buttonText}
     </a>
   ) : (
-    <button className={buttonClasses} type={props.buttonType}>
+    <button
+      className={buttonClasses}
+      type={props.buttonType}
+      disabled={props.isDisabled}
+    >
       {props.buttonText}
     </button>
   );

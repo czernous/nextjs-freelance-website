@@ -10,4 +10,16 @@ export interface IButtonProps {
   buttonTarget?: string;
   buttonFullWidth: boolean;
   hasShadow: boolean;
+  isDisabled?: boolean;
+}
+
+export interface IInputProps {
+  inputType: 'input' | 'textarea';
+  inputAdditionalClasses?: string;
+  inputColor: Color;
+  inputId: string;
+  inputPlaceholder: string;
+  isRequired?: boolean;
+  isDisabled?: boolean;
+  ariaDescribedBy?: string;
 }

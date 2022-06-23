@@ -32,6 +32,7 @@ export default {
       },
     },
     hasShadow: false,
+    isDisabled: false,
     buttonFullWidth: false,
     buttonType: 'button',
   },
@@ -47,6 +48,7 @@ Primary.args = {
   buttonColor: Color.Brick,
   buttonSize: Size.Regular,
   hasShadow: false,
+  isDisabled: false,
   buttonFullWidth: false,
   buttonType: 'button',
   buttonStyle: 'primary',
@@ -60,6 +62,7 @@ PrimaryLink.args = {
   buttonSize: Size.Regular,
   buttonHref: 'https://www.google.com',
   hasShadow: false,
+  isDisabled: false,
   buttonFullWidth: false,
   buttonType: 'button',
   buttonStyle: 'primary',
@@ -70,9 +73,7 @@ Secondary.args = {
   buttonText: 'Secondary CTA',
   buttonColor: Color.Brick,
   buttonSize: Size.Regular,
-  hasShadow: false,
-  buttonFullWidth: false,
-  buttonType: 'button',
+  isDisabled: false,
   buttonStyle: 'secondary',
 };
 
@@ -83,9 +84,7 @@ SecondaryLink.args = {
   buttonSize: Size.Regular,
   buttonHref: 'https://www.google.com',
   buttonTarget: '_blank',
-  hasShadow: false,
-  buttonFullWidth: false,
-  buttonType: 'button',
+  isDisabled: false,
   buttonStyle: 'secondary',
 };
 

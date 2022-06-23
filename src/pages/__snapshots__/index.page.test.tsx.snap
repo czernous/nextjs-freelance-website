@@ -19,7 +19,7 @@ exports[`Home renders homepage unchanged 1`] = `
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam ab esse culpa expedita nam aut officia quod consectetur corporis mollitia quidem totam aliquid error asperiores nihil, maiores dolorum debitis enim.
       </h2>
       <a
-        class="button brick large shadow main-cta "
+        class="button brick large shadow main-cta  "
         href="https://www.google.com"
         target="_blank"
       >

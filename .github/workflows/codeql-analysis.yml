@@ -32,11 +32,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-<<<<<<< HEAD
-        language: ['javascript']
-=======
         language: [ 'typescript', 'javascript' ]
->>>>>>> 485d2cb596571645d2cea93857f6d90ae37f72ce
         # CodeQL supports [ 'cpp', 'csharp', 'go', 'java', 'javascript', 'python', 'ruby' ]
         # Learn more about CodeQL language support at https://aka.ms/codeql-docs/language-support
 
