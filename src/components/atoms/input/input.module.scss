@@ -5,107 +5,160 @@
 @import 'bootstrap/dist/css/bootstrap-utilities.min.css';
 
 .input {
-    border: 2px solid;
-    padding: 19px 16px;
-    font-family: Sanchez, sans-serif;
+  font-family: Sanchez, sans-serif;
+  font-size: 16px;
+  padding: 13px 16px;
+  border: 2px solid;
+  transition: all 0.5s ease-in-out;
+
+  @include breakpoint(1140) {
     font-size: 18px;
-    transition: all 0.5s ease-in-out;
-    
+    padding: 19px 16px;
+  }
+
+  &,
+  &::placeholder {
+    color: map.get($map: $olive, $key: 700);
+  }
+
+  &:global.brick {
+    background-color: color.adjust(
+      map.get($map: $brick, $key: 500),
+      $alpha: -0.95
+    );
+    border-color: map.get($map: $brick, $key: 500);
+
+    &:hover,
+    &:focus {
+      background-color: color.adjust(
+        map.get($map: $brick, $key: 500),
+        $alpha: -0.96
+      );
+      outline: 2px solid map.get($map: $brick, $key: 300);
+    }
+  }
+
+  &:global.bark {
+    background-color: color.adjust(
+      map.get($map: $bark, $key: 600),
+      $alpha: -0.95
+    );
+    border-color: map.get($map: $bark, $key: 500);
+
+    &:hover,
+    &:focus {
+      background-color: color.adjust(
+        map.get($map: $bark, $key: 600),
+        $alpha: -0.96
+      );
+      outline: 2px solid map.get($map: $bark, $key: 300);
+    }
+  }
+
+  &:global.gray {
+    background-color: color.adjust(
+      map.get($map: $gray, $key: 600),
+      $alpha: -0.95
+    );
+    border-color: map.get($map: $gray, $key: 600);
+
+    &:hover,
+    &:focus {
+      background-color: color.adjust(
+        map.get($map: $gray, $key: 600),
+        $alpha: -0.96
+      );
+      outline: 2px solid map.get($map: $gray, $key: 300);
+    }
+  }
+
+  &:global.olive {
+    background-color: color.adjust(
+      map.get($map: $olive, $key: 500),
+      $alpha: -0.95
+    );
+    border-color: map.get($map: $olive, $key: 500);
+
+    &:hover,
+    &:focus {
+      background-color: color.adjust(
+        map.get($map: $olive, $key: 500),
+        $alpha: -0.96
+      );
+      outline: 2px solid map.get($map: $olive, $key: 500);
+    }
+  }
+
+  &:global.success {
+    background-color: color.adjust(
+      map.get($map: $success, $key: 600),
+      $alpha: -0.95
+    );
+    border-color: map.get($map: $success, $key: 600);
+
+    &:hover,
+    &:focus {
+      background-color: color.adjust(
+        map.get($map: $success, $key: 600),
+        $alpha: -0.96
+      );
+      outline: 2px solid map.get($map: $success, $key: 600);
+    }
+  }
+
+  &:global.info {
+    background-color: color.adjust(
+      map.get($map: $info, $key: 600),
+      $alpha: -0.95
+    );
+    border-color: map.get($map: $info, $key: 600);
+
+    &:hover,
+    &:focus {
+      background-color: color.adjust(
+        map.get($map: $info, $key: 600),
+        $alpha: -0.96
+      );
+      outline: 2px solid map.get($map: $info, $key: 600);
+    }
+  }
+
+  &:global.warning {
+    background-color: color.adjust(
+      map.get($map: $warning, $key: 600),
+      $alpha: -0.95
+    );
+    border-color: map.get($map: $warning, $key: 600);
+
+    &:hover,
+    &:focus {
+      background-color: color.adjust(
+        map.get($map: $warning, $key: 600),
+        $alpha: -0.96
+      );
+      outline: 2px solid map.get($map: $warning, $key: 600);
+    }
+  }
+
+  &:global.danger {
+    background-color: color.adjust(
+      map.get($map: $danger, $key: 500),
+      $alpha: -0.95
+    );
+    border-color: map.get($map: $danger, $key: 500);
+
     &,
     &::placeholder {
-      color: map.get($map: $olive, $key: 700);
+      color: map.get($map: $danger, $key: 500);
     }
 
-    &:global.brick {
-        border-color: map.get($map: $brick, $key: 500);
-        background-color: color.adjust(map.get($map: $brick, $key: 500), $alpha: -0.95);
-
-        &:hover,
-        &:focus {
-          background-color: color.adjust(map.get($map: $brick, $key: 500), $alpha: -0.96);
-          outline: 2px solid map.get($map: $brick, $key: 300);
-        }
-      }
-    
-      &:global.bark {
-        border-color: map.get($map: $bark, $key: 500);
-        background-color: color.adjust(map.get($map: $bark, $key: 600), $alpha: -0.95);
-
-        &:hover,
-        &:focus {
-          background-color: color.adjust(map.get($map: $bark, $key: 600), $alpha: -0.96);
-          outline: 2px solid map.get($map: $bark, $key: 300);
-        }
-      }
-    
-      &:global.gray {
-        border-color: map.get($map: $gray, $key: 600);
-        background-color: color.adjust(map.get($map: $gray, $key: 600), $alpha: -0.95);
-
-        &:hover,
-        &:focus {
-          background-color: color.adjust(map.get($map: $gray, $key: 600), $alpha: -0.96);
-          outline: 2px solid map.get($map: $gray, $key: 300);
-        }
-      }
-    
-      &:global.olive {
-        border-color: map.get($map: $olive, $key: 500);
-        background-color: color.adjust(map.get($map: $olive, $key: 500), $alpha: -0.95);
-
-        &:hover,
-        &:focus {
-          background-color: color.adjust(map.get($map: $olive, $key: 500), $alpha: -0.96);
-          outline: 2px solid map.get($map: $olive, $key: 500);
-        }
-      }
-    
-      &:global.success {
-        border-color: map.get($map: $success, $key: 600);
-        background-color: color.adjust(map.get($map: $success, $key: 600), $alpha: -0.95);
-
-        &:hover,
-        &:focus {
-          background-color: color.adjust(map.get($map: $success, $key: 600), $alpha: -0.96);
-          outline: 2px solid map.get($map: $success, $key: 600);
-        }
-      }
-    
-      &:global.info {
-        border-color: map.get($map: $info, $key: 600);
-        background-color: color.adjust(map.get($map: $info, $key: 600), $alpha: -0.95);
-
-        &:hover,
-        &:focus {
-          background-color: color.adjust(map.get($map: $info, $key: 600), $alpha: -0.96);
-          outline: 2px solid map.get($map: $info, $key: 600);
-        }
-      }
-    
-      &:global.warning {  
-        border-color: map.get($map: $warning, $key: 600);
-        background-color: color.adjust(map.get($map: $warning, $key: 600), $alpha: -0.95);
-
-        &:hover,
-        &:focus {
-          background-color: color.adjust(map.get($map: $warning, $key: 600), $alpha: -0.96);
-          outline: 2px solid map.get($map: $warning, $key: 600);
-        }
-      }
-    
-      &:global.danger {
-        border-color: map.get($map: $danger, $key: 500);
-        background-color: color.adjust(map.get($map: $danger, $key: 500), $alpha: -0.95);
-        
-        &,
-        &::placeholder {
-          color: map.get($map: $danger, $key: 500);
-        }
-
-        &:hover,
-        &:focus {
-          background-color: color.adjust(map.get($map: $danger, $key: 500), $alpha: -0.96);
-          outline: 2px solid map.get($map: $danger, $key: 500);
-        }
-      }
+    &:hover,
+    &:focus {
+      background-color: color.adjust(
+        map.get($map: $danger, $key: 500),
+        $alpha: -0.96
+      );
+      outline: 2px solid map.get($map: $danger, $key: 500);
+    }
+  }
 }

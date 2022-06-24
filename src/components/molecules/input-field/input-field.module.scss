@@ -1,0 +1,23 @@
+@use 'sass:map';
+@import '../../../styles/theme/palette';
+@import '../../../styles/mixins/breakpoints';
+
+.input {
+    display: flex;
+    flex-direction: column;
+    font-family: Sanchez, sans-serif;
+    font-size: 16px;
+    color: map.get($map: $olive, $key: 700);
+
+    label {
+        margin-bottom: 14px;
+    }
+
+    @include breakpoint(1140) {
+        font-size: 18px;
+
+        label {
+            margin-bottom: 16px;
+        }
+    }
+}

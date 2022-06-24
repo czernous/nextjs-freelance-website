@@ -1,4 +1,4 @@
-import { Color, Size } from '../enums';
+import { Color, InputTypes, Size } from '../enums';
 
 export interface IButtonProps {
   buttonColor: Color;
@@ -14,7 +14,8 @@ export interface IButtonProps {
 }
 
 export interface IInputProps {
-  inputType: 'input' | 'textarea';
+  type: 'input' | 'textarea';
+  inputType?: InputTypes;
   inputAdditionalClasses?: string;
   inputColor: Color;
   inputId: string;

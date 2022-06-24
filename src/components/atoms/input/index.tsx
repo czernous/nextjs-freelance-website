@@ -6,7 +6,7 @@ function Input({ ...props }: IInputProps) {
   const { inputColor, inputAdditionalClasses } = props;
   const inputClasses = `${inputAdditionalClasses} ${inputColor} ${styles.input}`;
 
-  return props.inputType === 'textarea' ? (
+  return props.type === 'textarea' ? (
     <textarea
       id={props.inputId}
       className={inputClasses}
@@ -19,6 +19,7 @@ function Input({ ...props }: IInputProps) {
     <input
       id={props.inputId}
       className={inputClasses}
+      type={props.inputType}
       placeholder={props.inputPlaceholder}
       required={props.isRequired}
       disabled={props.isDisabled}

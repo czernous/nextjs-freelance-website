@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Plain Input renders homepage unchanged 1`] = `
+<div>
+  <div
+    class=" input"
+  >
+    <label
+      for="test_input"
+    >
+      Name
+    </label>
+    <input
+      class="undefined brick input"
+      id="test_input"
+      placeholder="Enter your name"
+    />
+  </div>
+</div>
+`;

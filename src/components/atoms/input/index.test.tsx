@@ -14,7 +14,7 @@ describe('Plain Input', () => {
     act(() => {
       plainInput = render(
         <Input
-          inputType="input"
+          type="input"
           inputId="test_input"
           inputPlaceholder="Enter your name"
           inputColor={Color.Brick}
@@ -42,7 +42,7 @@ describe('Texarea Input', () => {
     act(() => {
       plainInput = render(
         <Input
-          inputType="textarea"
+          type="textarea"
           inputId="test_input"
           inputPlaceholder="Enter your message"
           inputColor={Color.Brick}

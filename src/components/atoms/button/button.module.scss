@@ -16,9 +16,9 @@
   }
 
   &:global.primary:disabled {
-    color: map.get($map: $gray, $key: 300)!important;
-    background-color: map.get($map: $gray, $key: 200)!important;
+    color: map.get($map: $gray, $key: 300) !important;
     pointer-events: none;
+    background-color: map.get($map: $gray, $key: 200) !important;
   }
 
   &:global.primary.small {
@@ -171,7 +171,7 @@
 
     &:global.secondary.disabled,
     &:global.secondary:disabled {
-      color: map.get($map: $gray, $key: 300)!important;
+      color: map.get($map: $gray, $key: 300) !important;
       pointer-events: none;
     }
 

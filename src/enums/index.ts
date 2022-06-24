@@ -15,3 +15,18 @@ export enum Size {
   Large = 'large',
   ExtraLarge = 'extra-large',
 }
+
+export enum InputTypes {
+  Button = 'button',
+  Checkbox = 'checkbox',
+  Color = 'color',
+  Date = 'date',
+  Email = 'email',
+  File = 'file',
+  Hidden = 'hidden',
+  Image = 'image',
+  Month = 'month',
+  Number = 'number',
+  Password = 'password',
+  Text = 'text',
+}
