@@ -5,15 +5,15 @@
 @import 'bootstrap/dist/css/bootstrap-utilities.min.css';
 
 .input {
+  padding: 13px 16px;
   font-family: Sanchez, sans-serif;
   font-size: 16px;
-  padding: 13px 16px;
   border: 2px solid;
-  transition: all 0.5s ease-in-out;
+  transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
 
   @include breakpoint(1140) {
-    font-size: 18px;
     padding: 19px 16px;
+    font-size: 18px;
   }
 
   &,
@@ -28,12 +28,15 @@
     );
     border-color: map.get($map: $brick, $key: 500);
 
-    &:hover,
-    &:focus {
+    &:hover{
       background-color: color.adjust(
         map.get($map: $brick, $key: 500),
         $alpha: -0.96
       );
+      @include box-shadow-brick(0.35);
+    }
+
+    &:focus {
       outline: 2px solid map.get($map: $brick, $key: 300);
     }
   }
@@ -45,12 +48,14 @@
     );
     border-color: map.get($map: $bark, $key: 500);
 
-    &:hover,
-    &:focus {
+    &:hover {
       background-color: color.adjust(
         map.get($map: $bark, $key: 600),
         $alpha: -0.96
       );
+    }
+
+    &:focus {
       outline: 2px solid map.get($map: $bark, $key: 300);
     }
   }
@@ -62,12 +67,15 @@
     );
     border-color: map.get($map: $gray, $key: 600);
 
-    &:hover,
-    &:focus {
+    &:hover {
       background-color: color.adjust(
         map.get($map: $gray, $key: 600),
         $alpha: -0.96
       );
+      
+    }
+
+    &:focus {
       outline: 2px solid map.get($map: $gray, $key: 300);
     }
   }
@@ -79,12 +87,14 @@
     );
     border-color: map.get($map: $olive, $key: 500);
 
-    &:hover,
-    &:focus {
+    &:hover {
       background-color: color.adjust(
         map.get($map: $olive, $key: 500),
         $alpha: -0.96
       );
+    }
+
+    &:focus {
       outline: 2px solid map.get($map: $olive, $key: 500);
     }
   }
@@ -96,12 +106,14 @@
     );
     border-color: map.get($map: $success, $key: 600);
 
-    &:hover,
-    &:focus {
+    &:hover {
       background-color: color.adjust(
         map.get($map: $success, $key: 600),
         $alpha: -0.96
       );
+    }
+
+    &:focus {
       outline: 2px solid map.get($map: $success, $key: 600);
     }
   }
@@ -113,12 +125,14 @@
     );
     border-color: map.get($map: $info, $key: 600);
 
-    &:hover,
-    &:focus {
+    &:hover {
       background-color: color.adjust(
         map.get($map: $info, $key: 600),
         $alpha: -0.96
       );
+    }
+
+    &:focus {
       outline: 2px solid map.get($map: $info, $key: 600);
     }
   }
@@ -130,12 +144,14 @@
     );
     border-color: map.get($map: $warning, $key: 600);
 
-    &:hover,
-    &:focus {
+    &:hover {
       background-color: color.adjust(
         map.get($map: $warning, $key: 600),
         $alpha: -0.96
       );
+    }
+
+    &:focus {
       outline: 2px solid map.get($map: $warning, $key: 600);
     }
   }
@@ -152,12 +168,14 @@
       color: map.get($map: $danger, $key: 500);
     }
 
-    &:hover,
-    &:focus {
+    &:hover {
       background-color: color.adjust(
         map.get($map: $danger, $key: 500),
         $alpha: -0.96
       );
+    }
+
+    &:focus {
       outline: 2px solid map.get($map: $danger, $key: 500);
     }
   }
