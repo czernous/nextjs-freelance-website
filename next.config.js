@@ -6,6 +6,9 @@ const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   pageExtensions: ['page.tsx', 'page.jsx'],
+  images: {
+    domains: ['images.unsplash.com'],
+  },
   webpack(config) {
     // temporary hack to disable css modules
     config.module.rules[3].oneOf.forEach((one) => {

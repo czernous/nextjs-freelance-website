@@ -12,6 +12,7 @@ export default async (): Promise<Config> => {
     coverageDirectory: '.coverage',
     collectCoverageFrom: [
       '<rootDir>/src/**/*.{js,jsx,ts,tsx}',
+      '!<rootDir>/src/**/*.mock.{js,jsx,ts,tsx}',
       '!<rootDir>/src/pages/api/**/*.{js,jsx,ts,tsx}',
       '!<rootDir>/src/**/_app.page.{js,jsx,ts,tsx}',
       '!<rootDir>/src/**/_document.page.{js,jsx,ts,tsx}',

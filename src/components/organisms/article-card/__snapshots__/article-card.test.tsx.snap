@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Article Card is rendered unchanged 1`] = `
+<div>
+  <div
+    class="card"
+  >
+    <div
+      class="image"
+    >
+      <span
+        style="box-sizing: border-box; display: block; overflow: hidden; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px;"
+      >
+        <img
+          alt="test image"
+          data-nimg="fill"
+          decoding="async"
+          src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+          style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; box-sizing: border-box; padding: 0px; margin: auto; display: block; width: 0px; height: 0px; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%; object-fit: cover; filter: blur(20px); background-size: cover; background-image: url(/test-images/small.avif); background-position: 0% 0%;"
+        />
+        <noscript />
+      </span>
+    </div>
+    <div
+      class="content"
+    >
+      <h3
+        class="title"
+      >
+        Test Card
+      </h3>
+      <p
+        class="description"
+      >
+        This is a test card
+      </p>
+      <a
+        class="button brick regular  secondary  link "
+        href="#"
+      >
+        Read More
+      </a>
+    </div>
+  </div>
+</div>
+`;

@@ -6,7 +6,9 @@ function Button({ ...props }: IButtonProps) {
   const { buttonColor, buttonSize, hasShadow } = props;
   const buttonClasses = `${style.button} ${buttonColor} ${buttonSize} ${
     hasShadow ? 'shadow' : ''
-  } ${props.buttonStyle} ${props.buttonFullWidth ? 'full-width' : ''}`;
+  } ${props.buttonStyle} ${props.buttonFullWidth ? 'full-width' : ''} ${
+    props.customClass ?? ''
+  }`.trim();
 
   return props.buttonHref ? (
     <a

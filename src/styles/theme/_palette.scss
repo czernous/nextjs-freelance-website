@@ -104,7 +104,6 @@ $gradient-1: linear-gradient(79.89deg, #979797 9.35%, #d8ac9c 77.72%);
   box-shadow: 0px 10px 50px rgba(216, 172, 156, $transparency);
 }
 
-
 @mixin drop-shadow-1 {
   filter: drop-shadow(2px 10px 25px hsl(216deg 172 156 / 15%));
 }

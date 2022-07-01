@@ -19,7 +19,7 @@ describe('Plain Input', () => {
     );
   });
 
-  it('renders homepage unchanged', () => {
+  it('renders input field unchanged', () => {
     const { container } = input;
     expect(container).toMatchSnapshot();
   });

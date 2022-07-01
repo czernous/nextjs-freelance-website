@@ -1,0 +1,75 @@
+@use 'sass:map';
+@import '../../../styles/theme/palette';
+@import '../../../styles/mixins/breakpoints';
+
+.card {
+    font-family: Sanchez, sans-serif;
+    display: flex;
+    flex-direction: column;
+    color: map.get($map: $olive, $key: 700);
+    background: map.get($map: $bark, $key: 100);
+    @include box-shadow-brick(0.25);
+}
+
+.image {
+    max-width: 100%;
+    display: none;
+    overflow: hidden;
+    position: relative;
+    
+    @include breakpoint(768) {
+        display: block;
+        height: 177px;
+    }
+
+    @include breakpoint(1141) {
+        height: 266px;
+    }
+}
+
+.content {
+    margin: 24px;
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.title {
+    font-family: Mulish, sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    margin: 0;
+
+    @include breakpoint(768) {
+        font-size: 20px;
+    }
+
+    @include breakpoint(1141) {
+        font-size: 24px;
+    }
+}
+
+
+.description {
+    font-size: 14px;
+    line-height: 21px;
+
+    @include breakpoint(768) {
+        font-size: 16px;
+        line-height: 24px;
+    }
+
+    @include breakpoint(1141) {
+        line-height: 27px;
+        font-size: 18px;
+    }
+}
+
+.link {
+    align-self: flex-end;
+    position: relative;
+
+   &::before {
+    z-index: 1!important;
+   }
+}
