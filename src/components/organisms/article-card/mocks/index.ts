@@ -1,4 +1,5 @@
 import { IArticleCard } from '../../../../interfaces';
+import { base64ImgSmall, base64ImgMedium, base64ImgLarge } from './images.mock';
 
 export const cardMock: IArticleCard = {
   title: 'Article title',
@@ -13,7 +14,7 @@ export const cardMock: IArticleCard = {
     caption: 'test image',
     previewUrl: null,
     ext: '',
-    url: '/test-images/large.avif',
+    url: base64ImgLarge,
     hash: '',
     mime: 'image/jpeg',
     path: null,
@@ -23,7 +24,7 @@ export const cardMock: IArticleCard = {
     formats: {
       large: {
         ext: '',
-        url: '/test-images/large.avif',
+        url: base64ImgLarge,
         hash: '',
         mime: 'image/jpeg',
         name: 'test image',
@@ -34,7 +35,7 @@ export const cardMock: IArticleCard = {
       },
       small: {
         ext: '',
-        url: '/test-images/small.avif',
+        url: base64ImgSmall,
         hash: '',
         mime: 'image/jpeg',
         name: 'test image',
@@ -45,7 +46,7 @@ export const cardMock: IArticleCard = {
       },
       medium: {
         ext: '',
-        url: '/test-images/medium.avif',
+        url: base64ImgMedium,
         hash: '',
         mime: 'image/jpeg',
         name: 'test image',
@@ -56,7 +57,7 @@ export const cardMock: IArticleCard = {
       },
       thumbnail: {
         ext: '',
-        url: '/public/test-images/small.avif',
+        url: base64ImgSmall,
         hash: '',
         mime: 'image/jpeg',
         name: 'test image',

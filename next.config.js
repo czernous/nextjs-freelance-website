@@ -5,9 +5,12 @@ const path = require('path');
 const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
-  pageExtensions: ['page.tsx', 'page.jsx'],
+  pageExtensions: ['page.tsx', 'page.jsx', 'ts'],
   images: {
     domains: ['images.unsplash.com'],
+  },
+  publicRuntimeConfig: {
+    STRAPI_HOST: process.env.STRAPI_HOST,
   },
   webpack(config) {
     // temporary hack to disable css modules

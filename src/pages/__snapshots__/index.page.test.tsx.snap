@@ -11,19 +11,19 @@ exports[`Home renders homepage unchanged 1`] = `
       <h1
         class="title col-sm-10 col-md-11 col-lg-10"
       >
-        Looking for awesome marketing?
+        Test headline
       </h1>
       <h2
         class="subtitle col-sm-10 col-xl-9 col-xxl-11"
       >
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam ab esse culpa expedita nam aut officia quod consectetur corporis mollitia quidem totam aliquid error asperiores nihil, maiores dolorum debitis enim.
+        Test subheadline
       </h2>
       <a
         class="button brick large shadow main-cta "
-        href="https://www.google.com"
+        href="http://google.com"
         target="_blank"
       >
-        Get Quote
+        Test button
       </a>
     </main>
   </div>

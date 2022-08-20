@@ -64,3 +64,10 @@ export interface IArticleCard {
   ctaUrl: string;
   unoptimized: boolean;
 }
+
+export interface IPaginationButtonProps {
+  text: string;
+  action: string;
+  active: boolean;
+  disabled: boolean;
+}

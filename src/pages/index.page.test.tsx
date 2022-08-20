@@ -3,8 +3,15 @@ import { axe, toHaveNoViolations } from 'jest-axe';
 import '@testing-library/jest-dom';
 import Home from './index.page';
 import { act } from 'react-dom/test-utils';
+import React from 'react';
 
 expect.extend(toHaveNoViolations);
+
+jest.mock('next/config', () => () => ({
+  publicRuntimeConfig: {
+    STRAPI_HOST: process.env.STRAPI_HOST,
+  },
+}));
 
 describe('Home', () => {
   it('renders a heading (h1 - title)', () => {

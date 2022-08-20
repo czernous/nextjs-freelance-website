@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { memo } from 'react';
 import Image from 'next/image';
 import { IArticleCard, IButtonProps } from '../../../interfaces';
 import styles from './article-card.module.scss';
 import Button from '../../atoms/button';
 import { Color, Size } from '../../../enums';
 
-export default function ArticleCard({ ...props }: IButtonProps & IArticleCard) {
+export const ArticleCard = memo(function ArticleCard({
+  ...props
+}: IButtonProps & IArticleCard) {
   return (
     <div className={styles.card}>
       <div className={styles.image}>
@@ -38,4 +40,6 @@ export default function ArticleCard({ ...props }: IButtonProps & IArticleCard) {
       </div>
     </div>
   );
-}
+});
+
+export default ArticleCard;

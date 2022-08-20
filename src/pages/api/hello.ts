@@ -2,12 +2,15 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 type Data = {
-  name: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  data: any;
 };
 
-export default function handler(
+export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>,
 ) {
-  res.status(200).json({ name: 'John Doe' });
+  const r = await fetch('http://ruthchernous.loc/cms/home?populate=*');
+  const data = await r.json();
+  res.status(200).json(data);
 }
