@@ -5,7 +5,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Button from '../components/atoms/button';
 import { Color, Size } from '../enums';
-import styles from '../styles/Home.module.scss';
+import styles from '../styles/pages/Home.module.scss';
 /* istanbul ignore next */
 const { publicRuntimeConfig } = getConfig();
 

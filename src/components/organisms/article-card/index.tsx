@@ -12,14 +12,12 @@ export const ArticleCard = memo(function ArticleCard({
     <div className={styles.card}>
       <div className={styles.image}>
         <Image
-          src={props.image.formats?.medium?.url ?? props.image.url} // add default placeholder if there is no image
-          alt={props.image.alternativeText}
+          src={props.image.secureUrl ?? props.image.secureUrl} // add default placeholder if there is no image
+          alt={props.image.altText}
           layout="fill"
           objectFit="cover"
           placeholder="blur"
-          blurDataURL={
-            (props.image.formats?.small?.url as string) ?? props.image.url
-          }
+          blurDataURL={props.image.blurredImageUrl ?? props.image.url}
           unoptimized={props.unoptimized}
         />
       </div>

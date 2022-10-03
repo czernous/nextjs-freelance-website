@@ -1,5 +1,6 @@
 import React from 'react';
 import { IButtonProps } from '../../../interfaces';
+
 import style from './button.module.scss';
 
 function Button({ ...props }: IButtonProps) {
