@@ -51,5 +51,5 @@ export interface IImage extends IEntity {
   thumbnailUrl: string;
   blurredImageUrl: string;
   path: string;
-  altText: string;
+  altText?: string;
 }
