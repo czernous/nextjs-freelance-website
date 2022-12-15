@@ -4,6 +4,7 @@ import { Color, Size } from '../../../enums';
 import ArticleCard from './index';
 import { cardMock } from './mocks';
 import { axe, toHaveNoViolations } from 'jest-axe';
+import React from 'react';
 
 expect.extend(toHaveNoViolations);
 

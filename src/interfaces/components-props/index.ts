@@ -42,3 +42,14 @@ export interface IPaginationButtonProps {
   active: boolean;
   disabled: boolean;
 }
+
+export interface INavbarProps {
+  drawerWidth: number;
+  navItems: INavItem[];
+}
+
+export interface INavItem {
+  uuid: string;
+  text: string;
+  url: string;
+}

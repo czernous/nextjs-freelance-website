@@ -25,6 +25,10 @@
   @include breakpoint(1141) {
     height: 266px;
   }
+
+  img {
+    object-fit: cover;
+  }
 }
 
 .content {

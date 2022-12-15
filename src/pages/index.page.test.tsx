@@ -13,9 +13,34 @@ jest.mock('next/config', () => () => ({
   },
 }));
 
+beforeEach(() => {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const useRouter = jest.spyOn(require('next/router'), 'useRouter');
+
+  useRouter.mockImplementation(() => ({
+    route: '/',
+    pathname: '',
+    query: '',
+    asPath: '',
+    push: jest.fn(),
+    events: {
+      on: jest.fn(),
+      off: jest.fn(),
+    },
+    beforePopState: jest.fn(() => null),
+    prefetch: jest.fn(() => null),
+  }));
+});
+
 describe('Home', () => {
   it('renders a heading (h1 - title)', () => {
-    render(<Home />);
+    render(
+      <Home
+        data={{
+          data: undefined,
+        }}
+      />,
+    );
 
     const heading = screen.getAllByRole('heading');
 
@@ -23,12 +48,24 @@ describe('Home', () => {
   });
 
   it('renders homepage unchanged', () => {
-    const { container } = render(<Home />);
+    const { container } = render(
+      <Home
+        data={{
+          data: undefined,
+        }}
+      />,
+    );
     expect(container).toMatchSnapshot();
   });
 
   test('has no axe violations', async () => {
-    const { container } = render(<Home />);
+    const { container } = render(
+      <Home
+        data={{
+          data: undefined,
+        }}
+      />,
+    );
     await act(async () => {
       expect(await axe(container)).toHaveNoViolations();
     });

@@ -4,8 +4,10 @@ import getConfig from 'next/config';
 import Head from 'next/head';
 import Image from 'next/image';
 import Button from '../components/atoms/button';
+import Navbar from '../components/organisms/navbar';
 import { Color, Size } from '../enums';
 import styles from '../styles/pages/Home.module.scss';
+import { navItems } from '../settings/navbar-settings';
 /* istanbul ignore next */
 const { publicRuntimeConfig } = getConfig();
 
@@ -40,9 +42,10 @@ const Home: NextPage<IHomeProps> = ({ ...props }: IHomeProps) => {
               props.data?.data?.attributes.mainBackground.data.attributes
                 .alternativeText
             }
-            layout={'fill'}
+            fill
           />
         ) : null}
+        <Navbar navItems={navItems} drawerWidth={243} />
         <main className={`${styles.main} custom-container`}>
           <h1 className={`${styles.title} col-sm-10 col-md-11 col-lg-10`}>
             {props.data?.data?.attributes.ctaHeadline ?? 'Test headline'}

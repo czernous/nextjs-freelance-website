@@ -13,9 +13,8 @@ export const ArticleCard = memo(function ArticleCard({
       <div className={styles.image}>
         <Image
           src={props.image.secureUrl ?? props.image.secureUrl} // add default placeholder if there is no image
-          alt={props.image.altText}
-          layout="fill"
-          objectFit="cover"
+          alt={props.image.altText ?? ''}
+          fill
           placeholder="blur"
           blurDataURL={props.image.blurredImageUrl ?? props.image.url}
           unoptimized={props.unoptimized}

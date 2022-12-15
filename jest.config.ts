@@ -50,7 +50,7 @@ export default async (): Promise<Config> => {
       '^.+\\.(js|jsx|ts|tsx)$': ['babel-jest', { presets: ['next/babel'] }],
     },
     transformIgnorePatterns: [
-      '/node_modules/',
+      '/node_modules/(?!nanoid)',
       '^.+\\.module\\.(css|sass|scss)$',
     ],
   };
