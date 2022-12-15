@@ -24,7 +24,7 @@
 .linkActive {
   background-color: color.adjust(
     $color: map.get($map: $olive, $key: 600),
-    $amounalphat: -0.92
+    $alpha: -0.92
   );
 }
 
