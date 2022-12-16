@@ -20,7 +20,7 @@
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
-    "@mui/icons-material": "^5.10.16",
+    "@mui/icons-material": "^5.11.0",
     "@mui/material": "^5.10.17",
     "bootstrap": "^5.2.1",
     "nanoid": "^4.0.0",
