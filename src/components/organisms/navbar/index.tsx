@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
@@ -21,9 +21,9 @@ const Navbar = ({ ...props }: INavbarProps) => {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const router = useRouter();
 
-  const handleDrawerToggle = () => {
+  const handleDrawerToggle = React.useCallback(() => {
     setMobileOpen(!mobileOpen);
-  };
+  }, [mobileOpen]);
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
@@ -86,7 +86,7 @@ const Navbar = ({ ...props }: INavbarProps) => {
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
             {props.navItems.map((item, index) => (
               // find a way to handle active route (do the same for drawer + style it )
-              <Link href={item.url} key={item.uuid}>
+              <Link href={item.url} key={item.uuid} passHref>
                 <Button
                   className={`${styles.link} ${
                     index === 0 ? styles.linkActive : null
