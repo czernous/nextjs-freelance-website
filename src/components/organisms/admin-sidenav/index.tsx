@@ -16,28 +16,28 @@ const AdminSideNav = () => {
   return (
     <div className={styles.sidenav}>
       <Tooltip title="posts" placement="right">
-        <Link href="/admin/posts">
+        <Link href="/admin/posts" passHref>
           <IconButton className={styles.icon} title="posts">
             <ListAltOutlinedIcon sx={iconStyle} />
           </IconButton>
         </Link>
       </Tooltip>
       <Tooltip title="pages" placement="right">
-        <Link href="/admin/pages">
+        <Link href="/admin/pages" passHref>
           <IconButton className={styles.icon} title="pages">
             <AutoStoriesOutlinedIcon sx={iconStyle} />
           </IconButton>
         </Link>
       </Tooltip>
       <Tooltip title="images" placement="right">
-        <Link href="/admin/images">
+        <Link href="/admin/images" passHref>
           <IconButton className={styles.icon} title="images">
             <CollectionsOutlinedIcon sx={iconStyle} />
           </IconButton>
         </Link>
       </Tooltip>
       <Tooltip title="logout" placement="right">
-        <Link href="/admin/logout">
+        <Link href="/admin/logout" passHref>
           <IconButton className={styles.icon} title="logout">
             <LogoutOutlinedIcon sx={iconStyle} />
           </IconButton>
