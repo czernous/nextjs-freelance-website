@@ -4,16 +4,16 @@
 @import '../../../styles/mixins/breakpoints';
 
 .sidenav {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background: map.get($map: $brick, $key: 200);
-  width: fit-content;
-  padding: 10px;
-  border-radius: 10px;
   position: fixed;
   top: 30vh;
   left: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: fit-content;
+  padding: 10px;
+  background: map.get($map: $brick, $key: 200);
+  border-radius: 10px;
 }
 
 .icon {
