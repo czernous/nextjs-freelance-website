@@ -33,7 +33,7 @@ const Navbar = ({ ...props }: INavbarProps) => {
       <Divider />
       <List>
         {props.navItems.map((item) => (
-          <Link href={item.url} key={item.uuid}>
+          <Link href={item.url} key={item.uuid} passHref>
             <ListItem disablePadding>
               <ListItemButton
                 className={`${styles.drawerLink} ${
