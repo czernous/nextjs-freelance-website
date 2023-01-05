@@ -1,6 +1,4 @@
 import type { NextPage } from 'next';
-import getConfig from 'next/config';
-//import getConfig from 'next/config';
 import Head from 'next/head';
 import Image from 'next/image';
 import Button from '../components/atoms/button';
@@ -8,18 +6,14 @@ import Navbar from '../components/organisms/navbar';
 import { Color, Size } from '../enums';
 import styles from '../styles/pages/Home.module.scss';
 import { navItems } from '../settings/navbar-settings';
-/* istanbul ignore next */
-const { publicRuntimeConfig } = getConfig();
+import { IHomePage } from '../interfaces';
+import { getFilePath, getPageData } from '../utils';
 
 interface IHomeProps {
-  data: {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    data: any;
-  };
+  data: IHomePage;
 }
 
 const Home: NextPage<IHomeProps> = ({ ...props }: IHomeProps) => {
-  console.log(props);
   return (
     <>
       <Head>
@@ -29,42 +23,31 @@ const Home: NextPage<IHomeProps> = ({ ...props }: IHomeProps) => {
       </Head>
 
       <div className={styles.gradient}>
-        {props.data?.data?.attributes.mainBackground.data !== null &&
-        props.data?.data?.attributes.mainBackground.data !== undefined ? (
+        {props.data?.imageUrl !== null && props.data?.imageUrl !== undefined ? (
           <Image
             className={styles.background}
-            src={
-              props.data?.data?.attributes.mainBackground.data.attributes
-                .alternativeText
-            }
+            src={props.data?.imageUrl}
             objectFit={'cover'}
-            alt={
-              props.data?.data?.attributes.mainBackground.data.attributes
-                .alternativeText
-            }
+            alt={''}
             fill
           />
         ) : null}
         <Navbar navItems={navItems} drawerWidth={243} />
         <main className={`${styles.main} custom-container`}>
           <h1 className={`${styles.title} col-sm-10 col-md-11 col-lg-10`}>
-            {props.data?.data?.attributes.ctaHeadline ?? 'Test headline'}
+            {props.data?.ctaHeadline}
           </h1>
           <h2 className={`${styles.subtitle} col-sm-10 col-xl-9 col-xxl-11`}>
-            {props.data?.data?.attributes.ctaSubheadline ?? 'Test subheadline'}
+            {props.data?.ctaSubheadline}
           </h2>
           <Button
             buttonColor={Color.Brick}
             buttonSize={Size.Large}
             buttonType={'button'}
-            buttonHref={
-              props.data?.data?.attributes.ctaBtnHref ?? 'http://google.com'
-            }
+            buttonHref={props.data?.ctaBtnHref}
             buttonTarget={'_blank'}
             buttonStyle={'main-cta'}
-            buttonText={
-              props.data?.data?.attributes.ctaBtnText ?? 'Test button'
-            }
+            buttonText={props.data?.ctaBtnText}
             buttonFullWidth={false}
             hasShadow={true}
           />
@@ -73,27 +56,22 @@ const Home: NextPage<IHomeProps> = ({ ...props }: IHomeProps) => {
     </>
   );
 };
-/* istanbul ignore next */
-async function loadHome() {
-  const res = await fetch(
-    `http://${publicRuntimeConfig.STRAPI_HOST}/api/home?populate=*`,
-  );
-  const data = await res.json();
-  return data;
-}
 
 /* istanbul ignore next */
 export async function getStaticProps() {
   try {
-    const data = await loadHome();
+    const pageData: IHomePage = await getPageData(
+      getFilePath('./src/public/data/pages', 'home', 'json'),
+    );
+
+    console.log(pageData);
     return {
       props: {
-        data,
+        data: pageData,
       },
     };
   } catch (error: unknown) {
     const err = JSON.parse(JSON.stringify(error));
-    console.log(error);
     return {
       props: {
         err,

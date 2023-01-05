@@ -1,21 +1,26 @@
-import { render, screen } from '@testing-library/react';
+import { render, RenderResult, screen } from '@testing-library/react';
 import { axe, toHaveNoViolations } from 'jest-axe';
 import '@testing-library/jest-dom';
 import Home from './index.page';
 import { act } from 'react-dom/test-utils';
 import React from 'react';
+import * as homePageData from '../public/data/pages/home.json';
+import { IHomePage } from '../interfaces';
 
 expect.extend(toHaveNoViolations);
 
+let data: IHomePage;
+let component: RenderResult;
 jest.mock('next/config', () => () => ({
   publicRuntimeConfig: {
     STRAPI_HOST: process.env.STRAPI_HOST,
   },
 }));
 
-beforeEach(() => {
+beforeEach(async () => {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const useRouter = jest.spyOn(require('next/router'), 'useRouter');
+  data = await JSON.parse(JSON.stringify(homePageData));
 
   useRouter.mockImplementation(() => ({
     route: '/',
@@ -30,42 +35,24 @@ beforeEach(() => {
     beforePopState: jest.fn(() => null),
     prefetch: jest.fn(() => null),
   }));
+
+  component = render(<Home data={data} />);
 });
 
 describe('Home', () => {
   it('renders a heading (h1 - title)', () => {
-    render(
-      <Home
-        data={{
-          data: undefined,
-        }}
-      />,
-    );
-
     const heading = screen.getAllByRole('heading');
 
     expect(heading[0]).toBeInTheDocument();
   });
 
   it('renders homepage unchanged', () => {
-    const { container } = render(
-      <Home
-        data={{
-          data: undefined,
-        }}
-      />,
-    );
+    const { container } = component;
     expect(container).toMatchSnapshot();
   });
 
-  test('has no axe violations', async () => {
-    const { container } = render(
-      <Home
-        data={{
-          data: undefined,
-        }}
-      />,
-    );
+  it('has no axe violations', async () => {
+    const { container } = component;
     await act(async () => {
       expect(await axe(container)).toHaveNoViolations();
     });

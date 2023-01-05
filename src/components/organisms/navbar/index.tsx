@@ -65,6 +65,7 @@ const Navbar = ({ ...props }: INavbarProps) => {
         >
           <IconButton
             color="inherit"
+            test-id="drawerButton"
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
@@ -102,6 +103,7 @@ const Navbar = ({ ...props }: INavbarProps) => {
       <Box component="nav">
         <Drawer
           variant="temporary"
+          test-id="drawer"
           open={mobileOpen}
           onClose={handleDrawerToggle}
           ModalProps={{

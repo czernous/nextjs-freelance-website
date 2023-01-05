@@ -15,6 +15,7 @@ exports[`Navbar is rendered unchanged 1`] = `
         aria-label="open drawer"
         class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-edgeStart MuiIconButton-sizeMedium css-6iz4mj-MuiButtonBase-root-MuiIconButton-root"
         tabindex="0"
+        test-id="drawerButton"
         type="button"
       >
         <svg

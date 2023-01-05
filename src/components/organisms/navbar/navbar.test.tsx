@@ -1,5 +1,11 @@
 import React from 'react';
-import { act, render, screen, waitFor } from '@testing-library/react';
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Navbar from './index';
 import { axe, toHaveNoViolations } from 'jest-axe';
@@ -54,5 +60,17 @@ describe('Navbar', () => {
   it('is rendered unchanged', () => {
     const { container } = navbar;
     expect(container).toMatchSnapshot();
+  });
+
+  it('opens mobile menu(drawer)', async () => {
+    await act(async () => {
+      const { container } = navbar;
+      const button = await container.querySelector('[test-id="drawerButton"]');
+      waitFor(() => expect(button).toBeInTheDocument());
+      fireEvent(
+        button,
+        new MouseEvent('click', { bubbles: true, cancelable: true }),
+      );
+    });
   });
 });

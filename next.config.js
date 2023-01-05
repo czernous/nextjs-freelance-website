@@ -7,10 +7,13 @@ const nextConfig = {
   poweredByHeader: false,
   pageExtensions: ['page.tsx', 'page.jsx', 'ts'],
   images: {
-    domains: ['images.unsplash.com', `cms.${process.env.STRAPI_HOST}`],
+    domains: ['images.unsplash.com', `${process.env.HOST}`],
+  },
+  serverRuntimeConfig: {
+    PROJECT_ROOT: __dirname,
   },
   publicRuntimeConfig: {
-    STRAPI_HOST: process.env.STRAPI_HOST,
+    APP_HOST: process.env.HOST,
   },
   webpack(config) {
     // temporary hack to disable css modules

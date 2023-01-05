@@ -18,6 +18,7 @@ exports[`Home renders homepage unchanged 1`] = `
           aria-label="open drawer"
           class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-edgeStart MuiIconButton-sizeMedium css-6iz4mj-MuiButtonBase-root-MuiIconButton-root"
           tabindex="0"
+          test-id="drawerButton"
           type="button"
         >
           <svg
@@ -130,19 +131,19 @@ exports[`Home renders homepage unchanged 1`] = `
       <h1
         class="title col-sm-10 col-md-11 col-lg-10"
       >
-        Test headline
+        Are you looking to get awesome stuff?
       </h1>
       <h2
         class="subtitle col-sm-10 col-xl-9 col-xxl-11"
       >
-        Test subheadline
+        We have the most awesome stuff on the internet!
       </h2>
       <a
         class="button brick large shadow main-cta "
-        href="http://google.com"
+        href="https://google.com"
         target="_blank"
       >
-        Test button
+        Get stuff
       </a>
     </main>
   </div>

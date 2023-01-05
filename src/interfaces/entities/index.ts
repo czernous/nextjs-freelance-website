@@ -12,11 +12,24 @@ interface IObjectId {
 }
 
 interface IEntity {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   id: IObjectId;
   _id: string;
   createdAt: string;
   updatedAt: string;
+}
+
+interface IOpenGraph {
+  title: string;
+  description: string;
+  imageUrl: string;
+  url?: string;
+  type?: string;
+}
+
+interface ISeo {
+  metaDescription: string;
+  metaKeywords: string;
+  openGraph: IOpenGraph;
 }
 
 interface ICategory extends IEntity {
@@ -28,8 +41,7 @@ interface IPost extends IEntity {
   categories: ICategory[];
   imageUrl: string;
   responsiveImgs: IResponsiveImage[];
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  meta: any; // seo
+  meta: ISeo; // seo
   isPublished: boolean;
   body: string;
 }
@@ -52,4 +64,20 @@ export interface IImage extends IEntity {
   blurredImageUrl: string;
   path: string;
   altText?: string;
+}
+
+// FE only entities
+
+interface IPage {
+  updatedAt?: string;
+}
+
+export interface IHomePage extends IPage {
+  ctaHeadline: string;
+  ctaSubheadline: string;
+  ctaBtnText: string;
+  ctaBtnHref: string;
+  imageUrl?: string;
+  responsiveImgs?: IResponsiveImage[];
+  meta: ISeo;
 }
