@@ -35,4 +35,4 @@ yarn-error.log*
 *.tsbuildinfo
 
 # test-files
-./src/public/data/pages/test.json
+src/public/data/pages/test.json
