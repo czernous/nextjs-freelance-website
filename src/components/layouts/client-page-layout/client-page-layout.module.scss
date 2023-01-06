@@ -34,11 +34,11 @@ body {
 }
 
 .heading {
+  margin: 0 0 10px;
   font-family: Mulish, sans-serif;
   font-size: 35px;
   font-weight: 800;
   color: map.get($map: $gray, $key: 700);
-  margin: 0 0 10px;
 
   @include breakpoint(768) {
     font-size: 50px;
