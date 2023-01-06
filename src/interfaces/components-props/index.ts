@@ -1,5 +1,5 @@
 import { Color, InputTypes, Size } from '../../enums';
-import { IImage } from '../entities';
+import { IImage, ISeo } from '../entities';
 
 export interface IButtonProps {
   buttonColor: Color;
@@ -52,4 +52,10 @@ export interface INavItem {
   uuid: string;
   text: string;
   url: string;
+}
+
+export interface IClientPageLayoutProps {
+  pageTitle: string;
+  appTitle: string;
+  meta: ISeo;
 }

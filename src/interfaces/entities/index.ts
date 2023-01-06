@@ -26,7 +26,7 @@ interface IOpenGraph {
   type?: string;
 }
 
-interface ISeo {
+export interface ISeo {
   metaDescription: string;
   metaKeywords: string;
   openGraph: IOpenGraph;
@@ -79,5 +79,27 @@ export interface IHomePage extends IPage {
   ctaBtnHref: string;
   imageUrl?: string;
   responsiveImgs?: IResponsiveImage[];
+  meta: ISeo;
+}
+
+interface IServiceItem {
+  headline: string;
+  description: string;
+}
+
+export interface IServicesPage extends IPage {
+  services: IServiceItem[];
+  meta: ISeo;
+}
+
+export interface IAboutPage extends IPage {
+  description: string;
+  imageUrl: string;
+  responsiveImgs?: IResponsiveImage[];
+  meta: ISeo;
+}
+
+export interface IContactPage extends IPage {
+  description?: string;
   meta: ISeo;
 }
