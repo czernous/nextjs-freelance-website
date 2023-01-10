@@ -64,7 +64,6 @@ export async function getStaticProps() {
       getFilePath('./src/public/data/pages', 'home', 'json'),
     );
 
-    console.log(pageData);
     return {
       props: {
         data: pageData,
