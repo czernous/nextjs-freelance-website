@@ -1,5 +1,5 @@
 import React from 'react';
-import { IInputProps } from '../../../interfaces';
+import { IInputProps } from '@src/interfaces';
 import styles from './input.module.scss';
 
 function Input({ ...props }: IInputProps) {

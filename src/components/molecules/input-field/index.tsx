@@ -1,6 +1,6 @@
 import React from 'react';
-import { IInputProps } from '../../../interfaces';
-import Input from '../../atoms/input';
+import { IInputProps } from '@src/interfaces';
+import Input from '@src/components/atoms/input';
 import styles from './input-field.module.scss';
 
 function InputField({

@@ -7,12 +7,12 @@ exports[`Client Page Layout is rendered unchanged 1`] = `
   >
     <nav
       aria-label="Main"
-      class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation4 MuiAppBar-root MuiAppBar-colorPrimary MuiAppBar-positionFixed appbar mui-fixed css-11b3ww9-MuiPaper-root-MuiAppBar-root"
+      class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation4 MuiAppBar-root MuiAppBar-colorPrimary MuiAppBar-positionFixed mui-fixed css-3y7qso-MuiPaper-root-MuiAppBar-root"
       role="navigation"
     >
       <div
         class="MuiToolbar-root MuiToolbar-gutters MuiToolbar-regular custom-container css-hyum1k-MuiToolbar-root"
-        style="width: 100%; height: 88px;"
+        style="width: inherit; height: 88px;"
       >
         <button
           aria-label="open drawer"
@@ -37,7 +37,7 @@ exports[`Client Page Layout is rendered unchanged 1`] = `
           />
         </button>
         <div
-          class="MuiTypography-root MuiTypography-h6 logo css-p7bec2-MuiTypography-root"
+          class="MuiTypography-root MuiTypography-h6 css-1urdvp-MuiTypography-root"
         >
           Ruth Chernous
         </div>
@@ -46,9 +46,10 @@ exports[`Client Page Layout is rendered unchanged 1`] = `
         >
           <a
             href="/"
+            style="text-decoration: none;"
           >
             <button
-              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium link linkActive css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium css-1blrfnj-MuiButtonBase-root-MuiButton-root"
               tabindex="0"
               type="button"
             >
@@ -57,13 +58,13 @@ exports[`Client Page Layout is rendered unchanged 1`] = `
                 class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
               />
             </button>
-             
           </a>
           <a
             href="/about"
+            style="text-decoration: none;"
           >
             <button
-              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium link null css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium css-12b7yuv-MuiButtonBase-root-MuiButton-root"
               tabindex="0"
               type="button"
             >
@@ -72,13 +73,13 @@ exports[`Client Page Layout is rendered unchanged 1`] = `
                 class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
               />
             </button>
-             
           </a>
           <a
             href="/blog"
+            style="text-decoration: none;"
           >
             <button
-              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium link null css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium css-12b7yuv-MuiButtonBase-root-MuiButton-root"
               tabindex="0"
               type="button"
             >
@@ -87,13 +88,13 @@ exports[`Client Page Layout is rendered unchanged 1`] = `
                 class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
               />
             </button>
-             
           </a>
           <a
             href="/services"
+            style="text-decoration: none;"
           >
             <button
-              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium link null css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium css-12b7yuv-MuiButtonBase-root-MuiButton-root"
               tabindex="0"
               type="button"
             >
@@ -102,13 +103,13 @@ exports[`Client Page Layout is rendered unchanged 1`] = `
                 class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
               />
             </button>
-             
           </a>
           <a
             href="/contact"
+            style="text-decoration: none;"
           >
             <button
-              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium link null css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium css-12b7yuv-MuiButtonBase-root-MuiButton-root"
               tabindex="0"
               type="button"
             >
@@ -117,7 +118,6 @@ exports[`Client Page Layout is rendered unchanged 1`] = `
                 class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
               />
             </button>
-             
           </a>
         </div>
       </div>

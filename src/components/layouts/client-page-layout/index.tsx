@@ -1,8 +1,8 @@
 import Head from 'next/head';
 import { PropsWithChildren } from 'react';
-import { IClientPageLayoutProps } from '../../../interfaces';
-import { navItems } from '../../../settings/navbar-settings';
-import Navbar from '../../organisms/navbar';
+import { IClientPageLayoutProps } from '@src/interfaces';
+import { navItems } from '@src/settings/navbar-settings';
+import Navbar from '@src/components/organisms/navbar';
 
 import styles from './client-page-layout.module.scss';
 

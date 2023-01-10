@@ -1,5 +1,5 @@
 import React from 'react';
-import { IButtonProps } from '../../../interfaces';
+import { IButtonProps } from '@src/interfaces';
 
 import style from './button.module.scss';
 

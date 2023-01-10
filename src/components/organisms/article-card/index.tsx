@@ -2,8 +2,8 @@ import React, { memo } from 'react';
 import Image from 'next/image';
 import { IArticleCard, IButtonProps } from '../../../interfaces';
 import styles from './article-card.module.scss';
-import Button from '../../atoms/button';
-import { Color, Size } from '../../../enums';
+import Button from '@src/components/atoms/button';
+import { Color, Size } from '@src/enums';
 
 export const ArticleCard = memo(function ArticleCard({
   ...props

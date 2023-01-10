@@ -36,6 +36,8 @@ export default async (): Promise<Config> => {
       /* Handle image imports
       https://jestjs.io/docs/webpack#handling-static-assets */
       '^.+\\.(jpg|jpeg|png|gif|webp|svg)$': '__mocks__/fileMock.ts',
+
+      '^@src(.*)$': '<rootDir>/src$1',
     },
     testPathIgnorePatterns: [
       '<rootDir>/node_modules/',

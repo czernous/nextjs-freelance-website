@@ -7,6 +7,7 @@ import '../styles/globals.scss';
 import type { AppProps } from 'next/app';
 import { NextPage } from 'next';
 import { ReactElement, ReactNode } from 'react';
+import { StyledEngineProvider } from '@mui/material/styles';
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
@@ -19,7 +20,11 @@ type AppPropsWithLayout = AppProps & {
 
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page) => page);
-  return getLayout(<Component {...pageProps} />);
+  return (
+    <StyledEngineProvider injectFirst>
+      {getLayout(<Component {...pageProps} />)}
+    </StyledEngineProvider>
+  );
 }
 
 export default MyApp;
