@@ -1,5 +1,4 @@
-import { jest } from '@jest/globals';
-
+/* eslint-disable no-undef */
 /* istanbul ignore next */
 export const mockNextRouter = () => {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
