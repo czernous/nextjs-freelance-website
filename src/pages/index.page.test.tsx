@@ -6,6 +6,7 @@ import { act } from 'react-dom/test-utils';
 import React from 'react';
 import * as homePageData from '../public/data/pages/home.json';
 import { IHomePage } from '../interfaces';
+import { mockNextRouter } from '../utils';
 
 expect.extend(toHaveNoViolations);
 
@@ -18,24 +19,8 @@ jest.mock('next/config', () => () => ({
 }));
 
 beforeEach(async () => {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const useRouter = jest.spyOn(require('next/router'), 'useRouter');
   data = await JSON.parse(JSON.stringify(homePageData));
-
-  useRouter.mockImplementation(() => ({
-    route: '/',
-    pathname: '',
-    query: '',
-    asPath: '',
-    push: jest.fn(),
-    events: {
-      on: jest.fn(),
-      off: jest.fn(),
-    },
-    beforePopState: jest.fn(() => null),
-    prefetch: jest.fn(() => null),
-  }));
-
+  mockNextRouter();
   component = render(<Home data={data} />);
 });
 
