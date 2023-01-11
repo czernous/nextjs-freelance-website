@@ -2,15 +2,11 @@
 @import '../../../styles/theme/palette';
 @import '../../../styles/mixins/breakpoints';
 
-body {
-  background-color: $paper;
-}
-
 .layout {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding-top: 56px;
+  padding-top: 132px;
   font-family: Sanchez, sans-serif;
   font-size: 14px;
   line-height: 22px;

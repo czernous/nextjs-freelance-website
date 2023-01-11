@@ -8,6 +8,7 @@ body {
   margin: 0;
   font-family: Sanchez, serif;
   color: map.get($map: $gray, $key: 700);
+  background: $paper;
 }
 
 a {

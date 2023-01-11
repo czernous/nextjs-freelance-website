@@ -30,7 +30,7 @@ const Navbar = ({ ...props }: INavbarProps) => {
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
       <Typography variant="h6" sx={{ my: 2, fontFamily: 'Mulish, sans-serif' }}>
-        Ruth Chernous
+        {props.companyName}
       </Typography>
       <Divider />
       <List>
@@ -84,7 +84,7 @@ const Navbar = ({ ...props }: INavbarProps) => {
       >
         <Toolbar
           className="custom-container"
-          style={{ width: 'inherit', height: 88 }}
+          style={{ width: '100%', height: 88 }}
         >
           <IconButton
             color="inherit"
@@ -111,9 +111,16 @@ const Navbar = ({ ...props }: INavbarProps) => {
               },
             }}
           >
-            Ruth Chernous
+            {props.companyName}
           </Typography>
-          <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+          <Box
+            sx={{
+              display: {
+                xs: 'none',
+                sm: 'block',
+              },
+            }}
+          >
             {props.navItems.map((item, index) => (
               <Link
                 href={item.url}
@@ -130,7 +137,7 @@ const Navbar = ({ ...props }: INavbarProps) => {
                         fontWeight: 700,
                         color: colors.olive[600],
                         backgroundColor:
-                          index === 0 &&
+                          router.asPath === item.url &&
                           alpha(colors.olive[600] as string, 0.08),
                         marginLeft: index !== 0 && '10px',
                         '@media(min-width: 768px)': {

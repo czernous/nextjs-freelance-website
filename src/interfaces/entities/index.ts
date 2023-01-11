@@ -82,13 +82,8 @@ export interface IHomePage extends IPage {
   meta: ISeo;
 }
 
-interface IServiceItem {
-  headline: string;
-  description: string;
-}
-
 export interface IServicesPage extends IPage {
-  services: IServiceItem[];
+  content: string;
   meta: ISeo;
 }
 

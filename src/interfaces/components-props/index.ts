@@ -44,6 +44,7 @@ export interface IPaginationButtonProps {
 }
 
 export interface INavbarProps {
+  companyName: string;
   drawerWidth: number;
   navItems: INavItem[];
 }
