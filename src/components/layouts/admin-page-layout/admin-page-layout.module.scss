@@ -5,8 +5,8 @@
 
 .dashboard {
   max-width: 1920px;
-  margin: 0 auto;
   padding: 0 10px 0 75px;
+  margin: 0 auto;
 
   @include breakpoint(768) {
     padding: 0 135px;
