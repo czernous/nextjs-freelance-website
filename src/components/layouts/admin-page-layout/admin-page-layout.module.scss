@@ -1,0 +1,26 @@
+@use 'sass:map';
+@use 'sass:color';
+@import '../../../styles/theme/palette';
+@import '../../../styles/mixins/breakpoints';
+
+.dashboard {
+  max-width: 1920px;
+  margin: 0 auto;
+  padding: 0 10px 0 75px;
+
+  @include breakpoint(768) {
+    padding: 0 135px;
+  }
+
+  section {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.heading {
+  font-family: Mulish, sans-serif;
+  font-size: 45px;
+  font-weight: 800;
+  color: map.get($map: $gray, $key: 700);
+}

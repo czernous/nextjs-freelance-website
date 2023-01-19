@@ -152,7 +152,7 @@ const MenuBar = ({ ...props }: ITipTapEditorProps) => {
     </div>
   );
 };
-
+/* istanbul ignore next */
 const Tiptap = ({ ...props }: ITipTapEditorProps & IEditorProps) => {
   return (
     <EditorContent
@@ -162,7 +162,7 @@ const Tiptap = ({ ...props }: ITipTapEditorProps & IEditorProps) => {
     />
   );
 };
-/* istanbul ignore next */
+
 const RichEditor = ({ ...props }: IEditorProps) => {
   const editor = useEditor({
     extensions: [StarterKit, Image],
