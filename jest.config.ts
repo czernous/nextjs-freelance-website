@@ -16,6 +16,8 @@ export default async (): Promise<Config> => {
       '!<rootDir>/src/pages/api/**/*.{js,jsx,ts,tsx}',
       '!<rootDir>/src/**/_app.page.{js,jsx,ts,tsx}',
       '!<rootDir>/src/**/_document.page.{js,jsx,ts,tsx}',
+      '!<rootDir>/src/utils/data-fetching/client/**/*.{js,jsx,ts,tsx}',
+      '!<rootDir>/src/mui-theme/**/**/*.{js,jsx,ts,tsx}',
       '!**/*.stories.{js,jsx,ts,tsx}',
       '!**/*.d.ts',
       '!**/node_modules/**',

@@ -5,7 +5,7 @@
 
 .dashboard {
   max-width: 1920px;
-  padding: 0 10px 0 75px;
+  padding: 0 10px 0 85px;
   margin: 0 auto;
 
   @include breakpoint(768) {
@@ -23,4 +23,5 @@
   font-size: 45px;
   font-weight: 800;
   color: map.get($map: $gray, $key: 700);
+  margin-bottom: 50px;
 }
