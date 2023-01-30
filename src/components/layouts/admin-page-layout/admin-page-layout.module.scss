@@ -19,9 +19,9 @@
 }
 
 .heading {
+  margin-bottom: 50px;
   font-family: Mulish, sans-serif;
   font-size: 45px;
   font-weight: 800;
   color: map.get($map: $gray, $key: 700);
-  margin-bottom: 50px;
 }
