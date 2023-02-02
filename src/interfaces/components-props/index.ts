@@ -60,3 +60,9 @@ export interface IClientPageLayoutProps {
   appTitle: string;
   meta: ISeo;
 }
+
+export interface ICustomSnackbarProps {
+  text: string | null;
+  severity: 'success' | 'error' | 'warning' | null;
+  clearPropsFn?: ({ ...props }: ICustomSnackbarProps | null) => void;
+}

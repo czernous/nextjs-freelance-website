@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import AdminPageLayout from '@src/components/layouts/admin-page-layout';
-import { IHomePage } from '@src/interfaces';
+import { ICustomSnackbarProps, IHomePage } from '@src/interfaces';
 import { NextPageWithLayout } from '@src/pages/_app.page';
 import { getFilePath, getPageData } from '@src/utils';
-import { ReactElement, useRef } from 'react';
+import { ReactElement, useRef, useState } from 'react';
 import {
   Accordion,
   AccordionDetails,
@@ -20,6 +20,8 @@ import {
   flexColumn,
 } from '@src/mui-theme/custom-styles';
 import { handleSubmit, submitData } from '@src/utils/data-fetching/client';
+import CustomSnackbar from '@src/components/molecules/custom-snackbar';
+import { updateSnackbarProps } from '@src/components/molecules/custom-snackbar/utils';
 
 interface IHomePageAdminProps {
   data: IHomePage;
@@ -29,6 +31,8 @@ const HomeAdmin: NextPageWithLayout<IHomePageAdminProps> = ({
   ...props
 }: IHomePageAdminProps) => {
   const formRef = useRef<HTMLFormElement | null>(null);
+  const [snackbarProps, setSnackbarProps] =
+    useState<ICustomSnackbarProps | null>(null);
 
   return (
     <>
@@ -38,9 +42,9 @@ const HomeAdmin: NextPageWithLayout<IHomePageAdminProps> = ({
         method="PUT"
         ref={formRef}
         sx={{ marginBottom: 5 }}
-        onSubmit={(e) =>
+        onSubmit={async (e) => {
           /* istanbul ignore next */
-          handleSubmit({
+          const response = await handleSubmit({
             event: e as unknown as SubmitEvent,
             formRef,
             handler: submitData,
@@ -54,8 +58,9 @@ const HomeAdmin: NextPageWithLayout<IHomePageAdminProps> = ({
                 },
               },
             },
-          })
-        }
+          });
+          updateSnackbarProps(response as Response, setSnackbarProps);
+        }}
       >
         <Accordion defaultExpanded sx={accordionStyleOverrides}>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
@@ -173,6 +178,7 @@ const HomeAdmin: NextPageWithLayout<IHomePageAdminProps> = ({
               defaultValue={props.data?.meta?.openGraph?.imageUrl}
               multiline
               maxRows={4}
+              inputMode="url"
               sx={customMuiTextFieldBrick}
             />
           </AccordionDetails>
@@ -186,6 +192,11 @@ const HomeAdmin: NextPageWithLayout<IHomePageAdminProps> = ({
           Submit
         </Button>
       </Box>
+      <CustomSnackbar
+        severity={snackbarProps?.severity ?? null}
+        text={snackbarProps?.text ?? null}
+        clearPropsFn={setSnackbarProps}
+      />
     </>
   );
 };

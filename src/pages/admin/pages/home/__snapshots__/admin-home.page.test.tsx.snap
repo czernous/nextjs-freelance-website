@@ -569,6 +569,7 @@ exports[`Home renders homepage unchanged 1`] = `
                 </div>
                 <div
                   class="MuiFormControl-root MuiTextField-root css-1ef9ltg-MuiFormControl-root-MuiTextField-root"
+                  inputmode="url"
                 >
                   <label
                     class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiFormLabel-filled Mui-required MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined css-1sumxir-MuiFormLabel-root-MuiInputLabel-root"

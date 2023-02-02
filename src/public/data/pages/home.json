@@ -1,16 +1,1 @@
-{
-  "updatedAt": "2023-01-30T11:00:10.668Z",
-  "ctaHeadline": "Are you looking to get awesome stuff?",
-  "ctaSubheadline": "We have the most awesome stuff on the internet!",
-  "ctaBtnText": "Get stuff",
-  "ctaBtnHref": "https://google.com",
-  "meta": {
-    "metaDescription": "Test ",
-    "metaKeywords": "test",
-    "openGraph": {
-      "title": "Test",
-      "description": "test",
-      "imageUrl": "http://g.com"
-    }
-  }
-}
+{"updatedAt":"2023-02-02T14:06:48.416Z","ctaHeadline":"Are you looking to get awesome stuff?","ctaSubheadline":"We have the most awesome stuff on the internet!","ctaBtnText":"Get stuff","ctaBtnHref":"https://google.com","meta":{"metaDescription":"Test ","metaKeywords":"test","openGraph":{"title":"Test","description":"test","imageUrl":"http://g.com"}}}

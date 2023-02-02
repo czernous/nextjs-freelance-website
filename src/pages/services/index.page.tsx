@@ -11,7 +11,7 @@ interface IServicesProps {
 const Services: NextPageWithLayout<IServicesProps> = ({
   ...props
 }: IServicesProps) => {
-  return <div dangerouslySetInnerHTML={{ __html: props.data.content }} />;
+  return <div dangerouslySetInnerHTML={{ __html: props.data.content }} />; // TODO: add DOMpurify
 };
 /* istanbul ignore next */
 Services.getLayout = function getLayout(page: ReactElement) {
@@ -40,6 +40,7 @@ export async function getStaticProps() {
     };
   } catch (error: unknown) {
     const err = JSON.parse(JSON.stringify(error));
+    // TODO: redirect user to error (400) page
     return {
       props: {
         err,
