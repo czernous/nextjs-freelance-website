@@ -358,7 +358,7 @@ exports[`Home renders homepage unchanged 1`] = `
                       required=""
                       style="height: 0px; overflow: hidden;"
                     >
-                      Test 
+                      Test 1
                     </textarea>
                     <textarea
                       aria-hidden="true"

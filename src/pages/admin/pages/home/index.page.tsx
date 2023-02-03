@@ -22,6 +22,7 @@ import {
 import { handleSubmit, submitData } from '@src/utils/data-fetching/client';
 import CustomSnackbar from '@src/components/molecules/custom-snackbar';
 import { updateSnackbarProps } from '@src/components/molecules/custom-snackbar/utils';
+import SeoFormFields from '@src/components/molecules/seo-form-fields';
 
 interface IHomePageAdminProps {
   data: IHomePage;
@@ -113,76 +114,7 @@ const HomeAdmin: NextPageWithLayout<IHomePageAdminProps> = ({
             />
           </AccordionDetails>
         </Accordion>
-        <Accordion sx={accordionStyleOverrides}>
-          {/* TODO: move the SEO fields to a separate component for reusability */}
-          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            <h5>SEO</h5>
-          </AccordionSummary>
-          <AccordionDetails sx={() => flexColumn(2)}>
-            <TextField
-              id="metaDescription"
-              name="metaDescription"
-              label="Meta Description"
-              required
-              variant="outlined"
-              defaultValue={props.data?.meta?.metaDescription}
-              multiline
-              maxRows={4}
-              inputProps={{ maxLength: 155 }}
-              helperText="Enter 155 characters max"
-              sx={customMuiTextFieldBrick}
-            />{' '}
-            <TextField
-              id="metaKeywords"
-              name="metaKeywords"
-              label="Meta Keywords"
-              required
-              variant="outlined"
-              defaultValue={props.data?.meta?.metaKeywords}
-              helperText="Enter keywords separated by comma w/o spaces"
-              multiline
-              maxRows={4}
-              sx={customMuiTextFieldBrick}
-            />
-            <TextField
-              id="title"
-              name="title"
-              label="OG Title"
-              required
-              variant="outlined"
-              defaultValue={props.data?.meta?.openGraph?.title}
-              multiline
-              maxRows={4}
-              sx={customMuiTextFieldBrick}
-            />
-            <TextField
-              id="description"
-              name="description"
-              label="OG Description"
-              required
-              variant="outlined"
-              defaultValue={props.data?.meta?.openGraph?.description}
-              multiline
-              maxRows={4}
-              inputProps={{ maxLength: 60 }}
-              helperText="Enter 60 characters max"
-              sx={customMuiTextFieldBrick}
-            />
-            {/* TODO: get the url from image gallery when it is created */}
-            <TextField
-              id="OgImageUrl"
-              name="OgImageUrl"
-              label="OG Image"
-              required
-              variant="outlined"
-              defaultValue={props.data?.meta?.openGraph?.imageUrl}
-              multiline
-              maxRows={4}
-              inputMode="url"
-              sx={customMuiTextFieldBrick}
-            />
-          </AccordionDetails>
-        </Accordion>
+        <SeoFormFields meta={props?.data?.meta} />
         <Button
           type="submit"
           variant="contained"
