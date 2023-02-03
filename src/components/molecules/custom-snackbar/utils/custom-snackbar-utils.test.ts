@@ -84,7 +84,7 @@ describe('updateSnackbarProps', () => {
 
     expect(callback).toHaveBeenCalledWith({
       severity: 'error',
-      text: 'Error saving data',
+      text: 'Invalid JSON',
     });
   });
 
