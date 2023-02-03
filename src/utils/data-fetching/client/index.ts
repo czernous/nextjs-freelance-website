@@ -1,3 +1,5 @@
+import { IError } from '@src/interfaces';
+import { NextRouter } from 'next/router';
 import { MutableRefObject } from 'react';
 
 interface ISubmitDataProps {
@@ -78,4 +80,13 @@ export const handleSubmit = async ({ ...options }: ISubmitHandlerOptions) => {
 
   const response = await options.handler(handlerProps);
   return response;
+};
+
+export const handleClientError = (error: IError, router: NextRouter) => {
+  const errorMessage = error?.message || JSON.stringify(error);
+  const statusCode = error?.statusCode || 400;
+  router.push({
+    pathname: '/error',
+    query: { statusCode, errorMessage },
+  });
 };

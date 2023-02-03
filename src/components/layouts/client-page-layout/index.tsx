@@ -19,25 +19,25 @@ const ClientPageLayout = ({
     <>
       <Head>
         <title>{fullTitle}</title>
-        <meta name="description" content={props.meta.metaDescription} />
-        <meta name="keywords" content={props.meta.metaKeywords} />
-        <meta property="og:title" content={props.meta.openGraph.title} />
+        <meta name="description" content={props.meta?.metaDescription} />
+        <meta name="keywords" content={props.meta?.metaKeywords} />
+        <meta property="og:title" content={props.meta?.openGraph.title} />
         <meta
           property="og:description"
-          content={props.meta.openGraph.description}
+          content={props.meta?.openGraph.description}
         />
 
-        {props.meta.openGraph?.imageUrl && (
+        {props.meta?.openGraph?.imageUrl && (
           /* istanbul ignore next */
-          <meta property="og:image" content={props.meta.openGraph.imageUrl} />
+          <meta property="og:image" content={props.meta?.openGraph.imageUrl} />
         )}
-        {props.meta.openGraph?.type && (
+        {props.meta?.openGraph?.type && (
           /* istanbul ignore next */
-          <meta property="og:type" content={props.meta.openGraph.type} />
+          <meta property="og:type" content={props.meta?.openGraph.type} />
         )}
-        {props.meta.openGraph?.url && (
+        {props.meta?.openGraph?.url && (
           /* istanbul ignore next */
-          <meta property="og:url" content={props.meta.openGraph.url} />
+          <meta property="og:url" content={props.meta?.openGraph.url} />
         )}
 
         <link rel="icon" href="/favicon.ico" />

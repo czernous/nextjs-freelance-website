@@ -1,19 +1,23 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
-import Button from '../components/atoms/button';
-import Navbar from '../components/organisms/navbar';
+import Button from '@src/components/atoms/button';
+import Navbar from '@src/components/organisms/navbar';
 import { Color, Size } from '../enums';
-import styles from '../styles/pages/Home.module.scss';
-import { navItems } from '../settings/navbar-settings';
-import { IHomePage } from '../interfaces';
-import { getFilePath, getPageData } from '../utils';
+import styles from '@src/styles/pages/Home.module.scss';
+import { navItems } from '@src/settings/navbar-settings';
+import { IError, IHomePage } from '@src/interfaces';
+import { getFilePath, getPageData } from '@src/utils';
+import StaticPageError from '@src/components/atoms/static-page-error';
 
 interface IHomeProps {
   data: IHomePage;
+  error?: IError;
 }
 
 const Home: NextPage<IHomeProps> = ({ ...props }: IHomeProps) => {
+  if (props.error) return <StaticPageError {...props.error} />;
+
   return (
     <>
       <Head>
@@ -96,10 +100,12 @@ export async function getStaticProps() {
       },
     };
   } catch (error: unknown) {
-    const err = JSON.parse(JSON.stringify(error));
     return {
       props: {
-        err,
+        error: {
+          statusCode: 400,
+          message: JSON.stringify(error),
+        },
       },
     };
   }

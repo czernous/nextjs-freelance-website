@@ -1,6 +1,8 @@
 import path from 'path';
 import { promises as fs } from 'fs';
 import getConfig from 'next/config';
+import { ServerResponse } from 'http';
+import { IError } from '@src/interfaces';
 
 const { serverRuntimeConfig } = getConfig();
 
@@ -31,4 +33,11 @@ export const writePageData = async <T>(filename: string, filebody: T) => {
   } catch (error) {
     return error;
   }
+};
+
+export const handleServerError = (res: ServerResponse, error: IError) => {
+  const statusCode = error.statusCode || 500;
+  res.statusCode = 302;
+  res.setHeader('Location', `/error?statusCode=${statusCode}&error=${error}`);
+  res.end();
 };

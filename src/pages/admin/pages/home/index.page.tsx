@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import AdminPageLayout from '@src/components/layouts/admin-page-layout';
-import { ICustomSnackbarProps, IHomePage } from '@src/interfaces';
+import { ICustomSnackbarProps, IError, IHomePage } from '@src/interfaces';
 import { NextPageWithLayout } from '@src/pages/_app.page';
-import { getFilePath, getPageData } from '@src/utils';
+import { getFilePath, getPageData, handleServerError } from '@src/utils';
 import { ReactElement, useRef, useState } from 'react';
 import {
   Accordion,
@@ -23,9 +23,12 @@ import { handleSubmit, submitData } from '@src/utils/data-fetching/client';
 import CustomSnackbar from '@src/components/molecules/custom-snackbar';
 import { updateSnackbarProps } from '@src/components/molecules/custom-snackbar/utils';
 import SeoFormFields from '@src/components/molecules/seo-form-fields';
+import { NextPageContext } from 'next';
+import { ServerResponse } from 'http';
 
 interface IHomePageAdminProps {
   data: IHomePage;
+  error?: Error;
 }
 
 const HomeAdmin: NextPageWithLayout<IHomePageAdminProps> = ({
@@ -60,6 +63,7 @@ const HomeAdmin: NextPageWithLayout<IHomePageAdminProps> = ({
               },
             },
           });
+          /* istanbul ignore next */
           updateSnackbarProps(response as Response, setSnackbarProps);
         }}
       >
@@ -137,7 +141,9 @@ HomeAdmin.getLayout = function getLayout(page: ReactElement) {
   return <AdminPageLayout title="Pages/Home">{page} </AdminPageLayout>;
 };
 /* istanbul ignore next */
-export async function getServerSideProps() {
+export async function getServerSideProps(ctx: NextPageContext) {
+  const { res } = ctx;
+
   try {
     const pageData: IHomePage = await getPageData(
       getFilePath('./src/public/data/pages', 'home', 'json'),
@@ -148,13 +154,8 @@ export async function getServerSideProps() {
         data: pageData,
       },
     };
-  } catch (error: unknown) {
-    const err = JSON.parse(JSON.stringify(error));
-    return {
-      props: {
-        err,
-      },
-    };
+  } catch (error) {
+    return handleServerError(res as ServerResponse, error as IError);
   }
 }
 export default HomeAdmin;

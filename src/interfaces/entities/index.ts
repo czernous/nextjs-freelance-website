@@ -98,3 +98,8 @@ export interface IContactPage extends IPage {
   description?: string;
   meta: ISeo;
 }
+
+export interface IError {
+  statusCode?: number;
+  message?: string;
+}

@@ -7,7 +7,11 @@ const nextConfig = {
   poweredByHeader: false,
   pageExtensions: ['page.tsx', 'page.jsx', 'ts'],
   images: {
-    domains: ['images.unsplash.com', `${process.env.HOST}`],
+    domains: [
+      'images.unsplash.com',
+      `${process.env.HOST}`,
+      'res.cloudinary.com',
+    ],
   },
   serverRuntimeConfig: {
     PROJECT_ROOT: __dirname,
