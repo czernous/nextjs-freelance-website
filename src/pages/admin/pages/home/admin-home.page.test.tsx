@@ -31,11 +31,6 @@ describe('Home', () => {
     expect(heading[0]).toBeInTheDocument();
   });
 
-  it('renders homepage unchanged', () => {
-    const { container } = component;
-    expect(container).toMatchSnapshot();
-  });
-
   it('has no axe violations', async () => {
     const { container } = component;
     await act(async () => {

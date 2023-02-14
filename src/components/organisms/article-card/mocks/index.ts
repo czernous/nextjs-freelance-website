@@ -1,7 +1,7 @@
 import { IArticleCard, IImage } from '../../../../interfaces';
 import { base64ImgSmall, base64ImgMedium, base64ImgLarge } from './images.mock';
 
-const imageMock: IImage = {
+export const imageMock: IImage = {
   publicId: 'fakeurl.com/asd',
   version: 1,
   signature: 'fakeSignature',

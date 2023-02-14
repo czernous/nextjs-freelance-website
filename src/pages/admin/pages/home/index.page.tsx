@@ -19,7 +19,7 @@ import {
   customMuiTextFieldBrick,
   flexColumn,
 } from '@src/mui-theme/custom-styles';
-import { handleSubmit, submitData } from '@src/utils/data-fetching/client';
+import { handleSubmit, fetchData } from '@src/utils/data-fetching/client';
 import CustomSnackbar from '@src/components/molecules/custom-snackbar';
 import { updateSnackbarProps } from '@src/components/molecules/custom-snackbar/utils';
 import SeoFormFields from '@src/components/molecules/seo-form-fields';
@@ -51,7 +51,7 @@ const HomeAdmin: NextPageWithLayout<IHomePageAdminProps> = ({
           const response = await handleSubmit({
             event: e as unknown as SubmitEvent,
             formRef,
-            handler: submitData,
+            handler: fetchData,
             handlerProps: {
               url: '/api/pages?name=home',
               options: {

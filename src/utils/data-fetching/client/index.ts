@@ -2,7 +2,7 @@ import { IError } from '@src/interfaces';
 import { NextRouter } from 'next/router';
 import { MutableRefObject } from 'react';
 
-interface ISubmitDataProps {
+interface IFetchDataProps {
   url: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   options: any;
@@ -11,19 +11,19 @@ interface ISubmitDataProps {
 interface ISubmitHandlerOptions {
   event: SubmitEvent;
   formRef: MutableRefObject<HTMLFormElement | null>;
-  handler: ISubmitDataFunc; // send formData to the API
-  handlerProps: ISubmitDataProps;
+  handler: IFetchDataFunc; // send formData to the API
+  handlerProps: IFetchDataProps;
   appendFields?: { [key: string]: string }[];
 }
 
-type ISubmitDataFunc = {
-  ({ ...props }: ISubmitDataProps): Promise<Response | undefined>;
+type IFetchDataFunc = {
+  ({ ...props }: IFetchDataProps): Promise<Response | undefined>;
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const submitData: ISubmitDataFunc = async ({
+export const fetchData: IFetchDataFunc = async ({
   ...props
-}: ISubmitDataProps) => {
+}: IFetchDataProps) => {
   const { url, options } = props;
 
   const location = window.location.hostname;
@@ -88,5 +88,16 @@ export const handleClientError = (error: IError, router: NextRouter) => {
   router.push({
     pathname: '/error',
     query: { statusCode, errorMessage },
+  });
+};
+
+export const fetchAndConvertToBase64 = async (imageUrl: string) => {
+  const response = await fetch(imageUrl);
+  const blob = await response.blob();
+  const reader = new FileReader();
+  reader.readAsDataURL(blob);
+  return new Promise((resolve, reject) => {
+    reader.onloadend = () => resolve(reader.result);
+    reader.onerror = reject;
   });
 };

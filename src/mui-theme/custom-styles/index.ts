@@ -28,7 +28,7 @@ export const customMuiTextFieldBrick = {
     color: colors.brick[600],
   },
 };
-/* istanbul ignore */
+/* istanbul ignore next*/
 export const customMuiButtonBrick = {
   borderRadius: 0,
   boxShadow: 'none',
@@ -44,7 +44,53 @@ export const customMuiButtonBrick = {
     boxShadow: 'none',
   },
 };
-/* istanbul ignore */
+/* istanbul ignore next */
 export const flexColumn = (gap: number) => {
   return { display: 'flex', flexDirection: 'column', gap };
+};
+
+export const imageGalleryStyles = {
+  header: {
+    position: 'relative',
+    background: colors.brick[200],
+    color: colors.gray[700],
+  },
+  headerText: { ml: 2, flex: 1, fontFamily: 'Mulish, sans-serif' },
+  speedDial: {
+    '.MuiFab-root': {
+      width: 36,
+      height: 36,
+      background: colors.brick[300],
+      color: colors.gray[700],
+      ':hover': {
+        backgroundColor: colors.brick[600],
+        color: colors.gray[200],
+        boxShadow: 'none',
+        transition: 'all 1s ease',
+      },
+    },
+    paddingRight: 1,
+  },
+  imageList: {
+    width: '100%',
+    height: '100%',
+    gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))!important',
+  },
+  listItemActionBar: {
+    background: colors.gray[600],
+  },
+  closeZoomButton: {
+    background: colors.brick[400],
+    svg: {
+      fill: colors.gray[700],
+    },
+    transition: 'all 1s ease',
+
+    ':hover': {
+      background: colors.brick[500],
+      svg: {
+        fill: colors.gray[800],
+      },
+    },
+  },
 };

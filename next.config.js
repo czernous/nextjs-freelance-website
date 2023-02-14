@@ -1,31 +1,43 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-/** @type {import('next').NextConfig} */
-const path = require('path');
-
+/**
+ * @type {import('next').NextConfig}
+ */
 const nextConfig = {
   reactStrictMode: true,
+  swcMinify: true,
   poweredByHeader: false,
   pageExtensions: ['page.tsx', 'page.jsx', 'ts'],
   images: {
-    domains: [
-      'images.unsplash.com',
-      `${process.env.HOST}`,
-      'res.cloudinary.com',
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**.cloudinary.com',
+        port: '',
+      },
+      {
+        protocol: 'http',
+        hostname: '**.cloudinary.com',
+        port: '',
+      },
+      {
+        protocol: 'https',
+        hostname: '**.unsplash.com',
+        port: '',
+      },
+      {
+        protocol: 'https',
+        hostname: process.env.HOST ?? '**',
+        port: '',
+      },
     ],
+
+    deviceSizes: [320, 640, 750, 828, 1080, 1200, 1920, 2048, 3840],
   },
   serverRuntimeConfig: {
     PROJECT_ROOT: __dirname,
   },
   publicRuntimeConfig: {
     APP_HOST: process.env.HOST,
-  },
-  webpack(config) {
-    // temporary hack to disable css modules
-    // config.module.rules[3].oneOf.forEach((one) => {
-    //   if (!`${one.issuer?.and}`.includes('_app')) return;
-    //   one.issuer.and = [path.resolve(__dirname)];
-    // });
-    return config;
+    API_KEY: process.env.API_KEY,
   },
 };
 
