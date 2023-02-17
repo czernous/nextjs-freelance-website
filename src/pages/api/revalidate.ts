@@ -12,7 +12,7 @@ export default async function handler(
   try {
     // this should be the actual path not a rewritten path
     // e.g. for "/blog/[slug]" this should be "/blog/post-1"
-    console.log(path);
+
     await res.revalidate(path.toString());
     return res.json({ revalidated: true });
   } catch (err) {

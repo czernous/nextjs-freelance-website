@@ -37,7 +37,7 @@ const CustomFormFields: FunctionComponent<{ meta: ISeo }> = ({
       <AccordionDetails sx={() => flexColumn(2)}>
         <TextField
           id="metaDescription"
-          name="metaDescription"
+          name="meta.metaDescription"
           label="Meta Description"
           required
           variant="outlined"
@@ -50,7 +50,7 @@ const CustomFormFields: FunctionComponent<{ meta: ISeo }> = ({
         />{' '}
         <TextField
           id="metaKeywords"
-          name="metaKeywords"
+          name="meta.metaKeywords"
           label="Meta Keywords"
           required
           variant="outlined"
@@ -62,7 +62,7 @@ const CustomFormFields: FunctionComponent<{ meta: ISeo }> = ({
         />
         <TextField
           id="title"
-          name="title"
+          name="meta.openGraph.title"
           label="OG Title"
           required
           variant="outlined"
@@ -73,7 +73,7 @@ const CustomFormFields: FunctionComponent<{ meta: ISeo }> = ({
         />
         <TextField
           id="description"
-          name="description"
+          name="meta.openGraph.description"
           label="OG Description"
           required
           variant="outlined"
@@ -85,8 +85,8 @@ const CustomFormFields: FunctionComponent<{ meta: ISeo }> = ({
           sx={customMuiTextFieldBrick}
         />
         <SelectImageField
-          fieldId={'OgImageUrl'}
-          fieldName={'OgImageUrl'}
+          fieldId={'ogImageUrl'}
+          fieldName={'meta.openGraph.imageUrl'}
           fieldLabel={'OG Image'}
           defaultValue={props.meta.openGraph?.imageUrl}
           value={selectedImage?.secureUrl}

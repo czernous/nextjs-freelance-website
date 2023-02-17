@@ -76,7 +76,7 @@ const ImageGallery = memo(
         const updatedImages = await Promise.all(
           images.map(async (img) => {
             const url = (await fetchAndConvertToBase64(
-              img.blurredImageUrl,
+              img.blurredImageUrl.replace('http', 'https'),
             )) as string;
             img.blurredImageUrl = url;
             return img;

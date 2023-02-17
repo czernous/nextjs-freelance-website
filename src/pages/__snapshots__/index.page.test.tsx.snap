@@ -131,7 +131,7 @@ exports[`Home renders homepage unchanged 1`] = `
       <h1
         class="title col-sm-10 col-md-11 col-lg-10"
       >
-        Are you looking to get awesome stuff?
+        Are you looking to get awesome stuff??
       </h1>
       <h2
         class="subtitle col-sm-10 col-xl-9 col-xxl-11"

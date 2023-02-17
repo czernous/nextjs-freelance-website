@@ -2,7 +2,7 @@
 import AdminPageLayout from '@src/components/layouts/admin-page-layout';
 import { ICustomSnackbarProps, IError, IHomePage } from '@src/interfaces';
 import { NextPageWithLayout } from '@src/pages/_app.page';
-import { getFilePath, getPageData, handleServerError } from '@src/utils';
+import { handleServerError, serverSideBackendFetch } from '@src/utils';
 import { ReactElement, useRef, useState } from 'react';
 import {
   Accordion,
@@ -25,6 +25,7 @@ import { updateSnackbarProps } from '@src/components/molecules/custom-snackbar/u
 import SeoFormFields from '@src/components/molecules/seo-form-fields';
 import { NextPageContext } from 'next';
 import { ServerResponse } from 'http';
+import getConfig from 'next/config';
 
 interface IHomePageAdminProps {
   data: IHomePage;
@@ -53,14 +54,16 @@ const HomeAdmin: NextPageWithLayout<IHomePageAdminProps> = ({
             formRef,
             handler: fetchData,
             handlerProps: {
-              url: '/api/pages?name=home',
+              url: '/backend/pages/home',
               options: {
                 method: 'PUT',
                 headers: {
                   Accept: 'application/json',
                   'Content-Type': 'application/json',
+                  apiKey: getConfig().publicRuntimeConfig.API_KEY,
                 },
               },
+              location: window.location.hostname,
             },
           });
           /* istanbul ignore next */
@@ -74,44 +77,55 @@ const HomeAdmin: NextPageWithLayout<IHomePageAdminProps> = ({
           <AccordionDetails sx={() => flexColumn(2)}>
             <TextField
               id="ctaHeadline"
-              name="ctaHeadline"
+              name="pageFields.ctaHeadline"
               label="CTA headline"
               required
               variant="outlined"
-              defaultValue={props.data.ctaHeadline}
+              defaultValue={props.data.pageFields.ctaHeadline}
               multiline
               maxRows={4}
               sx={customMuiTextFieldBrick}
             />
             <TextField
               id="ctaSubheadline"
-              name="ctaSubheadline"
+              name="pageFields.ctaSubheadline"
               label="CTA subheadline"
               required
               variant="outlined"
-              defaultValue={props.data.ctaSubheadline}
+              defaultValue={props.data.pageFields.ctaSubheadline}
               multiline
               maxRows={4}
               sx={customMuiTextFieldBrick}
             />
             <TextField
               id="ctaBtnText"
-              name="ctaBtnText"
+              name="pageFields.ctaBtnText"
               label="Button text"
               required
               variant="outlined"
-              defaultValue={props.data.ctaBtnText}
+              defaultValue={props.data.pageFields.ctaBtnText}
               multiline
               maxRows={4}
               sx={customMuiTextFieldBrick}
             />
             <TextField
               id="ctaBtnHref"
-              name="ctaBtnHref"
+              name="pageFields.ctaBtnHref"
               label="Button href"
               required
               variant="outlined"
-              defaultValue={props.data.ctaBtnHref}
+              defaultValue={props.data.pageFields.ctaBtnHref}
+              multiline
+              maxRows={4}
+              sx={customMuiTextFieldBrick}
+            />
+            <TextField
+              id="slug"
+              name="slug"
+              label="Page Slug"
+              required
+              variant="outlined"
+              defaultValue={props.data.slug}
               multiline
               maxRows={4}
               sx={customMuiTextFieldBrick}
@@ -145,13 +159,11 @@ export async function getServerSideProps(ctx: NextPageContext) {
   const { res } = ctx;
 
   try {
-    const pageData: IHomePage = await getPageData(
-      getFilePath('./src/public/data/pages', 'home', 'json'),
-    );
+    const data = await serverSideBackendFetch<IHomePage>('/pages/home');
 
     return {
       props: {
-        data: pageData,
+        data,
       },
     };
   } catch (error) {

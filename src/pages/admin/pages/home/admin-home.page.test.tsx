@@ -4,13 +4,33 @@ import '@testing-library/jest-dom';
 import AdminHome from './index.page';
 import { act } from 'react-dom/test-utils';
 import React from 'react';
-import * as homePageData from '../../../../public/data/pages/home.json';
+
 import { IHomePage } from '../../../../interfaces';
 import { mockNextRouter } from '../../../../utils';
 
 expect.extend(toHaveNoViolations);
 
-let data: IHomePage;
+const data: IHomePage = {
+  pageFields: {
+    ctaBtnHref: 'https://google.com',
+    ctaBtnText: 'Get stuff',
+    ctaHeadline: 'Are you looking to get awesome stuff??',
+    ctaSubheadline: 'We have the most awesome stuff on the internet!',
+  },
+  slug: 'home',
+  meta: {
+    metaDescription: 'Test',
+    metaKeywords: 'test',
+    openGraph: {
+      title: 'Test',
+      description: 'test',
+      imageUrl: 'http://g.com',
+    },
+  },
+
+  updatedAt: '2023-02-16T15:47:25.559Z',
+};
+
 let component: RenderResult;
 jest.mock('next/config', () => () => ({
   publicRuntimeConfig: {
@@ -19,7 +39,6 @@ jest.mock('next/config', () => () => ({
 }));
 
 beforeEach(async () => {
-  data = await JSON.parse(JSON.stringify(homePageData));
   mockNextRouter();
   component = render(<AdminHome data={data} />);
 });

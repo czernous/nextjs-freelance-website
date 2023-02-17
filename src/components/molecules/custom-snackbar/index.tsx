@@ -15,7 +15,7 @@ const CustomSnackbar = memo(({ ...props }: ICustomSnackbarProps) => {
         if (props.clearPropsFn) {
           props.clearPropsFn(null);
         }
-      }, 500);
+      }, 1500);
     },
     [props],
   );

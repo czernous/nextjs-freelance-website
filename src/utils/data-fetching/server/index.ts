@@ -3,6 +3,7 @@ import { promises as fs } from 'fs';
 import getConfig from 'next/config';
 import { ServerResponse } from 'http';
 import { IError } from '@src/interfaces';
+import { fetchData } from '../client';
 
 const { serverRuntimeConfig } = getConfig();
 
@@ -35,6 +36,39 @@ export const writePageData = async <T>(filename: string, filebody: T) => {
   }
 };
 
+/* istanbul ignore next */
+export const serverSideBackendFetch = async <T>(
+  backendEndpoint: string,
+): Promise<T> => {
+  const cfg = getConfig();
+  const apiKey = cfg.publicRuntimeConfig.API_KEY;
+
+  const isDevelopment = process.env.NODE_ENV === 'development';
+
+  if (isDevelopment) {
+    process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+  }
+
+  const location = isDevelopment
+    ? cfg.publicRuntimeConfig.BACKEND_URL
+    : cfg.publicRuntimeConfig.APP_HOST;
+
+  const response = await fetchData({
+    url: `${!isDevelopment ? 'backend' : ''}${backendEndpoint}`,
+    options: {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        apiKey,
+      },
+    },
+    location,
+  });
+
+  const data: T = await response?.json();
+
+  return data;
+};
 export const handleServerError = (res: ServerResponse, error: IError) => {
   const statusCode = error.statusCode || 500;
   res.statusCode = 302;

@@ -70,33 +70,38 @@ export interface IImage extends IEntity {
 
 interface IPage {
   updatedAt?: string;
+  meta: ISeo;
+  slug: string;
+  pageFields: Record<string, string>;
 }
 
 export interface IHomePage extends IPage {
-  ctaHeadline: string;
-  ctaSubheadline: string;
-  ctaBtnText: string;
-  ctaBtnHref: string;
-  imageUrl?: string;
-  responsiveImgs?: IResponsiveImage[];
-  meta: ISeo;
+  pageFields: {
+    ctaHeadline: string;
+    ctaSubheadline: string;
+    ctaBtnText: string;
+    ctaBtnHref: string;
+  };
+  image?: IImage;
 }
 
 export interface IServicesPage extends IPage {
-  content: string;
-  meta: ISeo;
+  pageFields: {
+    content: string;
+  };
 }
 
 export interface IAboutPage extends IPage {
-  description: string;
-  imageUrl: string;
-  responsiveImgs?: IResponsiveImage[];
-  meta: ISeo;
+  pageFields: {
+    description: string;
+  };
+  image?: IImage;
 }
 
 export interface IContactPage extends IPage {
-  description?: string;
-  meta: ISeo;
+  pageFields: {
+    description?: string;
+  };
 }
 
 export interface IError {

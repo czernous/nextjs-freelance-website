@@ -6,6 +6,7 @@ interface IFetchDataProps {
   url: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   options: any;
+  location: string;
 }
 
 interface ISubmitHandlerOptions {
@@ -24,16 +25,13 @@ type IFetchDataFunc = {
 export const fetchData: IFetchDataFunc = async ({
   ...props
 }: IFetchDataProps) => {
-  const { url, options } = props;
-
-  const location = window.location.hostname;
+  const { url, options, location } = props;
 
   try {
-    const res = await fetch(`//${location}${url}`, options);
-
+    const res = await fetch(`https://${location ?? ''}${url}`, options);
     return res;
   } catch (error) {
-    console.warn('Could not submit form', error);
+    console.warn('Could not fetch', error);
   }
 };
 
@@ -43,42 +41,57 @@ export const handleSubmit = async ({ ...options }: ISubmitHandlerOptions) => {
 
   const formData = new FormData(options.formRef.current as HTMLFormElement);
 
-  if (options.appendFields !== null && options.appendFields?.length) {
-    options.appendFields.forEach((field: { [key: string]: string }) => {
+  if (options.appendFields?.length) {
+    options.appendFields.forEach((field) => {
       formData.append(Object.keys(field)[0], Object.values(field)[0]);
     });
   }
 
-  const formDataObject = Object.fromEntries(formData);
-  const metaData = {
-    meta: {
-      metaDescription: formDataObject?.metaDescription ?? null,
-      metaKeywords: formDataObject?.metaKeywords ?? null,
-      openGraph: {
-        title: formDataObject?.title ?? null,
-        description: formDataObject?.description ?? null,
-        imageUrl: formDataObject?.OgImageUrl ?? null,
-      },
-    },
-  };
-  delete formDataObject?.metaKeywords;
-  delete formDataObject?.metaDescription;
-  delete formDataObject?.title;
-  delete formDataObject?.description;
-  delete formDataObject?.OgImageUrl;
+  const formattedObject: Record<string, unknown> = {};
+  const formDataEntries = [...formData.entries()].sort(([keyA], [keyB]) =>
+    keyA.localeCompare(keyB),
+  );
+  for (const [key, value] of formDataEntries) {
+    const keys = key.split('.');
+    let obj = formattedObject;
+    for (let i = 0; i < keys.length - 1; i++) {
+      const k = keys[i];
+      obj[k] = obj[k] || {};
+      obj = obj[k] as Record<string, unknown>;
+    }
+    obj[keys[keys.length - 1]] = value;
+  }
 
-  const formattedObject = { ...formDataObject, ...metaData };
-
-  let { handlerProps } = options;
-  const fetchOptions = handlerProps.options;
+  const { handlerProps } = options;
   const handlerOptions = {
-    ...fetchOptions,
+    ...handlerProps.options,
     body: JSON.stringify(formattedObject),
   };
 
-  handlerProps = { ...handlerProps, options: handlerOptions };
+  const response = await options.handler({
+    ...handlerProps,
+    options: handlerOptions,
+  });
 
-  const response = await options.handler(handlerProps);
+  if (options.handlerProps.url.includes('pages')) {
+    const pagePath = options.handlerProps.url.split('/').at(-1);
+    const path = pagePath === 'home' ? '/' : `/${pagePath}`;
+
+    const revalidateResponse = await fetchData({
+      url: `/api/revalidate?path=${path}`,
+      options: {
+        method: 'GET',
+      },
+      location: options.handlerProps.location,
+    });
+
+    try {
+      await revalidateResponse?.json();
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   return response;
 };
 

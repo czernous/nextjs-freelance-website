@@ -38,6 +38,7 @@ const nextConfig = {
   publicRuntimeConfig: {
     APP_HOST: process.env.HOST,
     API_KEY: process.env.API_KEY,
+    BACKEND_URL: process.env.BACKEND_URL,
   },
 };
 

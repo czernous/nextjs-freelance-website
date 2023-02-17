@@ -1,5 +1,5 @@
 import { IError, IServicesPage } from '@src/interfaces';
-import { getFilePath, getPageData } from '@src/utils';
+import { serverSideBackendFetch } from '@src/utils';
 import { NextPageWithLayout } from '../_app.page';
 import ClientPageLayout from '@src/components/layouts/client-page-layout';
 import { ReactElement } from 'react';
@@ -16,7 +16,9 @@ const Services: NextPageWithLayout<IServicesProps> = ({
   /* istanbul ignore next*/
   if (props.error) return <StaticPageError {...props.error} />;
 
-  return <div dangerouslySetInnerHTML={{ __html: props.data?.content }} />; // TODO: add DOMpurify
+  return (
+    <div dangerouslySetInnerHTML={{ __html: props.data?.pageFields.content }} />
+  ); // TODO: add DOMpurify
 };
 /* istanbul ignore next */
 Services.getLayout = function getLayout(page: ReactElement) {
@@ -34,13 +36,11 @@ Services.getLayout = function getLayout(page: ReactElement) {
 /* istanbul ignore next */
 export async function getStaticProps() {
   try {
-    const pageData: IServicesPage = await getPageData(
-      getFilePath('./src/public/data/pages', 'services', 'json'),
-    );
+    const data = await serverSideBackendFetch<IServicesPage>('/pages/services');
 
     return {
       props: {
-        data: pageData,
+        data,
       },
     };
   } catch (error) {

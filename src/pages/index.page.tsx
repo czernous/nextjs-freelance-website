@@ -7,7 +7,7 @@ import { Color, Size } from '../enums';
 import styles from '@src/styles/pages/Home.module.scss';
 import { navItems } from '@src/settings/navbar-settings';
 import { IError, IHomePage } from '@src/interfaces';
-import { getFilePath, getPageData } from '@src/utils';
+import { serverSideBackendFetch } from '@src/utils';
 import StaticPageError from '@src/components/atoms/static-page-error';
 
 interface IHomeProps {
@@ -49,10 +49,11 @@ const Home: NextPage<IHomeProps> = ({ ...props }: IHomeProps) => {
       </Head>
 
       <div className={styles.gradient}>
-        {props.data?.imageUrl !== null && props.data?.imageUrl !== undefined ? (
+        {props.data?.image?.secureUrl !== null &&
+        props.data?.image?.secureUrl !== undefined ? (
           <Image
             className={styles.background}
-            src={props.data?.imageUrl}
+            src={props.data.image.secureUrl}
             objectFit={'cover'}
             alt={''}
             fill
@@ -65,19 +66,19 @@ const Home: NextPage<IHomeProps> = ({ ...props }: IHomeProps) => {
         />
         <main className={`${styles.main} custom-container`}>
           <h1 className={`${styles.title} col-sm-10 col-md-11 col-lg-10`}>
-            {props.data?.ctaHeadline}
+            {props.data?.pageFields.ctaHeadline}
           </h1>
           <h2 className={`${styles.subtitle} col-sm-10 col-xl-9 col-xxl-11`}>
-            {props.data?.ctaSubheadline}
+            {props.data?.pageFields.ctaSubheadline}
           </h2>
           <Button
             buttonColor={Color.Brick}
             buttonSize={Size.Large}
             buttonType={'button'}
-            buttonHref={props.data?.ctaBtnHref}
+            buttonHref={props.data?.pageFields.ctaBtnHref}
             buttonTarget={'_blank'}
             buttonStyle={'main-cta'}
-            buttonText={props.data?.ctaBtnText}
+            buttonText={props.data?.pageFields.ctaBtnText}
             buttonFullWidth={false}
             hasShadow={true}
           />
@@ -90,13 +91,11 @@ const Home: NextPage<IHomeProps> = ({ ...props }: IHomeProps) => {
 /* istanbul ignore next */
 export async function getStaticProps() {
   try {
-    const pageData: IHomePage = await getPageData(
-      getFilePath('./src/public/data/pages', 'home', 'json'),
-    );
+    const data = await serverSideBackendFetch<IHomePage>('/pages/home');
 
     return {
       props: {
-        data: pageData,
+        data,
       },
     };
   } catch (error: unknown) {

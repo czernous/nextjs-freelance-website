@@ -6,7 +6,7 @@ export const updateSnackbarProps = async (
   callback: (value: SetStateAction<ICustomSnackbarProps | null>) => void,
 ) => {
   if (!r) return;
-  const severity = r.status === 200 ? 'success' : 'error';
+  const severity = r.status === 200 || r.status === 204 ? 'success' : 'error';
 
   let statusMsg;
 
@@ -23,7 +23,9 @@ export const updateSnackbarProps = async (
     }
   } else {
     try {
-      statusMsg = { message: await r.text() };
+      statusMsg = {
+        message: r.status === 204 ? 'Successfully saved data' : await r.text(),
+      };
     } catch (error) {
       /* istanbul ignore next */
       statusMsg = { message: 'Error reading response as text' };
