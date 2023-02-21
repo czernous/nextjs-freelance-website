@@ -27,7 +27,7 @@ describe('ErrorPage', () => {
 
   it('redirects to home when the Go back to home button is clicked', () => {
     const { getByText } = render(<ErrorPage />);
-    fireEvent.click(getByText('Go back to home'));
+    fireEvent.click(getByText('Go Home'));
     expect(mockedRouter.push).toHaveBeenCalledWith('/');
   });
   it('gets initial props from query string', () => {

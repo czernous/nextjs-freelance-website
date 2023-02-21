@@ -13,6 +13,7 @@ export interface IButtonProps {
   hasShadow: boolean;
   isDisabled?: boolean;
   customClass?: string;
+  onClick?: () => void;
 }
 
 export interface IInputProps {

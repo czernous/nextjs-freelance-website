@@ -24,6 +24,7 @@ function Button({ ...props }: IButtonProps) {
       className={buttonClasses}
       type={props.buttonType}
       disabled={props.isDisabled}
+      onClick={props.onClick}
     >
       {props.buttonText}
     </button>
