@@ -3,6 +3,7 @@ import {
   AccordionDetails,
   AccordionSummary,
   TextField,
+  Typography,
 } from '@mui/material';
 import {
   accordionStyleOverrides,
@@ -32,7 +33,9 @@ const CustomFormFields: FunctionComponent<{ meta: ISeo }> = ({
   return (
     <Accordion sx={accordionStyleOverrides}>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-        <h5>SEO</h5>
+        <Typography sx={{ fontFamily: 'Sanchez, sans-serif', fontWeight: 700 }}>
+          SEO
+        </Typography>
       </AccordionSummary>
       <AccordionDetails sx={() => flexColumn(2)}>
         <TextField

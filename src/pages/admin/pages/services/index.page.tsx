@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import AdminPageLayout from '@src/components/layouts/admin-page-layout';
-import { ICustomSnackbarProps, IError, IHomePage } from '@src/interfaces';
+import { ICustomSnackbarProps, IError, IServicesPage } from '@src/interfaces';
 import { NextPageWithLayout } from '@src/pages/_app.page';
 import { handleServerError, serverSideBackendFetch } from '@src/utils';
 import { ReactElement, useRef, useState } from 'react';
@@ -27,16 +27,18 @@ import SeoFormFields from '@src/components/molecules/seo-form-fields';
 import { NextPageContext } from 'next';
 import { ServerResponse } from 'http';
 import getConfig from 'next/config';
+import RichEditor from '@src/components/organisms/rich-editor';
 
-interface IHomePageAdminProps {
-  data: IHomePage;
+interface IServicesPageAdminProps {
+  data: IServicesPage;
   error?: Error;
 }
 
-const HomeAdmin: NextPageWithLayout<IHomePageAdminProps> = ({
+const ServicesAdmin: NextPageWithLayout<IServicesPageAdminProps> = ({
   ...props
-}: IHomePageAdminProps) => {
+}: IServicesPageAdminProps) => {
   const formRef = useRef<HTMLFormElement | null>(null);
+  const [editorHtml, setEditorHtml] = useState('');
   const [snackbarProps, setSnackbarProps] =
     useState<ICustomSnackbarProps | null>(null);
 
@@ -55,7 +57,7 @@ const HomeAdmin: NextPageWithLayout<IHomePageAdminProps> = ({
             formRef,
             handler: fetchData,
             handlerProps: {
-              url: '/backend/pages/home',
+              url: '/backend/pages/services',
               options: {
                 method: 'PUT',
                 headers: {
@@ -81,48 +83,18 @@ const HomeAdmin: NextPageWithLayout<IHomePageAdminProps> = ({
           </AccordionSummary>
           <AccordionDetails sx={() => flexColumn(2)}>
             <TextField
-              id="ctaHeadline"
-              name="pageFields.ctaHeadline"
-              label="CTA headline"
-              required
-              variant="outlined"
-              defaultValue={props.data.pageFields.ctaHeadline}
-              multiline
-              maxRows={4}
-              sx={customMuiTextFieldBrick}
+              id="content"
+              name="pageFields.content"
+              label="content"
+              hidden
+              value={editorHtml}
             />
-            <TextField
-              id="ctaSubheadline"
-              name="pageFields.ctaSubheadline"
-              label="CTA subheadline"
-              required
-              variant="outlined"
-              defaultValue={props.data.pageFields.ctaSubheadline}
-              multiline
-              maxRows={4}
-              sx={customMuiTextFieldBrick}
-            />
-            <TextField
-              id="ctaBtnText"
-              name="pageFields.ctaBtnText"
-              label="Button text"
-              required
-              variant="outlined"
-              defaultValue={props.data.pageFields.ctaBtnText}
-              multiline
-              maxRows={4}
-              sx={customMuiTextFieldBrick}
-            />
-            <TextField
-              id="ctaBtnHref"
-              name="pageFields.ctaBtnHref"
-              label="Button href"
-              required
-              variant="outlined"
-              defaultValue={props.data.pageFields.ctaBtnHref}
-              multiline
-              maxRows={4}
-              sx={customMuiTextFieldBrick}
+
+            <RichEditor
+              onEditorUpdate={setEditorHtml}
+              content={
+                editorHtml.length ? editorHtml : props.data.pageFields.content
+              }
             />
             <TextField
               id="slug"
@@ -137,6 +109,7 @@ const HomeAdmin: NextPageWithLayout<IHomePageAdminProps> = ({
             />
           </AccordionDetails>
         </Accordion>
+
         <SeoFormFields meta={props?.data?.meta} />
         <Button
           type="submit"
@@ -156,15 +129,15 @@ const HomeAdmin: NextPageWithLayout<IHomePageAdminProps> = ({
   );
 };
 
-HomeAdmin.getLayout = function getLayout(page: ReactElement) {
-  return <AdminPageLayout title="Pages/Home">{page} </AdminPageLayout>;
+ServicesAdmin.getLayout = function getLayout(page: ReactElement) {
+  return <AdminPageLayout title="Pages/Services">{page} </AdminPageLayout>;
 };
 /* istanbul ignore next */
 export async function getServerSideProps(ctx: NextPageContext) {
   const { res } = ctx;
 
   try {
-    const data = await serverSideBackendFetch<IHomePage>('/pages/home');
+    const data = await serverSideBackendFetch<IServicesPage>('/pages/services');
 
     return {
       props: {
@@ -175,4 +148,4 @@ export async function getServerSideProps(ctx: NextPageContext) {
     return handleServerError(res as ServerResponse, error as IError);
   }
 }
-export default HomeAdmin;
+export default ServicesAdmin;

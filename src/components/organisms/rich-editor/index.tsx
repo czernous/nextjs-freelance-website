@@ -2,7 +2,7 @@ import { useEditor, Editor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Image from '@tiptap/extension-image';
 import styles from './editor.module.scss';
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { IImage } from '@src/interfaces';
 import { handleGalleryOpen } from '../image-gallery/utils';
 import ImageGallery from '../image-gallery';
@@ -14,6 +14,7 @@ interface ITipTapEditorProps {
 interface IEditorProps {
   content?: string;
   placeholder?: string;
+  onEditorUpdate?: Dispatch<SetStateAction<string>>;
 }
 /* istanbul ignore next */
 const MenuBar = ({ ...props }: ITipTapEditorProps) => {
@@ -42,6 +43,7 @@ const MenuBar = ({ ...props }: ITipTapEditorProps) => {
     <>
       <div className={styles.menuBar}>
         <button
+          type="button"
           onClick={() => editor.chain().focus().toggleBold().run()}
           disabled={!editor.can().chain().focus().toggleBold().run()}
           className={editor.isActive('bold') ? styles.activeMenuBtn : ''}
@@ -49,6 +51,7 @@ const MenuBar = ({ ...props }: ITipTapEditorProps) => {
           bold
         </button>
         <button
+          type="button"
           onClick={() => editor.chain().focus().toggleItalic().run()}
           disabled={!editor.can().chain().focus().toggleItalic().run()}
           className={editor.isActive('italic') ? styles.activeMenuBtn : ''}
@@ -56,6 +59,7 @@ const MenuBar = ({ ...props }: ITipTapEditorProps) => {
           italic
         </button>
         <button
+          type="button"
           onClick={() => editor.chain().focus().toggleStrike().run()}
           disabled={!editor.can().chain().focus().toggleStrike().run()}
           className={editor.isActive('strike') ? styles.activeMenuBtn : ''}
@@ -63,19 +67,27 @@ const MenuBar = ({ ...props }: ITipTapEditorProps) => {
           strike
         </button>
         <button
+          type="button"
           onClick={() => editor.chain().focus().toggleCode().run()}
           disabled={!editor.can().chain().focus().toggleCode().run()}
           className={editor.isActive('code') ? styles.activeMenuBtn : ''}
         >
           code
         </button>
-        <button onClick={() => editor.chain().focus().unsetAllMarks().run()}>
+        <button
+          type="button"
+          onClick={() => editor.chain().focus().unsetAllMarks().run()}
+        >
           clear marks
         </button>
-        <button onClick={() => editor.chain().focus().clearNodes().run()}>
+        <button
+          type="button"
+          onClick={() => editor.chain().focus().clearNodes().run()}
+        >
           clear nodes
         </button>
         <button
+          type="button"
           onClick={() => editor.chain().focus().setParagraph().run()}
           className={editor.isActive('paragraph') ? styles.activeMenuBtn : ''}
         >
@@ -83,6 +95,7 @@ const MenuBar = ({ ...props }: ITipTapEditorProps) => {
         </button>
 
         <button
+          type="button"
           onClick={() =>
             editor.chain().focus().toggleHeading({ level: 2 }).run()
           }
@@ -93,6 +106,7 @@ const MenuBar = ({ ...props }: ITipTapEditorProps) => {
           h2
         </button>
         <button
+          type="button"
           onClick={() =>
             editor.chain().focus().toggleHeading({ level: 3 }).run()
           }
@@ -103,6 +117,7 @@ const MenuBar = ({ ...props }: ITipTapEditorProps) => {
           h3
         </button>
         <button
+          type="button"
           onClick={() =>
             editor.chain().focus().toggleHeading({ level: 4 }).run()
           }
@@ -113,6 +128,7 @@ const MenuBar = ({ ...props }: ITipTapEditorProps) => {
           h4
         </button>
         <button
+          type="button"
           onClick={() =>
             editor.chain().focus().toggleHeading({ level: 5 }).run()
           }
@@ -123,6 +139,7 @@ const MenuBar = ({ ...props }: ITipTapEditorProps) => {
           h5
         </button>
         <button
+          type="button"
           onClick={() =>
             editor.chain().focus().toggleHeading({ level: 6 }).run()
           }
@@ -133,45 +150,57 @@ const MenuBar = ({ ...props }: ITipTapEditorProps) => {
           h6
         </button>
         <button
+          type="button"
           onClick={() => editor.chain().focus().toggleBulletList().run()}
           className={editor.isActive('bulletList') ? styles.activeMenuBtn : ''}
         >
           bullet list
         </button>
-        <button onClick={addImage}>add image from URL</button>
+        <button type="button" onClick={addImage}>
+          add image from URL
+        </button>
         <button
+          type="button"
           onClick={() => editor.chain().focus().toggleOrderedList().run()}
           className={editor.isActive('orderedList') ? styles.activeMenuBtn : ''}
         >
           ordered list
         </button>
         <button
+          type="button"
           onClick={() => editor.chain().focus().toggleCodeBlock().run()}
           className={editor.isActive('codeBlock') ? styles.activeMenuBtn : ''}
         >
           code block
         </button>
         <button
+          type="button"
           onClick={() => editor.chain().focus().toggleBlockquote().run()}
           className={editor.isActive('blockquote') ? styles.activeMenuBtn : ''}
         >
           blockquote
         </button>
         <button
+          type="button"
           onClick={() => editor.chain().focus().setHorizontalRule().run()}
         >
           horizontal rule
         </button>
-        <button onClick={() => editor.chain().focus().setHardBreak().run()}>
+        <button
+          type="button"
+          onClick={() => editor.chain().focus().setHardBreak().run()}
+        >
           hard break
         </button>
         <button
+          type="button"
           onClick={() => editor.chain().focus().undo().run()}
           disabled={!editor.can().chain().focus().undo().run()}
         >
           undo
         </button>
         <button
+          type="button"
           onClick={() => editor.chain().focus().redo().run()}
           disabled={!editor.can().chain().focus().redo().run()}
         >
@@ -205,8 +234,18 @@ const Tiptap = ({ ...props }: ITipTapEditorProps & IEditorProps) => {
 
 const RichEditor = ({ ...props }: IEditorProps) => {
   const editor = useEditor({
-    extensions: [StarterKit, Image],
+    extensions: [
+      StarterKit,
+      Image.configure({
+        HTMLAttributes: {
+          class: 'rich-text__image',
+        },
+      }),
+    ],
     content: props.content,
+    onUpdate({ editor }) {
+      props.onEditorUpdate && props.onEditorUpdate(editor.getHTML());
+    },
   });
 
   if (!editor) {
