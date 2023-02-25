@@ -1,6 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import AdminPageLayout from '@src/components/layouts/admin-page-layout';
-import { ICustomSnackbarProps, IError, IServicesPage } from '@src/interfaces';
+import {
+  IAboutPage,
+  ICustomSnackbarProps,
+  IError,
+  IImage,
+} from '@src/interfaces';
 import { NextPageWithLayout } from '@src/pages/_app.page';
 import { handleServerError, serverSideBackendFetch } from '@src/utils';
 import { ReactElement, useRef, useState } from 'react';
@@ -28,21 +33,36 @@ import { NextPageContext } from 'next';
 import { ServerResponse } from 'http';
 import getConfig from 'next/config';
 import RichEditor from '@src/components/organisms/rich-editor';
+import SelectImageField from '@src/components/molecules/select-image-field';
+import ImageGallery from '@src/components/organisms/image-gallery';
+import { handleGalleryOpen } from '@src/components/organisms/image-gallery/utils';
 
-interface IServicesPageAdminProps {
-  data: IServicesPage;
+interface IAboutPageAdminProps {
+  data: IAboutPage;
   error?: Error;
 }
 
-const ServicesAdmin: NextPageWithLayout<IServicesPageAdminProps> = ({
+const AboutAdmin: NextPageWithLayout<IAboutPageAdminProps> = ({
   ...props
-}: IServicesPageAdminProps) => {
+}: IAboutPageAdminProps) => {
   const formRef = useRef<HTMLFormElement | null>(null);
   const [editorHtml, setEditorHtml] = useState(
-    props.data.pageFields.content ?? '',
+    props.data?.pageFields?.description ?? '',
   );
   const [snackbarProps, setSnackbarProps] =
     useState<ICustomSnackbarProps | null>(null);
+  const [selectedImage, setSelectedImage] = useState<IImage | null>(null);
+  const [images, setImages] = useState<IImage[] | null>(null);
+  const [isGalleryOpen, setIsGalleryOpen] = useState(false);
+
+  /* istanbul ignore next */
+  const handleImageSelection = (image: IImage) => {
+    setSelectedImage(image);
+    setIsGalleryOpen(false);
+    setTimeout(() => {
+      setSelectedImage(null);
+    }, 500);
+  };
 
   return (
     <>
@@ -59,7 +79,7 @@ const ServicesAdmin: NextPageWithLayout<IServicesPageAdminProps> = ({
             formRef,
             handler: fetchData,
             handlerProps: {
-              url: '/backend/pages/services',
+              url: '/backend/pages/about',
               options: {
                 method: 'PUT',
                 headers: {
@@ -80,14 +100,14 @@ const ServicesAdmin: NextPageWithLayout<IServicesPageAdminProps> = ({
             <Typography
               sx={{ fontFamily: 'Sanchez, sans-serif', fontWeight: 700 }}
             >
-              Content
+              Description
             </Typography>
           </AccordionSummary>
           <AccordionDetails sx={() => flexColumn(2)}>
             <TextField
-              id="content"
-              name="pageFields.content"
-              label="content"
+              id="desc"
+              name="pageFields.description"
+              label="description"
               hidden
               value={editorHtml}
             />
@@ -99,10 +119,25 @@ const ServicesAdmin: NextPageWithLayout<IServicesPageAdminProps> = ({
               label="Page Slug"
               required
               variant="outlined"
-              defaultValue={props.data.slug}
+              defaultValue={props?.data?.slug}
               multiline
               maxRows={4}
               sx={customMuiTextFieldBrick}
+            />
+            <SelectImageField
+              fieldId={'image'}
+              fieldName={'image'}
+              fieldLabel={'image'}
+              defaultValue={props?.data?.image}
+              value={selectedImage?.secureUrl}
+              onClick={
+                /* istanbul ignore next */
+                () => {
+                  handleGalleryOpen(setImages);
+                  setIsGalleryOpen(true);
+                }
+              }
+              required={true}
             />
           </AccordionDetails>
         </Accordion>
@@ -122,19 +157,33 @@ const ServicesAdmin: NextPageWithLayout<IServicesPageAdminProps> = ({
         text={snackbarProps?.text ?? null}
         clearPropsFn={setSnackbarProps}
       />
+      {
+        /* istanbul ignore next */
+        images && (
+          <ImageGallery
+            images={images}
+            isOpen={isGalleryOpen}
+            onClose={
+              /* istanbul ignore next */
+              () => setIsGalleryOpen(false)
+            }
+            onImageSelect={handleImageSelection}
+          />
+        )
+      }
     </>
   );
 };
 /* istanbul ignore next */
-ServicesAdmin.getLayout = function getLayout(page: ReactElement) {
-  return <AdminPageLayout title="Pages/Services">{page} </AdminPageLayout>;
+AboutAdmin.getLayout = function getLayout(page: ReactElement) {
+  return <AdminPageLayout title="Pages/About">{page} </AdminPageLayout>;
 };
 /* istanbul ignore next */
 export async function getServerSideProps(ctx: NextPageContext) {
   const { res } = ctx;
 
   try {
-    const data = await serverSideBackendFetch<IServicesPage>('/pages/services');
+    const data = await serverSideBackendFetch<IAboutPage>('/pages/about');
 
     return {
       props: {
@@ -145,4 +194,4 @@ export async function getServerSideProps(ctx: NextPageContext) {
     return handleServerError(res as ServerResponse, error as IError);
   }
 }
-export default ServicesAdmin;
+export default AboutAdmin;

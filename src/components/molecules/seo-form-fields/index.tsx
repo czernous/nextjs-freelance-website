@@ -29,6 +29,10 @@ const CustomFormFields: FunctionComponent<{ meta: ISeo }> = ({
   const handleImageSelection = (image: IImage) => {
     setSelectedImage(image);
     setIsGalleryOpen(false);
+    // make the field editable again
+    setTimeout(() => {
+      setSelectedImage(null);
+    }, 500);
   };
   return (
     <Accordion sx={accordionStyleOverrides}>
@@ -44,7 +48,7 @@ const CustomFormFields: FunctionComponent<{ meta: ISeo }> = ({
           label="Meta Description"
           required
           variant="outlined"
-          defaultValue={props.meta.metaDescription}
+          defaultValue={props.meta?.metaDescription}
           multiline
           maxRows={4}
           inputProps={{ maxLength: 155 }}
@@ -57,7 +61,7 @@ const CustomFormFields: FunctionComponent<{ meta: ISeo }> = ({
           label="Meta Keywords"
           required
           variant="outlined"
-          defaultValue={props.meta.metaKeywords}
+          defaultValue={props.meta?.metaKeywords}
           helperText="Enter keywords separated by comma w/o spaces"
           multiline
           maxRows={4}
@@ -69,7 +73,7 @@ const CustomFormFields: FunctionComponent<{ meta: ISeo }> = ({
           label="OG Title"
           required
           variant="outlined"
-          defaultValue={props.meta.openGraph?.title}
+          defaultValue={props.meta?.openGraph?.title}
           multiline
           maxRows={4}
           sx={customMuiTextFieldBrick}
@@ -80,7 +84,7 @@ const CustomFormFields: FunctionComponent<{ meta: ISeo }> = ({
           label="OG Description"
           required
           variant="outlined"
-          defaultValue={props.meta.openGraph?.description}
+          defaultValue={props.meta?.openGraph?.description}
           multiline
           maxRows={4}
           inputProps={{ maxLength: 60 }}
@@ -91,7 +95,7 @@ const CustomFormFields: FunctionComponent<{ meta: ISeo }> = ({
           fieldId={'ogImageUrl'}
           fieldName={'meta.openGraph.imageUrl'}
           fieldLabel={'OG Image'}
-          defaultValue={props.meta.openGraph?.imageUrl}
+          defaultValue={props.meta?.openGraph?.imageUrl}
           value={selectedImage?.secureUrl}
           onClick={
             /* istanbul ignore next */
@@ -100,6 +104,7 @@ const CustomFormFields: FunctionComponent<{ meta: ISeo }> = ({
               setIsGalleryOpen(true);
             }
           }
+          required={false}
         />
       </AccordionDetails>
       {images && (

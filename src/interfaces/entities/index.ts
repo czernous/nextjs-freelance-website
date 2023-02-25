@@ -95,7 +95,7 @@ export interface IAboutPage extends IPage {
   pageFields: {
     description: string;
   };
-  image?: IImage;
+  image: string;
 }
 
 export interface IContactPage extends IPage {

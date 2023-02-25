@@ -155,7 +155,7 @@ const HomeAdmin: NextPageWithLayout<IHomePageAdminProps> = ({
     </>
   );
 };
-
+/* istanbul ignore next */
 HomeAdmin.getLayout = function getLayout(page: ReactElement) {
   return <AdminPageLayout title="Pages/Home">{page} </AdminPageLayout>;
 };

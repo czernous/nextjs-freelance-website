@@ -11,6 +11,7 @@ interface ISelectImageFieldProps {
   fieldLabel: string;
   defaultValue: string;
   value: string | undefined;
+  required: boolean;
   onClick: () => void;
 }
 /* istanbul ignore next */
@@ -20,6 +21,7 @@ export const SelectImageField = ({
   fieldLabel,
   defaultValue,
   value,
+  required,
   onClick,
 }: ISelectImageFieldProps) => (
   <Stack direction="row" spacing={2}>
@@ -27,7 +29,7 @@ export const SelectImageField = ({
       id={fieldId}
       name={fieldName}
       label={fieldLabel}
-      required
+      required={required}
       variant="outlined"
       defaultValue={defaultValue}
       value={value}
