@@ -4,6 +4,7 @@ import '@testing-library/jest-dom';
 import Input from './index';
 import { act } from 'react-dom/test-utils';
 import { Color } from '../../../enums';
+import React from 'react';
 
 expect.extend(toHaveNoViolations);
 

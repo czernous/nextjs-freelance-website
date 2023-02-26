@@ -18,6 +18,7 @@ export interface IButtonProps {
 
 export interface IInputProps {
   type: 'input' | 'textarea';
+  name: string;
   inputType?: InputTypes;
   inputAdditionalClasses?: string;
   inputColor: Color;

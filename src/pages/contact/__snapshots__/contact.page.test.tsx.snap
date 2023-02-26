@@ -1,0 +1,68 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Contact renders contact page unchanged 1`] = `
+<div>
+  <div
+    class="col-xs-12 col-md-6 mx-3"
+    id="contact"
+  >
+    <form
+      action="example.com"
+      method="POST"
+      target="_blank"
+    >
+      <div
+        class="undefined input"
+      >
+        <label
+          for="Name"
+        >
+          Name
+        </label>
+        <input
+          class="undefined brick input"
+          id="Name"
+          name="name"
+          placeholder="Enter your name"
+        />
+      </div>
+      <div
+        class="mt-3 input"
+      >
+        <label
+          for="E-mail"
+        >
+          E-mail
+        </label>
+        <input
+          class="undefined brick input"
+          id="E-mail"
+          name="email"
+          placeholder="Enter your e-mail"
+        />
+      </div>
+      <div
+        class="mt-3 input"
+      >
+        <label
+          for="message"
+        >
+          Message
+        </label>
+        <textarea
+          class="undefined brick input"
+          id="message"
+          name="message"
+          placeholder="Enter your message"
+        />
+      </div>
+      <button
+        class="button brick small  primary full-width mt-3"
+        type="submit"
+      >
+        Submit
+      </button>
+    </form>
+  </div>
+</div>
+`;

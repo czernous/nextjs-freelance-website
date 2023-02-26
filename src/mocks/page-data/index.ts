@@ -1,4 +1,9 @@
-import { IAboutPage, IHomePage, IServicesPage } from '@src/interfaces';
+import {
+  IAboutPage,
+  IContactPage,
+  IHomePage,
+  IServicesPage,
+} from '@src/interfaces';
 
 export const homePageMock: IHomePage = {
   pageFields: {
@@ -57,4 +62,23 @@ export const aboutPageMock: IAboutPage = {
 
   updatedAt: '2023-02-16T15:47:25.559Z',
   image: 'https://example.com/test.jpg',
+};
+
+export const contactPageMock: IContactPage = {
+  pageFields: {
+    description: '<p data-testid="paragraph">This is an about page</p>',
+  },
+  formActionUrl: 'example.com',
+  slug: 'contact',
+  meta: {
+    metaDescription: 'Test',
+    metaKeywords: 'test',
+    openGraph: {
+      title: 'Test',
+      description: 'test',
+      imageUrl: 'http://g.com',
+    },
+  },
+
+  updatedAt: '2023-02-16T15:47:25.559Z',
 };

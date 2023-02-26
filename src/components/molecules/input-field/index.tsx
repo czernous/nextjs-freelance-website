@@ -5,9 +5,9 @@ import styles from './input-field.module.scss';
 
 function InputField({
   ...props
-}: IInputProps & { fieldLabel: string; fieldClasses: string }) {
+}: IInputProps & { fieldLabel: string; fieldClasses?: string }) {
   return (
-    <div className={`${props.fieldClasses} ${styles.input}`}>
+    <div className={`${props?.fieldClasses} ${styles.input}`}>
       <label htmlFor={props.inputId}>{props.fieldLabel}</label>
       <Input
         inputType={props.inputType}
@@ -18,6 +18,7 @@ function InputField({
         isRequired={props.isRequired}
         isDisabled={props.isDisabled}
         ariaDescribedBy={props.ariaDescribedBy}
+        name={props.name}
       />
     </div>
   );
