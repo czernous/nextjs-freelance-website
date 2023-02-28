@@ -29,6 +29,7 @@ const Contact: NextPageWithLayout<IContactProps> = ({
           name="name"
           inputId={'Name'}
           inputPlaceholder={'Enter your name'}
+          isRequired={true}
         />
         <InputField
           type={'input'}
@@ -38,6 +39,7 @@ const Contact: NextPageWithLayout<IContactProps> = ({
           inputId={'E-mail'}
           inputPlaceholder={'Enter your e-mail'}
           fieldClasses="mt-3"
+          isRequired={true}
         />
         <InputField
           type={'textarea'}
@@ -47,6 +49,7 @@ const Contact: NextPageWithLayout<IContactProps> = ({
           inputId={'message'}
           inputPlaceholder={'Enter your message'}
           fieldClasses="mt-3"
+          isRequired={true}
         />
         <Button
           buttonColor={Color.Brick}

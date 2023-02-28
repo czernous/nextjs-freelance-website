@@ -24,6 +24,7 @@ exports[`Contact renders contact page unchanged 1`] = `
           id="Name"
           name="name"
           placeholder="Enter your name"
+          required=""
         />
       </div>
       <div
@@ -39,6 +40,7 @@ exports[`Contact renders contact page unchanged 1`] = `
           id="E-mail"
           name="email"
           placeholder="Enter your e-mail"
+          required=""
         />
       </div>
       <div
@@ -54,6 +56,7 @@ exports[`Contact renders contact page unchanged 1`] = `
           id="message"
           name="message"
           placeholder="Enter your message"
+          required=""
         />
       </div>
       <button
