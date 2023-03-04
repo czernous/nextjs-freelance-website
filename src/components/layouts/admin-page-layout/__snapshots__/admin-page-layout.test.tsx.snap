@@ -9,9 +9,6 @@ exports[`Admin Page Layout is rendered unchanged 1`] = `
       class="sidenav"
     >
       <a
-        aria-label="posts"
-        class=""
-        data-mui-internal-clone-element="true"
         href="/admin/posts"
       >
         <button
@@ -37,9 +34,6 @@ exports[`Admin Page Layout is rendered unchanged 1`] = `
         </button>
       </a>
       <a
-        aria-label="pages"
-        class=""
-        data-mui-internal-clone-element="true"
         href="/admin/pages"
       >
         <button
@@ -65,9 +59,6 @@ exports[`Admin Page Layout is rendered unchanged 1`] = `
         </button>
       </a>
       <a
-        aria-label="images"
-        class=""
-        data-mui-internal-clone-element="true"
         href="/admin/images"
       >
         <button
@@ -93,9 +84,6 @@ exports[`Admin Page Layout is rendered unchanged 1`] = `
         </button>
       </a>
       <a
-        aria-label="logout"
-        class=""
-        data-mui-internal-clone-element="true"
         href="/admin/logout"
       >
         <button

@@ -37,6 +37,27 @@ export const writePageData = async <T>(filename: string, filebody: T) => {
 };
 
 /* istanbul ignore next */
+export const getDirNamesAsync = async (rootDir: string) => {
+  try {
+    const res = (
+      await fs.readdir(path.join(serverRuntimeConfig.PROJECT_ROOT, rootDir), {
+        withFileTypes: true,
+      })
+    ).filter((dir) => dir.isDirectory());
+    const dirNames: string[] = [];
+
+    for (const d of res) {
+      dirNames.push(d.name);
+    }
+
+    return dirNames;
+  } catch (error: unknown) {
+    console.debug(error);
+    return [];
+  }
+};
+
+/* istanbul ignore next */
 export const serverSideBackendFetch = async <T>(
   backendEndpoint: string,
 ): Promise<T> => {
