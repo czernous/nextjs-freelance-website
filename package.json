@@ -21,7 +21,7 @@
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.5",
     "@mui/icons-material": "^5.11.9",
-    "@mui/material": "^5.11.7",
+    "@mui/material": "^5.11.12",
     "@tiptap/extension-image": "^2.0.0-beta.217",
     "@tiptap/pm": "^2.0.0-beta.217",
     "@tiptap/react": "^2.0.0-beta.217",
