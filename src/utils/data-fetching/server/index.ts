@@ -88,8 +88,6 @@ export const serverSideBackendFetch = async <T>(
 
   const data: T = (await response?.json()) ?? null;
 
-  if (data === null) throw new Error('Error fetching data');
-
   return data;
 };
 export const handleServerError = (res: ServerResponse, error: IError) => {
