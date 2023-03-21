@@ -85,7 +85,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const res = await serverSideBackendFetch<{ data: IPost[] }>('/posts');
 
   return {
-    paths: res.data.map((post) => ({
+    paths: res.data?.map((post) => ({
       params: {
         slug: post.slug,
       },
