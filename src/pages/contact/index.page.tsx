@@ -68,11 +68,7 @@ const Contact: NextPageWithLayout<IContactProps> = ({
 /* istanbul ignore next */
 Contact.getLayout = function getLayout(page: ReactElement) {
   return (
-    <ClientPageLayout
-      pageTitle={'Contact me'}
-      appTitle={'Ruth Chernous'}
-      meta={page.props.data?.meta}
-    >
+    <ClientPageLayout pageTitle={'Contact me'} meta={page.props.data?.meta}>
       {page}
     </ClientPageLayout>
   );

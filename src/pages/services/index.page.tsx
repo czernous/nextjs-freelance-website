@@ -23,11 +23,7 @@ const Services: NextPageWithLayout<IServicesProps> = ({
 /* istanbul ignore next */
 Services.getLayout = function getLayout(page: ReactElement) {
   return (
-    <ClientPageLayout
-      pageTitle={'Services'}
-      appTitle={'Ruth Chernous'}
-      meta={page.props.data?.meta}
-    >
+    <ClientPageLayout pageTitle={'Services'} meta={page.props.data?.meta}>
       {page}
     </ClientPageLayout>
   );
