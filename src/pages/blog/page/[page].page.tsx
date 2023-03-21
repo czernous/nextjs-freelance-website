@@ -17,12 +17,17 @@ const PaginatedBlog: NextPageWithLayout<
   return (
     <div id="blog" className="d-flex flex-column gap-5">
       <SearchField searchUrl="/blog/search" />
-      <PaginatedCards
-        currentPage={props.currentPage}
-        currentUrl="/blog"
-        pageUrl="/page/"
-        data={props.data}
-      />
+      {
+        /* istanbul ignore next */
+        props.data && (
+          <PaginatedCards
+            currentPage={props.currentPage}
+            currentUrl="/blog"
+            pageUrl="/page/"
+            data={props.data}
+          />
+        )
+      }
     </div>
   ); // TODO: add DOMpurify
 };

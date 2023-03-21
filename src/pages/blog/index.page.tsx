@@ -18,12 +18,17 @@ const Blog: NextPageWithLayout<IBlogProps> = ({ ...props }: IBlogProps) => {
     <div id="blog" className="d-flex flex-column gap-5">
       <SearchField searchUrl="/blog/search" />
 
-      <PaginatedCards
-        currentPage={1}
-        currentUrl="/blog"
-        data={props.data}
-        pageUrl="/page/"
-      />
+      {
+        /* istanbul ignore next */
+        props.data && (
+          <PaginatedCards
+            currentPage={1}
+            currentUrl="/blog"
+            data={props.data}
+            pageUrl="/page/"
+          />
+        )
+      }
     </div>
   );
 };
