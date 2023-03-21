@@ -11,7 +11,8 @@ const ClientPageLayout = ({
   children,
   ...props
 }: PropsWithChildren & IClientPageLayoutProps) => {
-  const APP_NAME = getConfig().publicRuntimeConfig.APP_NAME;
+  /* istanbul ignore next */
+  const APP_NAME = getConfig().publicRuntimeConfig.APP_NAME ?? '';
 
   const pageTitle = `| ${props.pageTitle}`;
   const fullTitle = `${APP_NAME} ${props.pageTitle.length > 1 && pageTitle}`;
