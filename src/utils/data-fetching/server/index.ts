@@ -86,7 +86,7 @@ export const serverSideBackendFetch = async <T>(
     location,
   });
 
-  const data: T = await response?.json();
+  const data: T = (await response?.json()) ?? null;
 
   return data;
 };
