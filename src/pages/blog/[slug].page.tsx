@@ -84,8 +84,10 @@ const BlogPost: NextPage<IBlogPostProps> = ({ ...props }: IBlogPostProps) => {
 export const getStaticPaths: GetStaticPaths = async () => {
   const res = await serverSideBackendFetch<{ data: IPost[] }>('/posts');
 
+  const paths = res?.data ?? [];
+
   return {
-    paths: res.data?.map((post) => ({
+    paths: paths.map((post) => ({
       params: {
         slug: post.slug,
       },
