@@ -20,7 +20,7 @@ const Contact: NextPageWithLayout<IContactProps> = ({
   if (props.error) return <StaticPageError {...props.error} />;
 
   return (
-    <div id="contact" className="col-xs-12 col-md-6 mx-3">
+    <div id="contact" className="col-xs-12 col-md-6 mx-3 mb-4">
       <form action={props.data?.formActionUrl} method="POST" target="_blank">
         <InputField
           type={'input'}

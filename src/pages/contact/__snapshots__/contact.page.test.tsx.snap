@@ -3,7 +3,7 @@
 exports[`Contact renders contact page unchanged 1`] = `
 <div>
   <div
-    class="col-xs-12 col-md-6 mx-3"
+    class="col-xs-12 col-md-6 mx-3 mb-4"
     id="contact"
   >
     <form
