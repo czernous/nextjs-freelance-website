@@ -37,7 +37,7 @@ const nextConfig = {
   },
   publicRuntimeConfig: {
     APP_HOST: process.env.HOST,
-    APP_NAME: process.env.APP_NAME,
+    APP_NAME: process.env.APP_NAME ?? '',
     API_KEY: process.env.API_KEY,
     BACKEND_URL: process.env.BACKEND_URL,
   },
