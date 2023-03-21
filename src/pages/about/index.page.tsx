@@ -21,7 +21,7 @@ const About: NextPageWithLayout<IAboutProps> = ({ ...props }: IAboutProps) => {
     <div className={styles.wrapper}>
       <div className={styles.image}>
         <Image
-          src={props.data.image}
+          src={props.data?.image}
           alt="photo of blog's author"
           fill
           placeholder="blur"

@@ -21,7 +21,7 @@ const Contact: NextPageWithLayout<IContactProps> = ({
 
   return (
     <div id="contact" className="col-xs-12 col-md-6 mx-3">
-      <form action={props.data.formActionUrl} method="POST" target="_blank">
+      <form action={props.data?.formActionUrl} method="POST" target="_blank">
         <InputField
           type={'input'}
           fieldLabel="Name"

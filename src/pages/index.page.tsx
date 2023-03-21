@@ -11,7 +11,7 @@ import { serverSideBackendFetch } from '@src/utils';
 import StaticPageError from '@src/components/atoms/static-page-error';
 
 interface IHomeProps {
-  data: IHomePage;
+  data?: IHomePage;
   error?: IError;
 }
 
@@ -22,28 +22,28 @@ const Home: NextPage<IHomeProps> = ({ ...props }: IHomeProps) => {
     <>
       <Head>
         <title>Ruth Chernous</title>
-        <meta name="description" content={props.data.meta.metaDescription} />
-        <meta name="keywords" content={props.data.meta.metaKeywords} />
-        <meta property="og:title" content={props.data.meta.openGraph.title} />
+        <meta name="description" content={props.data?.meta?.metaDescription} />
+        <meta name="keywords" content={props.data?.meta?.metaKeywords} />
+        <meta property="og:title" content={props.data?.meta?.openGraph.title} />
         <meta
           property="og:description"
-          content={props.data.meta.openGraph.description}
+          content={props.data?.meta?.openGraph.description}
         />
 
-        {props.data.meta.openGraph?.imageUrl && (
+        {props.data?.meta?.openGraph?.imageUrl && (
           /* istanbul ignore next */
           <meta
             property="og:image"
-            content={props.data.meta.openGraph.imageUrl}
+            content={props.data?.meta?.openGraph.imageUrl}
           />
         )}
-        {props.data.meta.openGraph?.type && (
+        {props.data?.meta?.openGraph?.type && (
           /* istanbul ignore next */
-          <meta property="og:type" content={props.data.meta.openGraph.type} />
+          <meta property="og:type" content={props.data?.meta?.openGraph.type} />
         )}
-        {props.data.meta.openGraph?.url && (
+        {props.data?.meta?.openGraph?.url && (
           /* istanbul ignore next */
-          <meta property="og:url" content={props.data.meta.openGraph.url} />
+          <meta property="og:url" content={props.data?.meta?.openGraph.url} />
         )}
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -53,7 +53,7 @@ const Home: NextPage<IHomeProps> = ({ ...props }: IHomeProps) => {
         props.data?.image?.secureUrl !== undefined ? (
           <Image
             className={styles.background}
-            src={props.data.image.secureUrl}
+            src={props.data?.image.secureUrl}
             objectFit={'cover'}
             alt={''}
             fill
@@ -78,7 +78,7 @@ const Home: NextPage<IHomeProps> = ({ ...props }: IHomeProps) => {
             buttonHref={props.data?.pageFields.ctaBtnHref}
             buttonTarget={'_blank'}
             buttonStyle={'main-cta'}
-            buttonText={props.data?.pageFields.ctaBtnText}
+            buttonText={props.data?.pageFields.ctaBtnText ?? ''}
             buttonFullWidth={false}
             hasShadow={true}
           />
