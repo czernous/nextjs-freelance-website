@@ -1,4 +1,4 @@
-import { render, screen, act } from '@testing-library/react';
+import { render, screen, act, waitFor } from '@testing-library/react';
 import React from 'react';
 import ImageGallery from '.';
 import { imageMock } from '../article-card/mocks';
@@ -6,12 +6,6 @@ import '@testing-library/jest-dom';
 
 const mockedFetch = jest.fn();
 global.fetch = mockedFetch;
-
-jest.mock('../../../utils/data-fetching/client', () => ({
-  fetchAndConvertToBase64: jest
-    .fn()
-    .mockImplementation(() => Promise.resolve('base64')),
-}));
 
 describe('ImageGallery', () => {
   const imageMockCopy = JSON.parse(JSON.stringify(imageMock));
@@ -59,6 +53,6 @@ describe('ImageGallery', () => {
       );
     });
 
-    expect(screen.getByRole('progressbar')).toBeInTheDocument();
+    waitFor(() => expect(screen.getByRole('progressbar')).toBeInTheDocument());
   });
 });

@@ -1,8 +1,8 @@
-import { render, screen } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import { axe, toHaveNoViolations } from 'jest-axe';
 import '@testing-library/jest-dom';
 import Input from './index';
-import { act } from 'react-dom/test-utils';
+
 import { Color } from '../../../enums';
 import React from 'react';
 

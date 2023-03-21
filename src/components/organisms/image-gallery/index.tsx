@@ -75,10 +75,14 @@ const ImageGallery = memo(
       (async () => {
         const updatedImages = await Promise.all(
           images.map(async (img) => {
-            const url = (await fetchAndConvertToBase64(
-              img.blurredImageUrl.replace('http', 'https'),
-            )) as string;
-            img.blurredImageUrl = url;
+            /* istanbul ignore next */
+            if (img.blurredImageUrl.includes('https', 0)) {
+              // fetch only if is a link and not base64 string
+              const url = (await fetchAndConvertToBase64(
+                img.blurredImageUrl,
+              )) as string;
+              img.blurredImageUrl = url;
+            }
             return img;
           }),
         );

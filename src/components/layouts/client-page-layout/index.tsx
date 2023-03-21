@@ -5,18 +5,19 @@ import { navItems } from '@src/settings/navbar-settings';
 import Navbar from '@src/components/organisms/navbar';
 
 import styles from './client-page-layout.module.scss';
+import getConfig from 'next/config';
 
 const ClientPageLayout = ({
   children,
   ...props
 }: PropsWithChildren & IClientPageLayoutProps) => {
+  const APP_NAME = getConfig().publicRuntimeConfig.APP_NAME;
+
   const pageTitle = `| ${props.pageTitle}`;
-  const fullTitle = `${props.appTitle} ${
-    props.pageTitle.length > 1 && pageTitle
-  }`;
+  const fullTitle = `${APP_NAME} ${props.pageTitle.length > 1 && pageTitle}`;
 
   return (
-    <>
+    <div data-testid="client-layout">
       <Head>
         <title>{fullTitle}</title>
         <meta name="description" content={props.meta?.metaDescription} />
@@ -43,17 +44,13 @@ const ClientPageLayout = ({
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className={styles.wrapper}>
-        <Navbar
-          companyName={props.appTitle}
-          navItems={navItems}
-          drawerWidth={243}
-        />
+        <Navbar companyName={APP_NAME} navItems={navItems} drawerWidth={243} />
         <main className={`${styles.layout} custom-container`}>
           <h1 className={styles.heading}>{props.pageTitle}</h1>
           <section className={styles.content}>{children}</section>{' '}
         </main>
       </div>
-    </>
+    </div>
   );
 };
 

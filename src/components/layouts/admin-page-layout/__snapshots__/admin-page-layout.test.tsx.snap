@@ -4,6 +4,7 @@ exports[`Admin Page Layout is rendered unchanged 1`] = `
 <div>
   <main
     class="dashboard"
+    data-testid="admin-layout"
   >
     <div
       class="sidenav"

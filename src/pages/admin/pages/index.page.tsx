@@ -7,7 +7,7 @@ import { ReactElement } from 'react';
 import { NextPageContext } from 'next';
 import { ServerResponse } from 'http';
 import Link from 'next/link';
-import { Link as MuiLink } from '@mui/material';
+
 import { colors } from '@src/mui-theme/colors';
 
 interface IPagesAdminProps {
@@ -21,16 +21,15 @@ const PagesAdmin: NextPageWithLayout<IPagesAdminProps> = ({
   return (
     <div className="d-flex flex-column">
       {props.data.map((route) => (
-        <Link key={route} href={`/admin/pages/${route}`} passHref>
-          <MuiLink
-            sx={{
-              color: colors.olive[500],
-              textDecorationColor: 'unset',
-              ':hover': { color: colors.olive[700] },
-            }}
-          >
-            Edit {route} page
-          </MuiLink>
+        <Link
+          key={route}
+          href={`/admin/pages/${route}`}
+          style={{
+            color: colors.olive[500] as string,
+            textDecoration: 'underline',
+          }}
+        >
+          Edit {route} page
         </Link>
       ))}
     </div>

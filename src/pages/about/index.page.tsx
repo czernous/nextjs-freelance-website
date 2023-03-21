@@ -6,6 +6,7 @@ import { ReactElement } from 'react';
 import StaticPageError from '@src/components/atoms/static-page-error';
 import Image from 'next/image';
 import styles from './About.module.scss';
+import { imagePlaceholder } from '@src/assets/image-placeholder';
 
 interface IAboutProps {
   data: IAboutPage;
@@ -19,7 +20,13 @@ const About: NextPageWithLayout<IAboutProps> = ({ ...props }: IAboutProps) => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.image}>
-        <Image src={props.data.image} alt="photo of blog's author" fill />
+        <Image
+          src={props.data.image}
+          alt="photo of blog's author"
+          fill
+          placeholder="blur"
+          blurDataURL={imagePlaceholder}
+        />
       </div>
       <div
         className={styles.content}
@@ -31,11 +38,7 @@ const About: NextPageWithLayout<IAboutProps> = ({ ...props }: IAboutProps) => {
 /* istanbul ignore next */
 About.getLayout = function getLayout(page: ReactElement) {
   return (
-    <ClientPageLayout
-      pageTitle={'About me'}
-      appTitle={'Ruth Chernous'}
-      meta={page.props.data?.meta}
-    >
+    <ClientPageLayout pageTitle={'About me'} meta={page.props.data?.meta}>
       {page}
     </ClientPageLayout>
   );

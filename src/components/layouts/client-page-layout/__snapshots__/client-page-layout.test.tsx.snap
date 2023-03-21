@@ -3,141 +3,145 @@
 exports[`Client Page Layout is rendered unchanged 1`] = `
 <div>
   <div
-    class="wrapper"
+    data-testid="client-layout"
   >
-    <nav
-      aria-label="Main"
-      class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation4 MuiAppBar-root MuiAppBar-colorPrimary MuiAppBar-positionFixed mui-fixed css-3y7qso-MuiPaper-root-MuiAppBar-root"
-      role="navigation"
+    <div
+      class="wrapper"
     >
-      <div
-        class="MuiToolbar-root MuiToolbar-gutters MuiToolbar-regular custom-container css-hyum1k-MuiToolbar-root"
-        style="width: 100%; height: 88px;"
+      <nav
+        aria-label="Main"
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation4 MuiAppBar-root MuiAppBar-colorPrimary MuiAppBar-positionFixed mui-fixed css-3y7qso-MuiPaper-root-MuiAppBar-root"
+        role="navigation"
       >
-        <button
-          aria-label="open drawer"
-          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-edgeStart MuiIconButton-sizeMedium css-6iz4mj-MuiButtonBase-root-MuiIconButton-root"
-          tabindex="0"
-          test-id="drawerButton"
-          type="button"
+        <div
+          class="MuiToolbar-root MuiToolbar-gutters MuiToolbar-regular custom-container css-hyum1k-MuiToolbar-root"
+          style="width: 100%; height: 88px;"
         >
-          <svg
-            aria-hidden="true"
-            class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-            data-testid="MenuIcon"
-            focusable="false"
-            viewBox="0 0 24 24"
+          <button
+            aria-label="open drawer"
+            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-edgeStart MuiIconButton-sizeMedium css-6iz4mj-MuiButtonBase-root-MuiIconButton-root"
+            tabindex="0"
+            test-id="drawerButton"
+            type="button"
           >
-            <path
-              d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+              data-testid="MenuIcon"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"
+              />
+            </svg>
+            <span
+              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
             />
-          </svg>
-          <span
-            class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-          />
-        </button>
-        <div
-          class="MuiTypography-root MuiTypography-h6 css-1urdvp-MuiTypography-root"
-        >
-          Ruth Chernous
+          </button>
+          <div
+            class="MuiTypography-root MuiTypography-h6 css-1urdvp-MuiTypography-root"
+          >
+            test
+          </div>
+          <div
+            class="MuiBox-root css-130f8nx"
+          >
+            <a
+              href="/"
+              style="text-decoration: none;"
+            >
+              <button
+                class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium css-10s16q3-MuiButtonBase-root-MuiButton-root"
+                tabindex="0"
+                type="button"
+              >
+                Home
+                <span
+                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                />
+              </button>
+            </a>
+            <a
+              href="/about"
+              style="text-decoration: none;"
+            >
+              <button
+                class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium css-12b7yuv-MuiButtonBase-root-MuiButton-root"
+                tabindex="0"
+                type="button"
+              >
+                About
+                <span
+                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                />
+              </button>
+            </a>
+            <a
+              href="/blog"
+              style="text-decoration: none;"
+            >
+              <button
+                class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium css-12b7yuv-MuiButtonBase-root-MuiButton-root"
+                tabindex="0"
+                type="button"
+              >
+                Blog
+                <span
+                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                />
+              </button>
+            </a>
+            <a
+              href="/services"
+              style="text-decoration: none;"
+            >
+              <button
+                class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium css-12b7yuv-MuiButtonBase-root-MuiButton-root"
+                tabindex="0"
+                type="button"
+              >
+                Services
+                <span
+                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                />
+              </button>
+            </a>
+            <a
+              href="/contact"
+              style="text-decoration: none;"
+            >
+              <button
+                class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium css-12b7yuv-MuiButtonBase-root-MuiButton-root"
+                tabindex="0"
+                type="button"
+              >
+                Contact
+                <span
+                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                />
+              </button>
+            </a>
+          </div>
         </div>
-        <div
-          class="MuiBox-root css-130f8nx"
-        >
-          <a
-            href="/"
-            style="text-decoration: none;"
-          >
-            <button
-              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium css-10s16q3-MuiButtonBase-root-MuiButton-root"
-              tabindex="0"
-              type="button"
-            >
-              Home
-              <span
-                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-              />
-            </button>
-          </a>
-          <a
-            href="/about"
-            style="text-decoration: none;"
-          >
-            <button
-              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium css-12b7yuv-MuiButtonBase-root-MuiButton-root"
-              tabindex="0"
-              type="button"
-            >
-              About
-              <span
-                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-              />
-            </button>
-          </a>
-          <a
-            href="/blog"
-            style="text-decoration: none;"
-          >
-            <button
-              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium css-12b7yuv-MuiButtonBase-root-MuiButton-root"
-              tabindex="0"
-              type="button"
-            >
-              Blog
-              <span
-                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-              />
-            </button>
-          </a>
-          <a
-            href="/services"
-            style="text-decoration: none;"
-          >
-            <button
-              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium css-12b7yuv-MuiButtonBase-root-MuiButton-root"
-              tabindex="0"
-              type="button"
-            >
-              Services
-              <span
-                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-              />
-            </button>
-          </a>
-          <a
-            href="/contact"
-            style="text-decoration: none;"
-          >
-            <button
-              class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium css-12b7yuv-MuiButtonBase-root-MuiButton-root"
-              tabindex="0"
-              type="button"
-            >
-              Contact
-              <span
-                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-              />
-            </button>
-          </a>
-        </div>
-      </div>
-    </nav>
-    <nav
-      class="MuiBox-root css-0"
-    />
-    <main
-      class="layout custom-container"
-    >
-      <h1
-        class="heading"
-      >
-        About
-      </h1>
-      <section
-        class="content"
+      </nav>
+      <nav
+        class="MuiBox-root css-0"
       />
-       
-    </main>
+      <main
+        class="layout custom-container"
+      >
+        <h1
+          class="heading"
+        >
+          About
+        </h1>
+        <section
+          class="content"
+        />
+         
+      </main>
+    </div>
   </div>
 </div>
 `;

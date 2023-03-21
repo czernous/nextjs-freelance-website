@@ -1,30 +1,18 @@
-import { render, RenderResult } from '@testing-library/react';
+import { act, render } from '@testing-library/react';
 import { axe, toHaveNoViolations } from 'jest-axe';
 import '@testing-library/jest-dom';
 import Pages from './index.page';
-import { act } from 'react-dom/test-utils';
-import React from 'react';
 
-import { mockNextRouter } from '../../../utils';
+import React from 'react';
 
 expect.extend(toHaveNoViolations);
 
-let component: RenderResult;
-jest.mock('next/config', () => () => ({
-  publicRuntimeConfig: {
-    STRAPI_HOST: process.env.STRAPI_HOST,
-  },
-}));
-
-beforeEach(async () => {
-  mockNextRouter();
-  component = render(<Pages data={['contact', 'about']} />);
-});
-
 describe('Pages index', () => {
+  const template = <Pages data={['contact', 'about']} />;
+
   it('has no axe violations', async () => {
-    const { container } = component;
     await act(async () => {
+      const { container } = render(template);
       expect(await axe(container)).toHaveNoViolations();
     });
   });

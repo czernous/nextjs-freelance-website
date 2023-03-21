@@ -1,6 +1,7 @@
+import { imagePlaceholder } from '@src/assets/image-placeholder';
 import { IError } from '@src/interfaces';
 import { NextRouter } from 'next/router';
-import { MutableRefObject } from 'react';
+import { ChangeEvent, MutableRefObject } from 'react';
 
 interface IFetchDataProps {
   url: string;
@@ -103,14 +104,53 @@ export const handleClientError = (error: IError, router: NextRouter) => {
     query: { statusCode, errorMessage },
   });
 };
-
 export const fetchAndConvertToBase64 = async (imageUrl: string) => {
-  const response = await fetch(imageUrl);
-  const blob = await response.blob();
-  const reader = new FileReader();
-  reader.readAsDataURL(blob);
-  return new Promise((resolve, reject) => {
-    reader.onloadend = () => resolve(reader.result);
-    reader.onerror = reject;
-  });
+  const protocol = imageUrl.split(':')[0];
+
+  if (protocol !== 'http' && protocol !== 'https')
+    return Promise.resolve(imagePlaceholder);
+
+  try {
+    const response = await fetch(imageUrl);
+    const blob = await response.blob();
+    const reader = new FileReader();
+    reader.readAsDataURL(blob);
+    return new Promise((resolve, reject) => {
+      reader.onloadend = () => resolve(reader.result);
+      reader.onerror = reject;
+    });
+  } catch (error: unknown) {
+    console.warn(
+      `Error fetching and converting to b64: ${(error as Error).message}`,
+    );
+    return Promise.resolve(imagePlaceholder);
+  }
+};
+
+export const handlePageChange = (
+  e: ChangeEvent<unknown>,
+  router: NextRouter,
+  baseUrl: string,
+  currentPage: number,
+) => {
+  const target = e.currentTarget as HTMLElement;
+  const targetAriaLabel = target.ariaLabel;
+  const isNumber =
+    target.innerText !== null &&
+    target.innerText !== undefined &&
+    !Number.isNaN(parseInt(target.innerText));
+
+  let prevOrNextPage = 0;
+  const isPrevOrNext =
+    targetAriaLabel?.includes('previous') || targetAriaLabel?.includes('next');
+
+  if (!target.innerText && isPrevOrNext) {
+    prevOrNextPage = targetAriaLabel?.includes('previous')
+      ? currentPage - 1
+      : currentPage + 1;
+  }
+
+  const goToPage = isNumber ? parseInt(target.innerText) : prevOrNextPage;
+
+  router.push(`${baseUrl}${goToPage}`);
 };

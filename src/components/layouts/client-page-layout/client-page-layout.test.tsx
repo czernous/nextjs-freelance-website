@@ -1,50 +1,49 @@
-import { act, render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import ClientPageLayout from './index';
 import { clientPageMock } from './mocks';
 import { axe, toHaveNoViolations } from 'jest-axe';
 
 import React from 'react';
-import { mockNextRouter } from '../../../utils';
 
 expect.extend(toHaveNoViolations);
 
-jest.mock('next/config', () => () => ({
-  serverRuntimeConfig: {
-    PROJECT_ROOT: __dirname,
-  },
-}));
+// jest.mock('next/config', () => () => ({
+//   serverRuntimeConfig: {
+//     PROJECT_ROOT: __dirname,
+//   },
+//   publicRuntimeConfig: {
+//     APP_NAME: 'test',
+//   },
+// }));
 
 describe('Client Page Layout', () => {
-  let layout;
+  const template = (
+    <ClientPageLayout
+      test-id="layout"
+      pageTitle={clientPageMock.pageTitle}
+      meta={clientPageMock.meta}
+    />
+  );
 
-  beforeEach(async () => {
-    mockNextRouter();
-
-    layout = render(
-      <ClientPageLayout
-        test-id="layout"
-        pageTitle={clientPageMock.pageTitle}
-        appTitle={clientPageMock.appTitle}
-        meta={clientPageMock.meta}
-      />,
+  it('passes axe audit', async () => {
+    const { container } = render(template);
+    await waitFor(async () =>
+      expect(await axe(container)).toHaveNoViolations(),
     );
   });
 
-  it('passes axe audit', async () => {
-    const { container } = layout;
-    await act(async () => {
-      expect(await axe(container)).toHaveNoViolations();
+  it('is present in layout', async () => {
+    render(template);
+
+    const layout = await screen.findByTestId('client-layout');
+    await waitFor(() => {
+      expect(layout).toBeInTheDocument();
     });
   });
 
-  it('is present in layout', () => {
-    const layout = screen.findByTestId('layout');
-    waitFor(() => expect(layout).toBeInTheDocument());
-  });
-
-  it('is rendered unchanged', () => {
-    const { container } = layout;
+  it('is rendered unchanged', async () => {
+    const { container } = render(template);
     expect(container).toMatchSnapshot();
   });
 });

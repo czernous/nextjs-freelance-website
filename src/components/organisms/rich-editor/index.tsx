@@ -253,7 +253,7 @@ const RichEditor = ({ ...props }: IEditorProps) => {
   }
 
   return (
-    <div className={styles.editor}>
+    <div data-testid="editor" className={styles.editor}>
       <MenuBar editor={editor} />
       <Tiptap editor={editor} content={props.content} />
     </div>

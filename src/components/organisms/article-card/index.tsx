@@ -1,24 +1,55 @@
-import React, { memo } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import Image from 'next/image';
-import { IArticleCard, IButtonProps } from '../../../interfaces';
+import { IArticleCard } from '@src/interfaces';
 import styles from './article-card.module.scss';
 import Button from '@src/components/atoms/button';
 import { Color, Size } from '@src/enums';
+import { fetchAndConvertToBase64 } from '@src/utils/data-fetching/client';
+import { imagePlaceholder } from '@src/assets/image-placeholder';
+
+interface IArticleCardImage {
+  imageUrl: string;
+  imageAltText: string;
+  blurredImageUrl: string;
+}
 
 export const ArticleCard = memo(function ArticleCard({
   ...props
-}: IButtonProps & IArticleCard) {
+}: IArticleCard) {
+  const [articleImage, setArticleImage] = useState<IArticleCardImage | null>(
+    null,
+  );
+
+  useEffect(() => {
+    if (!articleImage) {
+      (async () => {
+        setArticleImage({
+          imageUrl: props.imageUrl,
+          imageAltText: props.imageAltText,
+          blurredImageUrl: props.blurredImageUrl
+            ? ((await fetchAndConvertToBase64(props.blurredImageUrl)) as string)
+            : imagePlaceholder,
+        });
+      })();
+    }
+  }, [articleImage, props.blurredImageUrl, props.imageAltText, props.imageUrl]);
+
   return (
     <div className={styles.card}>
       <div className={styles.image}>
-        <Image
-          src={props.image.secureUrl} // add default placeholder if there is no image
-          alt={props.image.altText as string}
-          fill
-          placeholder="blur"
-          blurDataURL={props.image.blurredImageUrl ?? props.image.url}
-          unoptimized={props.unoptimized}
-        />
+        {
+          /* istanbul ignore next */
+          articleImage && (
+            <Image
+              src={articleImage.imageUrl} // add default placeholder if there is no image
+              alt={articleImage.imageAltText}
+              fill
+              placeholder="blur"
+              blurDataURL={articleImage.blurredImageUrl}
+              unoptimized={props.unoptimized}
+            />
+          )
+        }
       </div>
       <div className={styles.content}>
         <h3 className={styles.title}>{props.title}</h3>

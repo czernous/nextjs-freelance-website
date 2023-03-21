@@ -2,6 +2,7 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { Color } from '../../../enums';
 import InputField from './index';
+import React from 'react';
 
 describe('Plain Input', () => {
   let input;

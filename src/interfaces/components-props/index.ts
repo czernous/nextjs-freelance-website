@@ -1,5 +1,5 @@
 import { Color, InputTypes, Size } from '../../enums';
-import { IImage, ISeo } from '../entities';
+import { IError, IPaginatedData, IPost, ISeo } from '../entities';
 
 export interface IButtonProps {
   buttonColor: Color;
@@ -30,7 +30,9 @@ export interface IInputProps {
 }
 
 export interface IArticleCard {
-  image: IImage;
+  imageUrl: string;
+  imageAltText: string;
+  blurredImageUrl: string;
   title: string;
   description: string;
   ctaText: string;
@@ -59,7 +61,6 @@ export interface INavItem {
 
 export interface IClientPageLayoutProps {
   pageTitle: string;
-  appTitle: string;
   meta: ISeo;
 }
 
@@ -67,4 +68,9 @@ export interface ICustomSnackbarProps {
   text: string | null;
   severity: 'success' | 'error' | 'warning' | null;
   clearPropsFn?: ({ ...props }: ICustomSnackbarProps | null) => void;
+}
+
+export interface IBlogProps {
+  data: IPaginatedData<IPost>;
+  error?: IError;
 }

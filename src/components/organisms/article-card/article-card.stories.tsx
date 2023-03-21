@@ -21,6 +21,8 @@ ArticleCardTemplate.args = {
   description: cardMock.description,
   ctaText: cardMock.ctaText,
   ctaUrl: cardMock.ctaUrl,
-  image: cardMock.image,
+  imageUrl: cardMock.imageUrl,
+  imageAltText: cardMock.imageAltText,
+  blurredImageUrl: cardMock.blurredImageUrl,
   unoptimized: cardMock.unoptimized,
 };

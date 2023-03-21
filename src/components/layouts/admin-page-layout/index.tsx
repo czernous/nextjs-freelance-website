@@ -11,15 +11,13 @@ const AdminPageLayout = ({
   children,
   ...props
 }: PropsWithChildren & IAdminPageLayoutProps) => (
-  <>
-    <main className={`${styles.dashboard}`}>
-      <AdminSideNav />
-      <section>
-        <h1 className={styles.heading}>{props.title}</h1>
-        {children}
-      </section>
-    </main>
-  </>
+  <main className={`${styles.dashboard}`} data-testid="admin-layout">
+    <AdminSideNav />
+    <section>
+      <h1 className={styles.heading}>{props.title}</h1>
+      {children}
+    </section>
+  </main>
 );
 
 export default AdminPageLayout;

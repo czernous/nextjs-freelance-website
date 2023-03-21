@@ -4,24 +4,16 @@ import '@testing-library/jest-dom';
 import { axe, toHaveNoViolations } from 'jest-axe';
 
 import React from 'react';
-import { mockNextRouter } from '../../../utils';
+
 import AdminPageLayout from './index';
 
 expect.extend(toHaveNoViolations);
-
-jest.mock('next/config', () => () => ({
-  serverRuntimeConfig: {
-    PROJECT_ROOT: __dirname,
-  },
-}));
 
 describe('Admin Page Layout', () => {
   let layout;
 
   beforeEach(async () => {
-    mockNextRouter();
-
-    layout = render(<AdminPageLayout test-id="layout" title="test" />);
+    layout = render(<AdminPageLayout title="test" />);
   });
 
   it('passes axe audit', async () => {
@@ -31,9 +23,9 @@ describe('Admin Page Layout', () => {
     });
   });
 
-  it('is present in layout', () => {
-    const layout = screen.findByTestId('layout');
-    waitFor(() => expect(layout).toBeInTheDocument());
+  it('is present in layout', async () => {
+    const layout = await screen.findByTestId('admin-layout');
+    await waitFor(() => expect(layout).toBeInTheDocument());
   });
 
   it('is rendered unchanged', () => {

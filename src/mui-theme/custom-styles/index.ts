@@ -94,3 +94,40 @@ export const imageGalleryStyles = {
     },
   },
 };
+
+export const searchFieldButton = {
+  borderRadius: 0,
+  boxShadow: 'none',
+  display: 'flex',
+  fontFamily: 'Sanchez, sans-serif',
+  fontWeight: 700,
+  textTransform: 'none',
+  backgroundColor: colors.brick[200],
+  color: colors.gray[700],
+  ':hover': {
+    backgroundColor: colors.brick[300],
+    color: colors.gray[800],
+    boxShadow: 'none',
+  },
+};
+
+export const customMuiPaginationOlive = {
+  '.MuiPagination-ul': {
+    '.MuiPaginationItem-root': {
+      borderRadius: 0,
+      fontFamily: 'Sanchez, sans-serif',
+      fontWeight: '700 !important',
+      color: colors.olive[500],
+      backgroundColor: '#F4EED',
+
+      '&.Mui-selected': {
+        backgroundColor: colors.olive[500],
+        color: '#F4EEED',
+
+        '&:hover': {
+          backgroundColor: colors.olive[600],
+        },
+      },
+    },
+  },
+};

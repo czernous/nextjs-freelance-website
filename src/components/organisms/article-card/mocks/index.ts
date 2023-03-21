@@ -3,6 +3,7 @@ import { base64ImgSmall, base64ImgMedium, base64ImgLarge } from './images.mock';
 
 export const imageMock: IImage = {
   publicId: 'fakeurl.com/asd',
+  name: 'asd',
   version: 1,
   signature: 'fakeSignature',
   width: 1000,
@@ -41,5 +42,7 @@ export const cardMock: IArticleCard = {
     'Some random article short summary. This will be taken from the article itself or prefilled when the article is posted',
   ctaText: 'Read more',
   ctaUrl: 'https//google.com',
-  image: imageMock,
+  imageUrl: imageMock.secureUrl,
+  imageAltText: imageMock.name,
+  blurredImageUrl: imageMock.blurredImageUrl,
 };

@@ -1,0 +1,11 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(409px, 1fr));
+  gap: 2em;
+  width: 100%;
+  margin-bottom: 2em;
+}
+
+.pagination {
+  margin-bottom: 2em;
+}

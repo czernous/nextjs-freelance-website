@@ -48,6 +48,7 @@ export default async (): Promise<Config> => {
       '!<rootDir>/src/',
     ],
     testEnvironment: 'jsdom',
+    detectOpenHandles: true,
     transform: {
       /* Use babel-jest to transpile tests with the next/babel preset
       https://jestjs.io/docs/configuration#transform-objectstring-pathtotransformer--pathtotransformer-object */
@@ -57,5 +58,6 @@ export default async (): Promise<Config> => {
       '/node_modules/(?!nanoid)',
       '^.+\\.module\\.(css|sass|scss)$',
     ],
+    setupFilesAfterEnv: ['<rootDir>/src/setup-tests.ts'],
   };
 };

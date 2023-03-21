@@ -1,36 +1,26 @@
-import { render, RenderResult, screen } from '@testing-library/react';
+import { act, render, screen, waitFor } from '@testing-library/react';
 import { axe, toHaveNoViolations } from 'jest-axe';
 import '@testing-library/jest-dom';
 import AdminServices from './index.page';
-import { act } from 'react-dom/test-utils';
+
 import React from 'react';
 import { servicesPageMock } from '../../../../mocks';
 
-import { mockNextRouter } from '../../../../utils';
-
 expect.extend(toHaveNoViolations);
 
-let component: RenderResult;
-jest.mock('next/config', () => () => ({
-  serverRuntimeConfig: {},
-}));
-
-beforeEach(async () => {
-  mockNextRouter();
-  component = render(<AdminServices data={servicesPageMock} />);
-});
-
 describe('Services', () => {
-  it('renders an accordion heading', () => {
-    const heading = screen.getByText('SEO');
+  const template = <AdminServices data={servicesPageMock} />;
 
-    expect(heading).toBeInTheDocument();
+  it('renders an accordion heading', async () => {
+    render(template);
+    const heading = screen.getByText('SEO');
+    await waitFor(() => expect(heading).toBeInTheDocument());
   });
 
   it('has no axe violations', async () => {
-    const { container } = component;
     await act(async () => {
-      expect(await axe(container)).toHaveNoViolations();
+      const { container } = render(template);
+      return expect(await axe(container)).toHaveNoViolations();
     });
   });
 });

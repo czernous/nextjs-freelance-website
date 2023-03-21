@@ -36,17 +36,31 @@ interface ICategory extends IEntity {
   name: string;
 }
 
-interface IPost extends IEntity {
+export interface IPost extends IEntity {
   title: string;
-  categories: ICategory[];
+  categories: ICategory[] | null;
   imageUrl: string;
+  imageAltText: string;
+  blurredImageUrl: string;
   responsiveImgs: IResponsiveImage[];
+  slug: string;
+  shortDescription: string;
   meta: ISeo; // seo
   isPublished: boolean;
   body: string;
 }
 
+export interface IPaginatedData<T> {
+  data: T[];
+  error?: IError;
+  page: number;
+  pageSize: number;
+  totalPages: number;
+  totalDocuments: number;
+}
+
 export interface IImage extends IEntity {
+  name: string;
   publicId: string;
   version: number;
   signature: string;
