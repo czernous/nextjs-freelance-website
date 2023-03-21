@@ -2,7 +2,6 @@ import { IClientPageLayoutProps } from '../../../../interfaces';
 
 export const clientPageMock: IClientPageLayoutProps = {
   pageTitle: 'About',
-  appTitle: 'Ruth Chernous',
   meta: {
     metaDescription:
       'This is a dummy description designed for testing purposes',
