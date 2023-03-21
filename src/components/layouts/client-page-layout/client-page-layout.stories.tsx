@@ -22,7 +22,6 @@ const Template: ComponentStory<typeof ClientPageLayout> = (args) => (
 
 export const ClientPageLayoutTemplate = Template.bind({});
 ClientPageLayoutTemplate.args = {
-  appTitle: clientPageMock.appTitle,
   pageTitle: clientPageMock.pageTitle,
   meta: clientPageMock.meta,
 };

@@ -8,15 +8,6 @@ import React from 'react';
 
 expect.extend(toHaveNoViolations);
 
-// jest.mock('next/config', () => () => ({
-//   serverRuntimeConfig: {
-//     PROJECT_ROOT: __dirname,
-//   },
-//   publicRuntimeConfig: {
-//     APP_NAME: 'test',
-//   },
-// }));
-
 describe('Client Page Layout', () => {
   const template = (
     <ClientPageLayout
