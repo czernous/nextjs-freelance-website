@@ -61,7 +61,7 @@ export interface INavItem {
 
 export interface IClientPageLayoutProps {
   pageTitle: string;
-  meta: ISeo;
+  meta: ISeo | null;
 }
 
 export interface ICustomSnackbarProps {
