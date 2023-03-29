@@ -68,7 +68,7 @@ const ServicesAdmin: NextPageWithLayout<IServicesPageAdminProps> = ({
                   apiKey: getConfig().publicRuntimeConfig.API_KEY,
                 },
               },
-              location: window.location.hostname,
+              location: window.location.origin,
             },
           });
           /* istanbul ignore next */
@@ -99,7 +99,7 @@ const ServicesAdmin: NextPageWithLayout<IServicesPageAdminProps> = ({
               label="Page Slug"
               required
               variant="outlined"
-              defaultValue={props.data.slug}
+              value="services"
               multiline
               maxRows={4}
               sx={customMuiTextFieldBrick}

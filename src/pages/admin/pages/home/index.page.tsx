@@ -64,7 +64,7 @@ const HomeAdmin: NextPageWithLayout<IHomePageAdminProps> = ({
                   apiKey: getConfig().publicRuntimeConfig.API_KEY,
                 },
               },
-              location: window.location.hostname,
+              location: window.location.origin,
             },
           });
           /* istanbul ignore next */
@@ -130,7 +130,7 @@ const HomeAdmin: NextPageWithLayout<IHomePageAdminProps> = ({
               label="Page Slug"
               required
               variant="outlined"
-              defaultValue={props.data.slug}
+              value="home"
               multiline
               maxRows={4}
               sx={customMuiTextFieldBrick}

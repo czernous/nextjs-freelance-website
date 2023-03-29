@@ -30,7 +30,7 @@ describe('updateSnackbarProps', () => {
 
     expect(callback).toHaveBeenCalledWith({
       severity: 'success',
-      text: 'Success',
+      text: { message: 'Success' },
     });
   });
 
@@ -49,7 +49,7 @@ describe('updateSnackbarProps', () => {
 
     expect(callback).toHaveBeenCalledWith({
       severity: 'error',
-      text: 'Error',
+      text: { message: 'Error' },
     });
   });
 

@@ -20,7 +20,7 @@ export const handleGalleryOpen = async (
         apiKey,
       },
     },
-    location: `${window.location.hostname}`,
+    location: `${window.location.origin}`,
   });
 
   const imagesData = await imageResponse?.json();

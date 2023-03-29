@@ -1,5 +1,5 @@
 import { imagePlaceholder } from '@src/assets/image-placeholder';
-import { IError } from '@src/interfaces';
+import { IError, IPost } from '@src/interfaces';
 import { NextRouter } from 'next/router';
 import { ChangeEvent, MutableRefObject } from 'react';
 
@@ -29,7 +29,7 @@ export const fetchData: IFetchDataFunc = async ({
   const { url, options, location } = props;
 
   try {
-    const res = await fetch(`https://${location ?? ''}${url}`, options);
+    const res = await fetch(`${location ?? ''}${url}`, options);
     return res;
   } catch (error) {
     console.warn('Could not fetch', error);
@@ -60,7 +60,11 @@ export const handleSubmit = async ({ ...options }: ISubmitHandlerOptions) => {
       obj[k] = obj[k] || {};
       obj = obj[k] as Record<string, unknown>;
     }
-    obj[keys[keys.length - 1]] = value;
+
+    const isBoolean = value === 'true' || value === 'false';
+    const isTrue = isBoolean && value === 'true';
+
+    obj[keys[keys.length - 1]] = isBoolean ? isTrue : value;
   }
 
   const { handlerProps } = options;
@@ -94,6 +98,38 @@ export const handleSubmit = async ({ ...options }: ISubmitHandlerOptions) => {
   }
 
   return response;
+};
+
+export const revalidatePosts = async (
+  originUrl: string,
+  totalDocuments: number,
+  pageSize: number,
+  post?: IPost | null | undefined,
+) => {
+  if (!post || !post.isPublished) return;
+  // create paths to revalidate
+  const pagePaths: string[] = [];
+  const totalPages = Math.ceil(totalDocuments / pageSize);
+
+  for (let i = totalPages; i > 0; i--) {
+    pagePaths.push(`/blog/page/${i}`);
+  }
+
+  const revalidatePaths = [`/blog`, ...pagePaths];
+  if (post) revalidatePaths.push(`/blog/${post.slug}`);
+
+  const revalidatePostsResposne = await Promise.all(
+    revalidatePaths.map((path) =>
+      fetch(`${originUrl}/api/revalidate?path=${path}`, {
+        method: 'GET',
+      }),
+    ),
+  );
+  try {
+    await Promise.all(revalidatePostsResposne.map(async (r) => await r.json()));
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 export const handleClientError = (error: IError, router: NextRouter) => {

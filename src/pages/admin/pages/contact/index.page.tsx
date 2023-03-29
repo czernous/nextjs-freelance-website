@@ -64,7 +64,7 @@ const ContactAdmin: NextPageWithLayout<IContactPageAdminProps> = ({
                   apiKey: getConfig().publicRuntimeConfig.API_KEY,
                 },
               },
-              location: window.location.hostname,
+              location: window.location.origin,
             },
           });
           /* istanbul ignore next */
@@ -107,7 +107,7 @@ const ContactAdmin: NextPageWithLayout<IContactPageAdminProps> = ({
               label="Page Slug"
               required
               variant="outlined"
-              defaultValue={props.data.slug}
+              value="contact"
               multiline
               maxRows={4}
               sx={customMuiTextFieldBrick}

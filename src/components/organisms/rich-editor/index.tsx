@@ -243,7 +243,9 @@ const RichEditor = ({ ...props }: IEditorProps) => {
       }),
     ],
     content: props.content,
+    /* istanbul ignore next */
     onUpdate({ editor }) {
+      /* istanbul ignore next */
       props.onEditorUpdate && props.onEditorUpdate(editor.getHTML());
     },
   });

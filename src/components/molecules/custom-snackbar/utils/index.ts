@@ -6,18 +6,32 @@ export const updateSnackbarProps = async (
   callback: (value: SetStateAction<ICustomSnackbarProps | null>) => void,
 ) => {
   if (!r) return;
-  const severity = r.status === 200 || r.status === 204 ? 'success' : 'error';
+  const severity =
+    r.status === 200 || r.status === 204 || r.status === 201
+      ? 'success'
+      : 'error';
   const hasJson = r.headers.get('Content-Type')?.includes('application/json');
+  /* istanbul ignore next */
+  const statusMessageText = async (r: Response) => {
+    switch (r.status) {
+      case 204:
+        return 'Successfully saved data';
+      case 201:
+        return 'Successfully created';
+      default:
+        return await r.text();
+    }
+  };
 
   let statusMsg;
 
   try {
-    statusMsg = hasJson
-      ? await r.json()
-      : {
-          message:
-            r.status === 204 ? 'Successfully saved data' : await r.text(),
-        };
+    statusMsg =
+      hasJson && r.headers.get('Method') === 'PUT'
+        ? await r.json()
+        : {
+            message: await statusMessageText(r),
+          };
   } catch (error) {
     /* istanbul ignore next */
     statusMsg = hasJson

@@ -88,7 +88,7 @@ const AboutAdmin: NextPageWithLayout<IAboutPageAdminProps> = ({
                   apiKey: getConfig().publicRuntimeConfig.API_KEY,
                 },
               },
-              location: window.location.hostname,
+              location: window.location.origin,
             },
           });
           /* istanbul ignore next */
@@ -119,7 +119,7 @@ const AboutAdmin: NextPageWithLayout<IAboutPageAdminProps> = ({
               label="Page Slug"
               required
               variant="outlined"
-              defaultValue={props?.data?.slug}
+              value="about"
               multiline
               maxRows={4}
               sx={customMuiTextFieldBrick}

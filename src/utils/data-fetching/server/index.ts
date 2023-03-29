@@ -64,18 +64,8 @@ export const serverSideBackendFetch = async <T>(
   const cfg = getConfig();
   const apiKey = cfg.publicRuntimeConfig.API_KEY;
 
-  const isDevelopment = process.env.NODE_ENV === 'development';
-
-  if (isDevelopment) {
-    process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-  }
-
-  const location = isDevelopment
-    ? cfg.publicRuntimeConfig.BACKEND_URL
-    : cfg.publicRuntimeConfig.APP_HOST;
-
   const response = await fetchData({
-    url: `${!isDevelopment ? 'backend' : ''}${backendEndpoint}`,
+    url: backendEndpoint,
     options: {
       method: 'GET',
       headers: {
@@ -83,7 +73,7 @@ export const serverSideBackendFetch = async <T>(
         apiKey,
       },
     },
-    location,
+    location: `http://${cfg.publicRuntimeConfig.BACKEND_URL}`,
   });
 
   const data: T = (await response?.json()) ?? null;

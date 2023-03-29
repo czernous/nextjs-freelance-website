@@ -48,9 +48,12 @@ export const getStaticProps: GetStaticProps = async () => {
       '/posts?page=1&pagesize=10',
     );
 
+    const publishedPosts = data.data.filter((p) => p.isPublished);
+    const filteredData = { ...data, data: publishedPosts };
+
     return {
       props: {
-        data,
+        data: filteredData,
       },
     };
   } catch (error) {

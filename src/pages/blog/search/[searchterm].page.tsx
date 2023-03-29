@@ -26,8 +26,10 @@ const BlogSearchResults: NextPageWithLayout<
       <SearchField searchUrl="/blog/search" />
       <PaginatedCards
         currentPage={props.currentPage}
-        /* istanbul ignore next*/
-        currentUrl={`${baseUrl}${!isPaginated ? '' : props.query}`}
+        currentUrl={`${baseUrl}${
+          /* istanbul ignore next*/
+          !isPaginated ? '' : props.query
+        }`}
         pageUrl="?page="
         data={props.data}
       />
@@ -56,9 +58,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       `/posts?search=${query}&page=${page}&pagesize=10`,
     );
 
+    const publishedPosts = data.data.filter((p) => p.isPublished);
+    const filteredData = { ...data, data: publishedPosts };
+
     return {
       props: {
-        data,
+        data: filteredData,
         query,
         currentPage: page,
       },

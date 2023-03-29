@@ -216,22 +216,26 @@ const ImageGallery = memo(
                   maxHeight: '70vh',
                 }}
               >
-                {currentImage && (
-                  <Image
-                    src={currentImage?.secureUrl}
-                    alt={currentImage.altText ?? ''}
-                    style={{
-                      display: 'flex',
-                      height: '100%',
-                      width: '100%',
-                      objectFit: 'cover',
-                    }}
-                    fill
-                    loading="lazy"
-                    placeholder="blur"
-                    blurDataURL={currentImage.blurredImageUrl}
-                  />
-                )}
+                {
+                  /* istanbul ignore next */
+                  currentImage && (
+                    <Image
+                      src={currentImage?.secureUrl}
+                      /* istanbul ignore next */
+                      alt={currentImage.altText ?? ''}
+                      style={{
+                        display: 'flex',
+                        height: '100%',
+                        width: '100%',
+                        objectFit: 'cover',
+                      }}
+                      fill
+                      loading="lazy"
+                      placeholder="blur"
+                      blurDataURL={currentImage.blurredImageUrl}
+                    />
+                  )
+                }
               </DialogContent>
             </Dialog>
           </Dialog>

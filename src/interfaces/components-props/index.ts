@@ -1,3 +1,4 @@
+import { NextConfig } from 'next';
 import { Color, InputTypes, Size } from '../../enums';
 import { IError, IPaginatedData, IPost, ISeo } from '../entities';
 
@@ -73,4 +74,26 @@ export interface ICustomSnackbarProps {
 export interface IBlogProps {
   data: IPaginatedData<IPost>;
   error?: IError;
+}
+
+export interface IPostsResponse {
+  data: IPost[];
+  hasPagination: boolean;
+  page: number;
+  pageSize: number;
+  totalPages: number;
+  totalDocuments: number;
+}
+
+export interface IPaginationSettings {
+  page: number;
+  pageSize: number;
+}
+
+export interface IPostsListProps {
+  postsResponse: IPostsResponse;
+  paginationSettings: IPaginationSettings;
+  cfg: NextConfig;
+  updatePaginationSettings: (paginationSettings: IPaginationSettings) => void;
+  updatePostsResponse: (postsResponse: IPostsResponse) => void;
 }

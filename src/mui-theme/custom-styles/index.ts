@@ -131,3 +131,27 @@ export const customMuiPaginationOlive = {
     },
   },
 };
+
+export const customMuiTable = {
+  '&, td, th': {
+    background: colors.bark[100],
+    color: colors.brick[800],
+  },
+  'th, td': {
+    borderColor: colors.brick[800],
+  },
+
+  'th, td *': {
+    color: colors.brick[800],
+  },
+};
+
+export const customMuiCheckbox = {
+  '&.Mui-checked': {
+    color: colors.brick[500],
+  },
+
+  '&:hover': {
+    background: colors.brick[100],
+  },
+};
