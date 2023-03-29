@@ -197,8 +197,10 @@ const PostForm = memo(({ ...props }: IPostFormProps) => {
               label="Post title"
               required
               variant="outlined"
-              /* istanbul ignore next*/
-              defaultValue={props?.currentPost?.title ?? ''}
+              defaultValue={
+                /* istanbul ignore next*/
+                props?.currentPost?.title ?? ''
+              }
               multiline
               maxRows={4}
               sx={customMuiTextFieldBrick}
@@ -209,8 +211,10 @@ const PostForm = memo(({ ...props }: IPostFormProps) => {
               label="Short description"
               required
               variant="outlined"
-              /* istanbul ignore next*/
-              defaultValue={props?.currentPost?.shortDescription ?? ''}
+              defaultValue={
+                /* istanbul ignore next*/
+                props?.currentPost?.shortDescription ?? ''
+              }
               inputProps={{ maxLength: 120 }}
               multiline
               maxRows={4}
@@ -223,8 +227,10 @@ const PostForm = memo(({ ...props }: IPostFormProps) => {
               label="Post Slug"
               required
               variant="outlined"
-              /* istanbul ignore next*/
-              defaultValue={props?.currentPost?.slug ?? ''}
+              defaultValue={
+                /* istanbul ignore next*/
+                props?.currentPost?.slug ?? ''
+              }
               multiline
               maxRows={4}
               sx={customMuiTextFieldBrick}
@@ -242,8 +248,10 @@ const PostForm = memo(({ ...props }: IPostFormProps) => {
               fieldId={'imageUrl'}
               fieldName={'imageUrl'}
               fieldLabel={'imageUrl'}
-              /* istanbul ignore next*/
-              defaultValue={props?.currentPost?.imageUrl ?? ''}
+              defaultValue={
+                /* istanbul ignore next*/
+                props?.currentPost?.imageUrl ?? ''
+              }
               value={selectedImage?.secureUrl}
               onClick={handleGallery}
               required={true}
