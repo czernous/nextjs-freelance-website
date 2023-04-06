@@ -140,6 +140,7 @@ export const handleClientError = (error: IError, router: NextRouter) => {
     query: { statusCode, errorMessage },
   });
 };
+
 export const fetchAndConvertToBase64 = async (imageUrl: string) => {
   const protocol = imageUrl.split(':')[0];
 
@@ -189,4 +190,33 @@ export const handlePageChange = (
   const goToPage = isNumber ? parseInt(target.innerText) : prevOrNextPage;
 
   router.push(`${baseUrl}${goToPage}`);
+};
+
+/* istanbul ignore next */ //is only used for storybook
+export const base64toFileObject = async (
+  url: string,
+  filename: string,
+): Promise<File> => {
+  const mimeType = url.split(':')[1];
+  const res = await fetch(url);
+  const buf = await res.arrayBuffer();
+  return new File([buf], `${filename}.${mimeType}`, { type: mimeType });
+};
+/* istanbul ignore next */ //no point testing this
+export const fileToBase64 = async (
+  file: File,
+): Promise<string | ArrayBuffer | null> => {
+  try {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    return new Promise((resolve, reject) => {
+      reader.onloadend = () => resolve(reader.result) as unknown as string;
+      reader.onerror = reject;
+    });
+  } catch (error: unknown) {
+    console.warn(
+      `Error converting file to base64 string: ${(error as Error).message}`,
+    );
+    return Promise.resolve(null);
+  }
 };

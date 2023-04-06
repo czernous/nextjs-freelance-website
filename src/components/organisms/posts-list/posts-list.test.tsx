@@ -109,7 +109,7 @@ describe('PostsList', () => {
       'delete-button',
     );
     fireEvent.click(firstPostDeleteButton);
-    const dialogTitle = screen.getByText('Confirm');
+    const dialogTitle = screen.getByText('Delete');
     expect(dialogTitle).toBeInTheDocument();
   });
 
@@ -120,7 +120,7 @@ describe('PostsList', () => {
       'delete-button',
     );
     fireEvent.click(firstPostDeleteButton);
-    const deleteButton = screen.getByText('Confirm');
+    const deleteButton = screen.getByText('Delete');
     fireEvent.click(deleteButton);
 
     await waitFor(() => {

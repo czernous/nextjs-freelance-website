@@ -29,7 +29,11 @@ import React, { memo, useCallback, useState } from 'react';
 import { fetchData, revalidatePosts } from '@src/utils/data-fetching/client';
 import { updateSnackbarProps } from '@src/components/molecules/custom-snackbar/utils';
 import CustomSnackbar from '@src/components/molecules/custom-snackbar';
-import { customMuiTable } from '@src/mui-theme/custom-styles';
+import {
+  customMuiButtonBrick,
+  customMuiButtonDanger,
+  customMuiTable,
+} from '@src/mui-theme/custom-styles';
 
 const PostsList = memo(({ ...props }: IPostsListProps) => {
   const theme = useTheme();
@@ -264,8 +268,7 @@ const PostsList = memo(({ ...props }: IPostsListProps) => {
               marginTop: 'unset',
               marginBottom: 'unset',
             },
-            color: '#5B3324',
-            background: '#F5F0EF',
+            ...customMuiTable,
           }}
         />
       </Paper>
@@ -278,10 +281,13 @@ const PostsList = memo(({ ...props }: IPostsListProps) => {
             onClose={handleClose}
             aria-labelledby="responsive-dialog-title"
           >
-            <DialogTitle id="responsive-dialog-title">
+            <DialogTitle
+              id="responsive-dialog-title"
+              sx={{ fontFamily: 'Mulish, sans-serif', fontWeight: 700 }}
+            >
               {'Are you sure you want to delete this post?'}
             </DialogTitle>
-            <DialogContent>
+            <DialogContent sx={{ '*': { fontFamily: 'Sanchez, sans-serif' } }}>
               <DialogContentText component={'div'}>
                 <h4>Title: {markedPost.title}</h4>
                 <p>Short description: {markedPost.shortDescription}</p>
@@ -292,8 +298,12 @@ const PostsList = memo(({ ...props }: IPostsListProps) => {
               </DialogContentText>
             </DialogContent>
             <DialogActions>
-              <Button onClick={handleClose}>Cancel</Button>
-              <Button onClick={handleDeletePost}>Confirm</Button>
+              <Button onClick={handleClose} sx={customMuiButtonBrick}>
+                Cancel
+              </Button>
+              <Button onClick={handleDeletePost} sx={customMuiButtonDanger}>
+                Delete
+              </Button>
             </DialogActions>
           </Dialog>
         )

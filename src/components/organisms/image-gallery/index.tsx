@@ -35,6 +35,8 @@ import { TransitionProps } from '@mui/material/transitions';
 
 import { fetchAndConvertToBase64 } from '@src/utils/data-fetching/client';
 import { imageGalleryStyles } from '@src/mui-theme/custom-styles';
+import { AddAPhotoOutlined } from '@mui/icons-material';
+import ImageUpload from '@src/components/molecules/image-upload';
 
 interface IImageGalleryProps {
   images: IImage[];
@@ -57,6 +59,7 @@ const ImageGallery = memo(
     const [currentImage, setCurrentImage] = useState<IImage | null>(null);
     const [updatedImages, setUpdatedImages] = useState<IImage[] | null>(null);
     const [openZoom, setOpenZoom] = useState(false);
+    const [isImageUploadOpen, setImageUploadOpen] = useState(false);
     /* istanbul ignore next */
     const showZoomedImage = useCallback((image: IImage) => {
       setCurrentImage(image);
@@ -70,6 +73,11 @@ const ImageGallery = memo(
     const handleZoomClose = useCallback(() => {
       setOpenZoom(false);
     }, [setOpenZoom]);
+
+    /* istanbul ignore next */
+    const toggleImageUploadOpen = useCallback(() => {
+      setImageUploadOpen(!isImageUploadOpen);
+    }, [isImageUploadOpen]);
 
     useEffect(() => {
       (async () => {
@@ -120,6 +128,14 @@ const ImageGallery = memo(
                 >
                   Image gallery
                 </Typography>
+
+                <IconButton
+                  component="span"
+                  title="Upload image"
+                  onClick={toggleImageUploadOpen}
+                >
+                  <AddAPhotoOutlined />
+                </IconButton>
               </Toolbar>
             </AppBar>
             {!updatedImages || !updatedImages.length ? (
@@ -238,6 +254,10 @@ const ImageGallery = memo(
                 }
               </DialogContent>
             </Dialog>
+            <ImageUpload
+              isOpen={isImageUploadOpen}
+              toggleOpen={toggleImageUploadOpen}
+            />
           </Dialog>
         </div>
       </>

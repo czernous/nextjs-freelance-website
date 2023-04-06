@@ -28,19 +28,33 @@ export const customMuiTextFieldBrick = {
     color: colors.brick[600],
   },
 };
-/* istanbul ignore next*/
-export const customMuiButtonBrick = {
+const customMuiButtonCommon = {
   borderRadius: 0,
   boxShadow: 'none',
   display: 'flex',
   fontFamily: 'Sanchez, sans-serif',
   fontWeight: 700,
   textTransform: 'none',
+};
+
+/* istanbul ignore next*/
+export const customMuiButtonBrick = {
+  ...customMuiButtonCommon,
   backgroundColor: colors.brick[200],
   color: colors.gray[700],
   ':hover': {
     backgroundColor: colors.brick[300],
     color: colors.gray[800],
+    boxShadow: 'none',
+  },
+};
+
+export const customMuiButtonDanger = {
+  ...customMuiButtonCommon,
+  backgroundColor: colors.danger[500],
+  color: '#fff',
+  ':hover': {
+    backgroundColor: colors.danger[600],
     boxShadow: 'none',
   },
 };
