@@ -2,10 +2,10 @@ import { useEditor, Editor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Image from '@tiptap/extension-image';
 import styles from './editor.module.scss';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { IImage } from '@src/interfaces';
-import { handleGalleryOpen } from '../image-gallery/utils';
+import { Dispatch, SetStateAction, useContext, useEffect } from 'react';
+
 import ImageGallery from '../image-gallery';
+import { GalleryContext } from '../image-gallery/state/image-gallery.base';
 
 interface ITipTapEditorProps {
   editor: Editor;
@@ -20,24 +20,25 @@ interface IEditorProps {
 const MenuBar = ({ ...props }: ITipTapEditorProps) => {
   const { editor } = props;
 
-  const [images, setImages] = useState<IImage[] | null>(null);
-  const [isGalleryOpen, setIsGalleryOpen] = useState(false);
-  const [selectedImage, setSelectedImage] = useState<IImage | null>(null);
-  /* istanbul ignore next */
-  const handleImageSelection = (image: IImage) => {
-    setSelectedImage(image);
-    setIsGalleryOpen(false);
-  };
+  const galleryContext = useContext(GalleryContext);
+
+  const { toggleOpen, selectedImages, instanceid, setInstanceId } =
+    galleryContext;
+  const galleryId = 'rich-editor-gallery';
 
   const addImage = () => {
-    handleGalleryOpen(setImages);
-    setIsGalleryOpen(true);
+    toggleOpen();
   };
 
   useEffect(() => {
-    if (selectedImage)
-      editor.chain().focus().setImage({ src: selectedImage.secureUrl }).run();
-  }, [selectedImage, editor]);
+    if (instanceid !== galleryId) setInstanceId(galleryId);
+    if (selectedImages[galleryId])
+      editor
+        .chain()
+        .focus()
+        .setImage({ src: selectedImages[galleryId].secureUrl })
+        .run();
+  }, [selectedImages, editor]);
 
   return (
     <>
@@ -207,17 +208,8 @@ const MenuBar = ({ ...props }: ITipTapEditorProps) => {
           redo
         </button>
       </div>
-      {images && (
-        <ImageGallery
-          images={images}
-          isOpen={isGalleryOpen}
-          onClose={
-            /* istanbul ignore next */
-            () => setIsGalleryOpen(false)
-          }
-          onImageSelect={handleImageSelection}
-        />
-      )}
+
+      <ImageGallery identifier={galleryId} />
     </>
   );
 };

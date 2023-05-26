@@ -70,7 +70,7 @@
     font-size: 50px;
   }
 
-  @media (max-width: 1139px) {
+  @media (width <= 1139px) {
     display: block;
   }
 }

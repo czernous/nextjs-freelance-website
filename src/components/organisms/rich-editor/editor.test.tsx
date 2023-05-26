@@ -1,8 +1,8 @@
-import { act, render, screen, waitFor } from '@testing-library/react';
+import { act, screen, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import RichEditor from '.';
 import { axe, toHaveNoViolations } from 'jest-axe';
-
+import { render } from '../../../utils/testing';
 import React from 'react';
 
 expect.extend(toHaveNoViolations);
