@@ -1,13 +1,13 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react';
 import React from 'react';
 import AdminPageLayout from '.';
 
 export default {
   title: 'Layouts/Admin Page',
   component: AdminPageLayout,
-} as unknown as ComponentMeta<typeof AdminPageLayout>;
+} satisfies Meta<typeof AdminPageLayout>;
 
-const Template: ComponentStory<typeof AdminPageLayout> = (args) => (
+const Template: StoryFn<typeof AdminPageLayout> = (args) => (
   <AdminPageLayout {...args}>
     <p>
       Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis

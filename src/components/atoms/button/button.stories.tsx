@@ -9,7 +9,6 @@ const meta = {
   component: Button,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {
-    buttonText: 'primaryCta',
     buttonColor: {
       control: {
         type: 'select',
@@ -31,12 +30,15 @@ const meta = {
         options: ['small', 'regular', 'large', 'extra-large'],
       },
     },
+  },
+  args: {
+    buttonText: 'primaryCta',
     hasShadow: false,
     isDisabled: false,
     buttonFullWidth: false,
     buttonType: 'button',
   },
-} as unknown as Meta<typeof Button>;
+} satisfies Meta<typeof Button>;
 
 export default meta;
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args

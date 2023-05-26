@@ -1,4 +1,4 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react';
 import React from 'react';
 import ArticleCard from '.';
 import { cardMock } from './mocks';
@@ -6,10 +6,10 @@ import { cardMock } from './mocks';
 export default {
   title: 'Organisms/Article Card',
   component: ArticleCard,
-  argTypes: cardMock,
-} as unknown as ComponentMeta<typeof ArticleCard>;
+  args: cardMock,
+} satisfies Meta<typeof ArticleCard>;
 
-const Template: ComponentStory<typeof ArticleCard> = (args) => (
+const Template: StoryFn<typeof ArticleCard> = (args) => (
   <div style={{ width: '450px', display: 'flex', maxWidth: '100%' }}>
     <ArticleCard {...args} />
   </div>

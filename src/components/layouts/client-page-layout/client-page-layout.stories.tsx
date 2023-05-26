@@ -1,4 +1,4 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react';
 import React from 'react';
 import ClientPageLayout from '.';
 import { clientPageMock } from './mocks';
@@ -6,10 +6,10 @@ import { clientPageMock } from './mocks';
 export default {
   title: 'Layouts/Client Page',
   component: ClientPageLayout,
-  argTypes: clientPageMock,
-} as unknown as ComponentMeta<typeof ClientPageLayout>;
+  args: clientPageMock,
+} satisfies Meta<typeof ClientPageLayout>;
 
-const Template: ComponentStory<typeof ClientPageLayout> = (args) => (
+const Template: StoryFn<typeof ClientPageLayout> = (args) => (
   <ClientPageLayout {...args}>
     <p>
       Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis

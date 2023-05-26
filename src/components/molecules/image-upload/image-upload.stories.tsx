@@ -1,16 +1,16 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react';
 import ImageUpload from '.';
 
 export default {
   title: 'Molecules/Image Upload',
   component: ImageUpload,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
-  argTypes: {
+  args: {
     isOpen: true,
   },
-} as unknown as ComponentMeta<typeof ImageUpload>;
+} satisfies Meta<typeof ImageUpload>;
 
-const Template: ComponentStory<typeof ImageUpload> = (args) => (
+const Template: StoryFn<typeof ImageUpload> = (args) => (
   <ImageUpload {...args} />
 );
 

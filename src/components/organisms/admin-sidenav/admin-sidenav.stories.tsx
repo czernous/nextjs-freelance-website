@@ -5,7 +5,7 @@ import AdminSidenav from '.';
 export default {
   title: 'Organisms/Admin Sidenav',
   component: AdminSidenav,
-} as unknown as Meta<typeof AdminSidenav>;
+} satisfies Meta<typeof AdminSidenav>;
 
 const Template: StoryFn<typeof AdminSidenav> = () => (
   <AdminSidenav galleryIdent={'test-gallery'} />

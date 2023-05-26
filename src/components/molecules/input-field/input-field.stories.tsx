@@ -1,4 +1,4 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react';
 import React from 'react';
 import InputField from '.';
 import { Color, InputTypes } from '../../../enums';
@@ -9,12 +9,8 @@ export default {
   component: InputField,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {
-    inputId: 'example_input',
-    inputAdditionalClasses: '',
-    type: 'input',
-    inputType: 'text',
-    isRequired: true,
     inputColor: {
+      inputType: 'text',
       control: {
         type: 'select',
         options: [
@@ -29,14 +25,18 @@ export default {
         ],
       },
     },
-    fieldLabel: 'Name',
   },
-} as unknown as ComponentMeta<typeof InputField>;
+  args: {
+    fieldLabel: 'Name',
+    isRequired: true,
+    inputId: 'example_input',
+    inputAdditionalClasses: '',
+    type: 'input',
+  },
+} satisfies Meta<typeof InputField>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof InputField> = (args) => (
-  <InputField {...args} />
-);
+const Template: StoryFn<typeof InputField> = (args) => <InputField {...args} />;
 
 export const InputFieldTemplate = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
