@@ -38,7 +38,7 @@ const MenuBar = ({ ...props }: ITipTapEditorProps) => {
         .focus()
         .setImage({ src: selectedImages[galleryId].secureUrl })
         .run();
-  }, [selectedImages, editor]);
+  }, [selectedImages, editor, instanceid, setInstanceId]);
 
   return (
     <>

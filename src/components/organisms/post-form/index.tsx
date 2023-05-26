@@ -80,7 +80,6 @@ const PostForm = memo(({ ...props }: IPostFormProps) => {
     () => setIsPublished(!isPublished),
     [isPublished],
   );
-  console.log(selectedImages);
 
   const handleFormSubmit = useCallback(
     async (e: unknown) => {
