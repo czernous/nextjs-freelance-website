@@ -1,12 +1,14 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react';
 import React from 'react';
 import AdminSidenav from '.';
 
 export default {
   title: 'Organisms/Admin Sidenav',
   component: AdminSidenav,
-} as unknown as ComponentMeta<typeof AdminSidenav>;
+} as unknown as Meta<typeof AdminSidenav>;
 
-const Template: ComponentStory<typeof AdminSidenav> = () => <AdminSidenav />;
+const Template: StoryFn<typeof AdminSidenav> = () => (
+  <AdminSidenav galleryIdent={'test-gallery'} />
+);
 
 export const AdminSidenavTemplate = Template.bind({});

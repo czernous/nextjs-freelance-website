@@ -1,12 +1,10 @@
 const path = require('path');
-
 module.exports = {
   stories: ['../src/**/*.stories.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
   addons: [
     '@storybook/addon-links',
     '@storybook/addon-essentials',
     '@storybook/addon-interactions',
-    'storybook-addon-next-router',
     '@storybook/addon-a11y',
     {
       name: '@storybook/addon-postcss',
@@ -17,9 +15,9 @@ module.exports = {
       },
     },
   ],
-  framework: '@storybook/react',
-  core: {
-    builder: '@storybook/builder-webpack5',
+  framework: {
+    name: '@storybook/nextjs',
+    options: {},
   },
   typescript: {
     check: false,
@@ -40,22 +38,23 @@ module.exports = {
   `,
   webpackFinal: async (config) => {
     config.module.rules.push(
-      {
-        test: /\.scss$/,
-        use: ['style-loader', 'css-loader', 'sass-loader'],
-        include: path.resolve(__dirname, '../'),
-      },
+      // {
+      //   test: /\.scss$/,
+      //   use: ['style-loader', 'css-loader', 'sass-loader'],
+      //   include: path.resolve(__dirname, '../'),
+      // },
       {
         test: /\.(png|jpg|gif)$/i,
         type: 'asset/resource',
       },
     );
-
     config.resolve.alias = {
       ...config.resolve.alias,
       '@src': path.resolve(__dirname, '../src/'),
     };
-
     return config;
+  },
+  docs: {
+    autodocs: true,
   },
 };
