@@ -11,32 +11,25 @@ import {
   customMuiTextFieldBrick,
 } from '@src/mui-theme/custom-styles';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import React, { FunctionComponent, memo, useCallback, useState } from 'react';
-import { IImage, ISeo } from '@src/interfaces';
-import { handleGalleryOpen } from '@src/components/organisms/image-gallery/utils';
+import React, { FunctionComponent, memo, useCallback, useContext } from 'react';
+import { ISeo } from '@src/interfaces';
 import ImageGallery from '@src/components/organisms/image-gallery';
 import SelectImageField from '../select-image-field';
+import { GalleryContext } from '@src/components/organisms/image-gallery/state/image-gallery.base';
 
 const CustomFormFields: FunctionComponent<{ meta?: ISeo }> = memo(
   ({ ...props }: { meta?: ISeo }) => {
-    const [images, setImages] = useState<IImage[] | null>(null);
-    const [isGalleryOpen, setIsGalleryOpen] = useState(false);
-    const [selectedImage, setSelectedImage] = useState<IImage | null>(null);
-    /* istanbul ignore next */
-    const handleImageSelection = useCallback((image: IImage) => {
-      setSelectedImage(image);
-      setIsGalleryOpen(false);
-      // make the field editable again
-      setTimeout(() => {
-        setSelectedImage(null);
-      }, 500);
-    }, []);
+    const galleryIdent = 'openGraph-seo-image';
+
+    const galleryContext = useContext(GalleryContext);
+
+    const { toggleOpen, selectedImages, setInstanceId } = galleryContext;
 
     /* istanbul ignore next */
-    const handleGallery = useCallback(() => {
-      handleGalleryOpen(setImages);
-      setIsGalleryOpen(true);
-    }, []);
+    const handleOpen = useCallback(() => {
+      setInstanceId(galleryIdent);
+      toggleOpen();
+    }, [setInstanceId, toggleOpen]);
 
     return (
       <Accordion sx={accordionStyleOverrides}>
@@ -102,22 +95,12 @@ const CustomFormFields: FunctionComponent<{ meta?: ISeo }> = memo(
             fieldName={'meta.openGraph.imageUrl'}
             fieldLabel={'OG Image'}
             defaultValue={props?.meta?.openGraph?.imageUrl ?? ''}
-            value={selectedImage?.secureUrl}
-            onClick={handleGallery}
+            value={selectedImages[galleryIdent]?.secureUrl}
+            onClick={handleOpen}
             required={false}
           />
         </AccordionDetails>
-        {images && (
-          <ImageGallery
-            images={images}
-            isOpen={isGalleryOpen}
-            onClose={
-              /* istanbul ignore next */
-              () => setIsGalleryOpen(false)
-            }
-            onImageSelect={handleImageSelection}
-          />
-        )}
+        <ImageGallery identifier={galleryIdent} />
       </Accordion>
     );
   },

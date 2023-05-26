@@ -1,4 +1,4 @@
-import { act, render, screen, waitFor } from '@testing-library/react';
+import { act, screen, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
 import { axe, toHaveNoViolations } from 'jest-axe';
@@ -6,6 +6,8 @@ import { axe, toHaveNoViolations } from 'jest-axe';
 import React from 'react';
 
 import AdminPageLayout from './index';
+
+import { render } from '../../../utils/testing';
 
 expect.extend(toHaveNoViolations);
 

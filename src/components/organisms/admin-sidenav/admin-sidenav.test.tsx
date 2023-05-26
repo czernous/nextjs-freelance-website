@@ -10,7 +10,9 @@ describe('Admin Sidenav', () => {
   let sidenav;
 
   beforeEach(async () => {
-    sidenav = render(<AdminSideNav test-id="admin-sidenav" />);
+    sidenav = render(
+      <AdminSideNav test-id="admin-sidenav" galleryIdent={'test'} />,
+    );
   });
 
   it('passes axe audit', async () => {

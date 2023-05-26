@@ -12,6 +12,7 @@ import { useRouter } from 'next/router';
 import React, { ReactElement, useEffect, useState } from 'react';
 import PostsList from '@src/components/organisms/posts-list';
 import { NextConfig } from 'next';
+import { ImageGalleryProvider } from '@src/components/organisms/image-gallery/state/image-gallery.provider';
 
 const PostsAdmin: NextPageWithLayout = () => {
   const [postsResponse, setPostsResponse] = useState<IPostsResponse | null>(
@@ -97,7 +98,11 @@ PostsAdmin.getLayout = function getLayout(page: ReactElement) {
       : ''
   }`;
 
-  return <AdminPageLayout title={title}>{page} </AdminPageLayout>;
+  return (
+    <ImageGalleryProvider>
+      <AdminPageLayout title={title}>{page} </AdminPageLayout>
+    </ImageGalleryProvider>
+  );
 };
 
 export default PostsAdmin;

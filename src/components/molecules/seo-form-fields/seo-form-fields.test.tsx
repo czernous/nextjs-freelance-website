@@ -1,7 +1,8 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import CustomFormFields from '.';
+import { render } from '../../../utils/testing';
 
 describe('CustomFormFields', () => {
   const mockMeta = {

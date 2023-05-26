@@ -27,6 +27,7 @@ import SeoFormFields from '@src/components/molecules/seo-form-fields';
 import { NextPageContext } from 'next';
 import { ServerResponse } from 'http';
 import getConfig from 'next/config';
+import { ImageGalleryProvider } from '@src/components/organisms/image-gallery/state/image-gallery.provider';
 
 interface IHomePageAdminProps {
   data: IHomePage;
@@ -137,7 +138,9 @@ const HomeAdmin: NextPageWithLayout<IHomePageAdminProps> = ({
             />
           </AccordionDetails>
         </Accordion>
+
         <SeoFormFields meta={props?.data?.meta} />
+
         <Button
           type="submit"
           variant="contained"
@@ -157,7 +160,11 @@ const HomeAdmin: NextPageWithLayout<IHomePageAdminProps> = ({
 };
 /* istanbul ignore next */
 HomeAdmin.getLayout = function getLayout(page: ReactElement) {
-  return <AdminPageLayout title="Pages/Home">{page} </AdminPageLayout>;
+  return (
+    <ImageGalleryProvider>
+      <AdminPageLayout title="Pages/Home">{page} </AdminPageLayout>
+    </ImageGalleryProvider>
+  );
 };
 /* istanbul ignore next */
 export async function getServerSideProps(ctx: NextPageContext) {

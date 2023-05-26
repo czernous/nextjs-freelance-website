@@ -15,8 +15,9 @@ import { customMuiButtonBrick } from '@src/mui-theme/custom-styles';
 import { fileToBase64 } from '@src/utils/data-fetching/client';
 import getConfig from 'next/config';
 import Image from 'next/image';
-import React, { ChangeEvent, useCallback, useState } from 'react';
+import React, { ChangeEvent, useCallback, useContext, useState } from 'react';
 import style from './image-upload.module.scss';
+import { GalleryContext } from '@src/components/organisms/image-gallery/state/image-gallery.base';
 
 interface IImageUploadProps {
   isOpen: boolean;
@@ -31,6 +32,8 @@ const ImageUpload = ({ isOpen, toggleOpen }: IImageUploadProps) => {
   const [responseMessage, setResponseMessage] = useState<string | null>(null);
   const [isLoading, setIsloading] = useState(false);
   const [fileName, setFilename] = useState('');
+  const galleryContext = useContext(GalleryContext);
+  const { fetchImages } = galleryContext;
   /* istanbul ignore next */
   const resetState = useCallback(() => {
     setBase64FromImage('');
@@ -54,7 +57,7 @@ const ImageUpload = ({ isOpen, toggleOpen }: IImageUploadProps) => {
   /* istanbul ignore next */
   const uploadImage = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
-      if (!e || !e.currentTarget) return;
+      if (!e?.currentTarget) return;
 
       e.preventDefault();
       const apiKey = getConfig()?.publicRuntimeConfig?.API_KEY ?? null;
@@ -79,9 +82,8 @@ const ImageUpload = ({ isOpen, toggleOpen }: IImageUploadProps) => {
       );
 
       if (response.ok) {
-        setResponseMessage(
-          'Image successfully uploaded. If you are using Image Gallery, you should reopen it to fetch new image(s).',
-        );
+        await fetchImages();
+        setResponseMessage('Image successfully uploaded.');
         // add a way to refetch images within image gallery on image upload
       } else {
         const json = await response.json();
@@ -89,7 +91,7 @@ const ImageUpload = ({ isOpen, toggleOpen }: IImageUploadProps) => {
       }
       setIsloading(false);
     },
-    [fileName],
+    [fetchImages, fileName],
   );
 
   return (

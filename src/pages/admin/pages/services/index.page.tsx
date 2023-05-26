@@ -28,6 +28,7 @@ import { NextPageContext } from 'next';
 import { ServerResponse } from 'http';
 import getConfig from 'next/config';
 import RichEditor from '@src/components/organisms/rich-editor';
+import { ImageGalleryProvider } from '@src/components/organisms/image-gallery/state/image-gallery.provider';
 
 interface IServicesPageAdminProps {
   data: IServicesPage;
@@ -127,7 +128,11 @@ const ServicesAdmin: NextPageWithLayout<IServicesPageAdminProps> = ({
 };
 /* istanbul ignore next */
 ServicesAdmin.getLayout = function getLayout(page: ReactElement) {
-  return <AdminPageLayout title="Pages/Services">{page} </AdminPageLayout>;
+  return (
+    <ImageGalleryProvider>
+      <AdminPageLayout title="Pages/Services">{page} </AdminPageLayout>
+    </ImageGalleryProvider>
+  );
 };
 /* istanbul ignore next */
 export async function getServerSideProps(ctx: NextPageContext) {

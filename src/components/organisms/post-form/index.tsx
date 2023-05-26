@@ -16,7 +16,6 @@ import { updateSnackbarProps } from '@src/components/molecules/custom-snackbar/u
 import SeoFormFields from '@src/components/molecules/seo-form-fields';
 import {
   ICustomSnackbarProps,
-  IImage,
   IPaginationSettings,
   IPost,
   IPostsResponse,
@@ -35,12 +34,13 @@ import {
 } from '@src/utils/data-fetching/client';
 import getConfig from 'next/config';
 import { NextRouter } from 'next/router';
-import React, { memo, useCallback, useRef, useState } from 'react';
+import React, { memo, useCallback, useContext, useRef, useState } from 'react';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import RichEditor from '../rich-editor';
 import ImageGallery from '../image-gallery';
 import SelectImageField from '@src/components/molecules/select-image-field';
-import { handleGalleryOpen } from '../image-gallery/utils';
+
+import { GalleryContext } from '../image-gallery/state/image-gallery.base';
 
 interface IPostFormProps {
   currentPost?: IPost | null;
@@ -53,15 +53,23 @@ interface IPostFormProps {
 }
 
 const PostForm = memo(({ ...props }: IPostFormProps) => {
+  const galleryIdentifier = 'post-feature-image';
   const formRef = useRef<HTMLFormElement | null>(null);
   const [snackbarProps, setSnackbarProps] =
     useState<ICustomSnackbarProps | null>(null);
 
   const [editorHtml, setEditorHtml] = useState(props.currentPost?.body ?? '');
 
-  const [selectedImage, setSelectedImage] = useState<IImage | null>(null);
-  const [images, setImages] = useState<IImage[] | null>(null);
-  const [isGalleryOpen, setIsGalleryOpen] = useState(false);
+  const galleryContext = useContext(GalleryContext);
+
+  const { toggleOpen, selectedImages, setInstanceId } = galleryContext;
+
+  /* istanbul ignore next */
+  const handleOpen = useCallback(() => {
+    setInstanceId(galleryIdentifier);
+    toggleOpen();
+  }, [galleryIdentifier, setInstanceId, toggleOpen]);
+
   const [isPublished, setIsPublished] = useState(
     props.currentPost?.isPublished ?? true,
   );
@@ -72,21 +80,7 @@ const PostForm = memo(({ ...props }: IPostFormProps) => {
     () => setIsPublished(!isPublished),
     [isPublished],
   );
-
-  /* istanbul ignore next */
-  const handleGallery = useCallback(() => {
-    handleGalleryOpen(setImages);
-    setIsGalleryOpen(true);
-  }, []);
-
-  /* istanbul ignore next */
-  const handleImageSelection = useCallback((image: IImage) => {
-    setSelectedImage(image);
-    setIsGalleryOpen(false);
-    setTimeout(() => {
-      setSelectedImage(null);
-    }, 500);
-  }, []);
+  console.log(selectedImages);
 
   const handleFormSubmit = useCallback(
     async (e: unknown) => {
@@ -142,7 +136,7 @@ const PostForm = memo(({ ...props }: IPostFormProps) => {
         console.warn(`Error revalidating posts: ${error}`);
       }
       /* istanbul ignore next */
-      updateSnackbarProps(response as Response, setSnackbarProps);
+      await updateSnackbarProps(response as Response, setSnackbarProps);
     },
     [props],
   );
@@ -252,8 +246,8 @@ const PostForm = memo(({ ...props }: IPostFormProps) => {
                 /* istanbul ignore next*/
                 props?.currentPost?.imageUrl ?? ''
               }
-              value={selectedImage?.secureUrl}
-              onClick={handleGallery}
+              value={selectedImages[galleryIdentifier]?.secureUrl}
+              onClick={handleOpen}
               required={true}
             />
           </AccordionDetails>
@@ -273,20 +267,8 @@ const PostForm = memo(({ ...props }: IPostFormProps) => {
         text={snackbarProps?.text ?? null}
         clearPropsFn={setSnackbarProps}
       />
-      {
-        /* istanbul ignore next */
-        images && (
-          <ImageGallery
-            images={images}
-            isOpen={isGalleryOpen}
-            onClose={
-              /* istanbul ignore next */
-              () => setIsGalleryOpen(false)
-            }
-            onImageSelect={handleImageSelection}
-          />
-        )
-      }
+
+      <ImageGallery identifier={galleryIdentifier} />
     </>
   );
 });

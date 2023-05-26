@@ -9,6 +9,7 @@ import { ServerResponse } from 'http';
 import Link from 'next/link';
 
 import { colors } from '@src/mui-theme/colors';
+import { ImageGalleryProvider } from '../../../components/organisms/image-gallery/state/image-gallery.provider';
 
 interface IPagesAdminProps {
   data: string[];
@@ -37,7 +38,11 @@ const PagesAdmin: NextPageWithLayout<IPagesAdminProps> = ({
 };
 /* istanbul ignore next */
 PagesAdmin.getLayout = function getLayout(page: ReactElement) {
-  return <AdminPageLayout title="Pages">{page} </AdminPageLayout>;
+  return (
+    <ImageGalleryProvider>
+      <AdminPageLayout title="Pages">{page} </AdminPageLayout>
+    </ImageGalleryProvider>
+  );
 };
 /* istanbul ignore next */
 export async function getServerSideProps(ctx: NextPageContext) {

@@ -27,6 +27,7 @@ import SeoFormFields from '@src/components/molecules/seo-form-fields';
 import { NextPageContext } from 'next';
 import { ServerResponse } from 'http';
 import getConfig from 'next/config';
+import { ImageGalleryProvider } from '@src/components/organisms/image-gallery/state/image-gallery.provider';
 
 interface IContactPageAdminProps {
   data: IContactPage;
@@ -134,7 +135,11 @@ const ContactAdmin: NextPageWithLayout<IContactPageAdminProps> = ({
 };
 /* istanbul ignore next */
 ContactAdmin.getLayout = function getLayout(page: ReactElement) {
-  return <AdminPageLayout title="Pages/Contact">{page} </AdminPageLayout>;
+  return (
+    <ImageGalleryProvider>
+      <AdminPageLayout title="Pages/Contact">{page} </AdminPageLayout>
+    </ImageGalleryProvider>
+  );
 };
 /* istanbul ignore next */
 export async function getServerSideProps(ctx: NextPageContext) {

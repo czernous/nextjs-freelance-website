@@ -1,14 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import AdminPageLayout from '@src/components/layouts/admin-page-layout';
-import {
-  IAboutPage,
-  ICustomSnackbarProps,
-  IError,
-  IImage,
-} from '@src/interfaces';
+import { IAboutPage, ICustomSnackbarProps, IError } from '@src/interfaces';
 import { NextPageWithLayout } from '@src/pages/_app.page';
 import { handleServerError, serverSideBackendFetch } from '@src/utils';
-import { ReactElement, useRef, useState } from 'react';
+import { ReactElement, useCallback, useContext, useRef, useState } from 'react';
 import {
   Accordion,
   AccordionDetails,
@@ -35,7 +30,8 @@ import getConfig from 'next/config';
 import RichEditor from '@src/components/organisms/rich-editor';
 import SelectImageField from '@src/components/molecules/select-image-field';
 import ImageGallery from '@src/components/organisms/image-gallery';
-import { handleGalleryOpen } from '@src/components/organisms/image-gallery/utils';
+import { ImageGalleryProvider } from '@src/components/organisms/image-gallery/state/image-gallery.provider';
+import { GalleryContext } from '@src/components/organisms/image-gallery/state/image-gallery.base';
 
 interface IAboutPageAdminProps {
   data: IAboutPage;
@@ -51,18 +47,18 @@ const AboutAdmin: NextPageWithLayout<IAboutPageAdminProps> = ({
   );
   const [snackbarProps, setSnackbarProps] =
     useState<ICustomSnackbarProps | null>(null);
-  const [selectedImage, setSelectedImage] = useState<IImage | null>(null);
-  const [images, setImages] = useState<IImage[] | null>(null);
-  const [isGalleryOpen, setIsGalleryOpen] = useState(false);
+
+  const galleryIdent = 'about-page-image';
+
+  const galleryContext = useContext(GalleryContext);
+
+  const { toggleOpen, selectedImages, setInstanceId } = galleryContext;
 
   /* istanbul ignore next */
-  const handleImageSelection = (image: IImage) => {
-    setSelectedImage(image);
-    setIsGalleryOpen(false);
-    setTimeout(() => {
-      setSelectedImage(null);
-    }, 500);
-  };
+  const handleOpen = useCallback(() => {
+    setInstanceId(galleryIdent);
+    toggleOpen();
+  }, [setInstanceId, toggleOpen]);
 
   return (
     <>
@@ -129,14 +125,8 @@ const AboutAdmin: NextPageWithLayout<IAboutPageAdminProps> = ({
               fieldName={'image'}
               fieldLabel={'image'}
               defaultValue={props?.data?.image}
-              value={selectedImage?.secureUrl}
-              onClick={
-                /* istanbul ignore next */
-                () => {
-                  handleGalleryOpen(setImages);
-                  setIsGalleryOpen(true);
-                }
-              }
+              value={selectedImages[galleryIdent]?.secureUrl}
+              onClick={handleOpen}
               required={true}
             />
           </AccordionDetails>
@@ -157,26 +147,18 @@ const AboutAdmin: NextPageWithLayout<IAboutPageAdminProps> = ({
         text={snackbarProps?.text ?? null}
         clearPropsFn={setSnackbarProps}
       />
-      {
-        /* istanbul ignore next */
-        images && (
-          <ImageGallery
-            images={images}
-            isOpen={isGalleryOpen}
-            onClose={
-              /* istanbul ignore next */
-              () => setIsGalleryOpen(false)
-            }
-            onImageSelect={handleImageSelection}
-          />
-        )
-      }
+
+      <ImageGallery identifier={galleryIdent} />
     </>
   );
 };
 /* istanbul ignore next */
 AboutAdmin.getLayout = function getLayout(page: ReactElement) {
-  return <AdminPageLayout title="Pages/About">{page} </AdminPageLayout>;
+  return (
+    <ImageGalleryProvider>
+      <AdminPageLayout title="Pages/About">{page} </AdminPageLayout>
+    </ImageGalleryProvider>
+  );
 };
 /* istanbul ignore next */
 export async function getServerSideProps(ctx: NextPageContext) {

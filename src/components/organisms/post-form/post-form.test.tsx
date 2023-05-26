@@ -1,10 +1,12 @@
 import '@testing-library/jest-dom';
-import { act, fireEvent, render, screen } from '@testing-library/react';
+import { act, fireEvent, screen } from '@testing-library/react';
 import { axe, toHaveNoViolations } from 'jest-axe';
 import { NextRouter } from 'next/router';
 import React from 'react';
 import PostForm from '.';
 import { posts } from '../../../mocks';
+
+import { render } from '../../../utils/testing';
 
 expect.extend(toHaveNoViolations);
 

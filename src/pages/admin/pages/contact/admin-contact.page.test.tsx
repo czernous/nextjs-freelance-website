@@ -1,7 +1,7 @@
-import { act, render, screen, waitFor } from '@testing-library/react';
+import { act, screen, waitFor } from '@testing-library/react';
 import { axe, toHaveNoViolations } from 'jest-axe';
 import '@testing-library/jest-dom';
-
+import { render } from '../../../../utils/testing';
 import AdminContact from './index.page';
 
 import React from 'react';
