@@ -8,7 +8,7 @@ import style from './paginated-cards.module.scss';
 
 const PaginatedCards = ({
   ...props
-}: IBlogProps & {
+}: Omit<IBlogProps, 'meta'> & {
   currentPage: number;
   currentUrl: string;
   pageUrl: string;

@@ -25,7 +25,6 @@ const Blog: NextPageWithLayout<IBlogProps> = ({ ...props }: IBlogProps) => {
             currentUrl="/blog"
             data={props.data}
             pageUrl="/page/"
-            meta={props.meta}
           />
         )
       }
