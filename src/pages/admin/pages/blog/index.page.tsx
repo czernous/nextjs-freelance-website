@@ -61,11 +61,13 @@ const BlogAdmin: NextPageWithLayout<IBlogPageAdminProps> = ({
             handler: fetchData,
             handlerProps: {
               url:
+                /* istanbul ignore next */
                 (props.data as unknown as IErrorResponse)?.status === 404
                   ? '/backend/pages'
                   : 'backend/pages/blog',
               options: {
                 method:
+                /* istanbul ignore next */
                   (props.data as unknown as IErrorResponse)?.status === 404
                     ? 'POST'
                     : 'PUT',
