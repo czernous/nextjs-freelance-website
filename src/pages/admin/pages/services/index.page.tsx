@@ -1,6 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import AdminPageLayout from '@src/components/layouts/admin-page-layout';
-import { ICustomSnackbarProps, IError, IServicesPage } from '@src/interfaces';
+import {
+  ICustomSnackbarProps,
+  IError,
+  IErrorResponse,
+  IServicesPage,
+} from '@src/interfaces';
 import { NextPageWithLayout } from '@src/pages/_app.page';
 import { handleServerError, serverSideBackendFetch } from '@src/utils';
 import { ReactElement, useRef, useState } from 'react';
@@ -60,9 +65,17 @@ const ServicesAdmin: NextPageWithLayout<IServicesPageAdminProps> = ({
             formRef,
             handler: fetchData,
             handlerProps: {
-              url: '/backend/pages/services',
+              url:
+                /* istanbul ignore next */
+                (props.data as unknown as IErrorResponse)?.status === 404
+                  ? '/backend/pages'
+                  : 'backend/pages/services',
               options: {
-                method: 'PUT',
+                method:
+                  /* istanbul ignore next */
+                  (props.data as unknown as IErrorResponse)?.status === 404
+                    ? 'POST'
+                    : 'PUT',
                 headers: {
                   Accept: 'application/json',
                   'Content-Type': 'application/json',

@@ -1,6 +1,6 @@
 import { NextConfig } from 'next';
 import { Color, InputTypes, Size } from '../../enums';
-import { IError, IPaginatedData, IPost, ISeo } from '../entities';
+import { IBlogPage, IError, IPaginatedData, IPost, ISeo } from '../entities';
 
 export interface IButtonProps {
   buttonColor: Color;
@@ -73,6 +73,7 @@ export interface ICustomSnackbarProps {
 
 export interface IBlogProps {
   data: IPaginatedData<IPost>;
+  meta: IBlogPage;
   error?: IError;
 }
 

@@ -1,4 +1,4 @@
-import { IBlogProps, IPost, IPaginatedData } from '@src/interfaces';
+import { IBlogProps, IPost, IPaginatedData, IBlogPage } from '@src/interfaces';
 import { serverSideBackendFetch } from '@src/utils';
 import { NextPageWithLayout } from '../_app.page';
 import ClientPageLayout from '@src/components/layouts/client-page-layout';
@@ -13,7 +13,6 @@ const Blog: NextPageWithLayout<IBlogProps> = ({ ...props }: IBlogProps) => {
   if (props.error) return <StaticPageError {...props.error} />;
 
   // posts are stored in data.data
-
   return (
     <div id="blog" className="d-flex flex-column gap-5">
       <SearchField searchUrl="/blog/search" />
@@ -26,6 +25,7 @@ const Blog: NextPageWithLayout<IBlogProps> = ({ ...props }: IBlogProps) => {
             currentUrl="/blog"
             data={props.data}
             pageUrl="/page/"
+            meta={props.meta}
           />
         )
       }
@@ -35,7 +35,7 @@ const Blog: NextPageWithLayout<IBlogProps> = ({ ...props }: IBlogProps) => {
 /* istanbul ignore next */
 Blog.getLayout = function getLayout(page: ReactElement) {
   return (
-    <ClientPageLayout pageTitle={'Blog'} meta={page.props.data?.meta}>
+    <ClientPageLayout pageTitle={'Blog'} meta={page.props.meta}>
       {page}
     </ClientPageLayout>
   );
@@ -48,12 +48,15 @@ export const getStaticProps: GetStaticProps = async () => {
       '/posts?page=1&pagesize=10',
     );
 
+    const pageMetaData = await serverSideBackendFetch<IBlogPage>('/pages/blog');
+
     const publishedPosts = data.data.filter((p) => p.isPublished);
     const filteredData = { ...data, data: publishedPosts };
 
     return {
       props: {
         data: filteredData,
+        meta: pageMetaData.meta,
       },
     };
   } catch (error) {

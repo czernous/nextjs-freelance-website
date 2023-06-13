@@ -82,11 +82,26 @@ export interface IImage extends IEntity {
 
 // FE only entities
 
+/* .NET API Error response */
+export interface IErrorResponse {
+  status: number;
+  title: string;
+  traceId: string;
+  type: string;
+}
+
 interface IPage {
   updatedAt?: string;
   meta: ISeo;
   slug: string;
   pageFields: Record<string, string>;
+}
+
+export interface IBlogPage extends IPage {
+  pageFields: {
+    /* arbitrary field to prevent API errors */
+    unused: string;
+  };
 }
 
 export interface IHomePage extends IPage {
