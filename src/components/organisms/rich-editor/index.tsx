@@ -28,8 +28,14 @@ const MenuBar = ({ ...props }: ITipTapEditorProps) => {
 
   const galleryContext = useContext(GalleryContext);
   const [shouldSelectImage, setShouldSelectImage] = useState(false);
-  const { toggleOpen, selectedImages, instanceid, setInstanceId, selectImage, removeSelectedImage} =
-    galleryContext;
+  const {
+    toggleOpen,
+    selectedImages,
+    instanceid,
+    setInstanceId,
+    selectImage,
+    removeSelectedImage,
+  } = galleryContext;
   const galleryId = 'rich-editor-gallery';
 
   const addImage = () => {
@@ -52,10 +58,18 @@ const MenuBar = ({ ...props }: ITipTapEditorProps) => {
         .setImage({ src: selectedImages[galleryId].secureUrl })
         .run();
       setShouldSelectImage(false);
-      removeSelectedImage(galleryId); 
+      removeSelectedImage(galleryId);
       setInstanceId('');
     }
-  }, [selectedImages, editor, instanceid, setInstanceId, shouldSelectImage, selectImage, removeSelectedImage]);
+  }, [
+    selectedImages,
+    editor,
+    instanceid,
+    setInstanceId,
+    shouldSelectImage,
+    selectImage,
+    removeSelectedImage,
+  ]);
 
   return (
     <>
