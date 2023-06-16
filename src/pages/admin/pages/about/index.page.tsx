@@ -84,7 +84,7 @@ const AboutAdmin: NextPageWithLayout<IAboutPageAdminProps> = ({
                 /* istanbul ignore next */
                 (props.data as unknown as IErrorResponse)?.status === 404
                   ? '/backend/pages'
-                  : 'backend/pages/about',
+                  : '/backend/pages/about',
               options: {
                 method:
                   /* istanbul ignore next */
@@ -129,8 +129,6 @@ const AboutAdmin: NextPageWithLayout<IAboutPageAdminProps> = ({
               required
               variant="outlined"
               value="about"
-              multiline
-              maxRows={4}
               sx={customMuiTextFieldBrick}
             />
             <SelectImageField

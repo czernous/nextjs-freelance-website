@@ -65,7 +65,7 @@ const HomeAdmin: NextPageWithLayout<IHomePageAdminProps> = ({
                 /* istanbul ignore next */
                 (props.data as unknown as IErrorResponse)?.status === 404
                   ? '/backend/pages'
-                  : 'backend/pages/home',
+                  : '/backend/pages/home',
               options: {
                 method:
                   /* istanbul ignore next */

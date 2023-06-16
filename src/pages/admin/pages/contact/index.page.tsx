@@ -65,7 +65,7 @@ const ContactAdmin: NextPageWithLayout<IContactPageAdminProps> = ({
                 /* istanbul ignore next */
                 (props.data as unknown as IErrorResponse)?.status === 404
                   ? '/backend/pages'
-                  : 'backend/pages/contact',
+                  : '/backend/pages/contact',
               options: {
                 method:
                   /* istanbul ignore next */

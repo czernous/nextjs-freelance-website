@@ -64,7 +64,7 @@ const BlogAdmin: NextPageWithLayout<IBlogPageAdminProps> = ({
                 /* istanbul ignore next */
                 (props.data as unknown as IErrorResponse)?.status === 404
                   ? '/backend/pages'
-                  : 'backend/pages/blog',
+                  : '/backend/pages/blog',
               options: {
                 method:
                   /* istanbul ignore next */
@@ -99,8 +99,10 @@ const BlogAdmin: NextPageWithLayout<IBlogPageAdminProps> = ({
               label="Description"
               hidden
               variant="outlined"
-              defaultValue={props.data.pageFields?.unused}
-              value=""
+              defaultValue={
+                /* istanbul ignore next*/
+                props.data.pageFields?.unused ?? ''
+              }
               multiline
               maxRows={4}
               sx={customMuiTextFieldBrick}

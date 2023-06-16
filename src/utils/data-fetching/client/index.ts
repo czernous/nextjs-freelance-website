@@ -82,6 +82,8 @@ export const handleSubmit = async ({ ...options }: ISubmitHandlerOptions) => {
     const pagePath = options.handlerProps.url.split('/').at(-1);
     const path = pagePath === 'home' ? '/' : `/${pagePath}`;
 
+    console.debug(pagePath);
+
     const revalidateResponse = await fetchData({
       url: `/api/revalidate?path=${path}`,
       options: {
