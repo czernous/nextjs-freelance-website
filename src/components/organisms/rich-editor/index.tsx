@@ -2,7 +2,13 @@ import { useEditor, Editor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Image from '@tiptap/extension-image';
 import styles from './editor.module.scss';
-import { Dispatch, SetStateAction, useContext, useEffect } from 'react';
+import {
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 
 import ImageGallery from '../image-gallery';
 import { GalleryContext } from '../image-gallery/state/image-gallery.base';
@@ -21,24 +27,35 @@ const MenuBar = ({ ...props }: ITipTapEditorProps) => {
   const { editor } = props;
 
   const galleryContext = useContext(GalleryContext);
-
-  const { toggleOpen, selectedImages, instanceid, setInstanceId } =
+  const [shouldSelectImage, setShouldSelectImage] = useState(false);
+  const { toggleOpen, selectedImages, instanceid, setInstanceId, selectImage, removeSelectedImage} =
     galleryContext;
   const galleryId = 'rich-editor-gallery';
 
   const addImage = () => {
+    setShouldSelectImage(true);
     toggleOpen();
+    if (instanceid !== galleryId) {
+      setInstanceId(galleryId);
+    }
   };
 
   useEffect(() => {
-    if (instanceid !== galleryId) setInstanceId(galleryId);
-    if (selectedImages[galleryId])
+    if (
+      selectedImages[galleryId] &&
+      instanceid === galleryId &&
+      shouldSelectImage
+    ) {
       editor
         .chain()
         .focus()
         .setImage({ src: selectedImages[galleryId].secureUrl })
         .run();
-  }, [selectedImages, editor, instanceid, setInstanceId]);
+      setShouldSelectImage(false);
+      removeSelectedImage(galleryId); 
+      setInstanceId('');
+    }
+  }, [selectedImages, editor, instanceid, setInstanceId, shouldSelectImage, selectImage, removeSelectedImage]);
 
   return (
     <>

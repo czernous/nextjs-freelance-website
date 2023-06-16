@@ -27,6 +27,7 @@ export interface IImageGalleryContext {
   handleZoomClose: () => void;
   showZoomedImage: (zoomedImage: IImage) => void;
   selectImage: (image: IImage | null) => void;
+  removeSelectedImage: (instanceid: string) => void;
   setInstanceId: (instanceid: string) => void;
 }
 // initial context(state)
@@ -45,6 +46,7 @@ const initialState = {
 export enum GalleryActions {
   FETCH_IMAGES = 'FETCH_IMAGES',
   SELECT_IMAGE = 'SELECT_IMAGE',
+  REMOVE_SELECTED_IMAGE = 'REMOVE_SELECTED_IMAGE',
   ZOOM_IMAGE = 'ZOOM_IMAGE',
   SET_INSTANCEID = 'SET_INSTANCEID',
   TOGGLE_OPEN = 'TOGGLE_OPEN',
@@ -82,6 +84,23 @@ const reducer = (state: IImageGalleryContext, action: IGalleryAction) => {
           [`${state.instanceid}`]: action.payload.image,
         },
       };
+
+    case GalleryActions.REMOVE_SELECTED_IMAGE:
+      const { instanceid } = action.payload;
+      const selectedImages = state.selectedImages;
+
+      if (selectedImages.hasOwnProperty(instanceid)) {
+        const updatedSelectedImages: Record<string, IImage | null> =
+          Object.keys(selectedImages)
+            .filter((key) => key !== instanceid)
+            .reduce((obj, key) => {
+              obj[key] = selectedImages[key];
+              return obj;
+            }, {} as Record<string, IImage | null>);
+        return { ...state, selectedImages: updatedSelectedImages };
+      }
+
+      return state;
 
     case GalleryActions.ZOOM_IMAGE:
       return {
@@ -229,6 +248,19 @@ export const useGalleryReducer = () => {
     [gallery],
   );
 
+  const removeSelectedImage = useCallback(
+    (instanceid: string) => {
+      dispatch({
+        type: GalleryActions.REMOVE_SELECTED_IMAGE,
+        payload: {
+          ...gallery,
+          instanceid,
+        },
+      });
+    },
+    [gallery],
+  );
+
   const setInstanceId = useCallback(
     (instanceid: string) => {
       dispatch({
@@ -260,6 +292,7 @@ export const useGalleryReducer = () => {
       handleZoomClose,
       showZoomedImage,
       selectImage,
+      removeSelectedImage,
       setInstanceId,
     }),
     [
@@ -279,6 +312,7 @@ export const useGalleryReducer = () => {
       handleZoomClose,
       showZoomedImage,
       selectImage,
+      removeSelectedImage,
       setInstanceId,
     ],
   );
@@ -338,6 +372,10 @@ export const useMockGalleryReducer = () => {
     gallery.instanceid = instanceid;
   };
 
+  const removeSelectedImage = (instanceid: string) => {
+    delete gallery.selectedImages[instanceid];
+  };
+
   return {
     images: gallery.images,
     image: gallery.image,
@@ -355,6 +393,7 @@ export const useMockGalleryReducer = () => {
     handleZoomClose,
     showZoomedImage,
     selectImage,
+    removeSelectedImage,
     setInstanceId,
   };
 };

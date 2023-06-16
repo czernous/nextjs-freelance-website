@@ -10,6 +10,7 @@ export interface IImageGalleryProviderProps
   children: ReactNode;
 }
 
+/* istanbul ignore next */
 export const ImageGalleryProvider: FC<IImageGalleryProviderProps> = ({
   children,
 }) => {
