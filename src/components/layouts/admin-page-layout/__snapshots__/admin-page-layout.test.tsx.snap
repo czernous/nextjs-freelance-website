@@ -81,7 +81,7 @@ exports[`Admin Page Layout is rendered unchanged 1`] = `
         />
       </button>
       <a
-        href="/admin/logout"
+        href="/logout"
       >
         <button
           class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium icon css-78trlr-MuiButtonBase-root-MuiIconButton-root"

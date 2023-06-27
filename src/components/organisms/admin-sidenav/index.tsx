@@ -41,7 +41,7 @@ const AdminSideNav = ({ galleryIdent }: { galleryIdent: string }) => {
         <CollectionsOutlinedIcon sx={iconStyle} />
       </IconButton>
 
-      <Link href="/admin/logout" passHref>
+      <Link href="/logout" passHref>
         <IconButton className={styles.icon} title="logout">
           <LogoutOutlinedIcon sx={iconStyle} />
         </IconButton>
