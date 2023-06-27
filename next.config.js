@@ -40,6 +40,8 @@ const nextConfig = {
     APP_NAME: process.env.APP_NAME ?? '',
     API_KEY: process.env.API_KEY,
     BACKEND_URL: process.env.BACKEND_URL,
+    AUTH_URL: process.env.AUTH_URL,
+    ADMIN_EMAILS: process.env.ADMIN_EMAILS,
   },
 };
 

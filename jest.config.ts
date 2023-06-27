@@ -16,6 +16,8 @@ export default async (): Promise<Config> => {
       '!<rootDir>/src/middleware.{js,jsx,ts,tsx}',
       '!<rootDir>/src/**/*.base.{js,jsx,ts,tsx}',
       '!<rootDir>/src/pages/api/**/*.{js,jsx,ts,tsx}',
+      '!<rootDir>/src/pages/login**/*.{js,jsx,ts,tsx}',
+      '!<rootDir>/src/pages/logout**/*.{js,jsx,ts,tsx}',
       '!<rootDir>/src/**/_app.page.{js,jsx,ts,tsx}',
       '!<rootDir>/src/**/_document.page.{js,jsx,ts,tsx}',
       '!<rootDir>/src/utils/data-fetching/client/**/*.{js,jsx,ts,tsx}',
