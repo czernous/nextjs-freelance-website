@@ -55,7 +55,10 @@ const MenuBar = ({ ...props }: ITipTapEditorProps) => {
       editor
         .chain()
         .focus()
-        .setImage({ src: selectedImages[galleryId].secureUrl })
+        .setImage({
+          src: selectedImages[galleryId].secureUrl,
+          alt: selectedImages[galleryId].name,
+        })
         .run();
       setShouldSelectImage(false);
       removeSelectedImage(galleryId);

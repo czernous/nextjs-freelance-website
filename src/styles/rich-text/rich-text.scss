@@ -1,8 +1,16 @@
 .rich-text {
-  &__image {
+  &.post {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     width: 100%;
-    max-height: 400px;
+    margin-bottom: 50px;
+  }
+
+  &__image {
+    width: 70%;
     aspect-ratio: 16 / 9;
     object-fit: cover;
+    align-self: center;
   }
 }

@@ -73,7 +73,10 @@ const BlogPost: NextPage<IBlogPostProps> = ({ ...props }: IBlogPostProps) => {
         </div>
         <div className={`custom-container w-100 ${style.body}`}>
           <h1 className={style.title}>{props.data.title}</h1>
-          <div dangerouslySetInnerHTML={{ __html: props.data.body }} />
+          <div
+            dangerouslySetInnerHTML={{ __html: props.data.body }}
+            className="rich-text post"
+          />
         </div>
       </div>
     </>

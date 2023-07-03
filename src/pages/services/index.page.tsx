@@ -17,7 +17,10 @@ const Services: NextPageWithLayout<IServicesProps> = ({
   if (props.error) return <StaticPageError {...props.error} />;
 
   return (
-    <div dangerouslySetInnerHTML={{ __html: props.data?.pageFields.content }} />
+    <div
+      dangerouslySetInnerHTML={{ __html: props.data?.pageFields.content }}
+      className="rich-text"
+    />
   ); // TODO: add DOMpurify
 };
 /* istanbul ignore next */

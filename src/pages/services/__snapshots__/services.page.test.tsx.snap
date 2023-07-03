@@ -2,7 +2,9 @@
 
 exports[`Services renders homepage unchanged 1`] = `
 <div>
-  <div>
+  <div
+    class="rich-text"
+  >
     <h2>
       Service #1
     </h2>
