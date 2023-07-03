@@ -8,9 +8,9 @@
   }
 
   &__image {
+    align-self: center;
     width: 70%;
     aspect-ratio: 16 / 9;
     object-fit: cover;
-    align-self: center;
   }
 }
