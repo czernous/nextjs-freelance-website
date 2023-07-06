@@ -19,7 +19,7 @@ interface IBlogPostProps {
 const BlogPost: NextPage<IBlogPostProps> = ({ ...props }: IBlogPostProps) => {
   const APP_NAME = getConfig().publicRuntimeConfig.APP_NAME;
 
-  const pageTitle = `| ${props.data.slug}`;
+  const pageTitle = `| ${props.data.slug.replaceAll('-', ' ')}`;
   const fullTitle = `${APP_NAME} ${pageTitle}`;
 
   /* istanbul ignore next*/

@@ -114,8 +114,7 @@ const ServicesAdmin: NextPageWithLayout<IServicesPageAdminProps> = ({
               required
               variant="outlined"
               value="services"
-              multiline
-              maxRows={4}
+              hidden
               sx={customMuiTextFieldBrick}
             />
           </AccordionDetails>

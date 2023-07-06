@@ -122,8 +122,7 @@ const ContactAdmin: NextPageWithLayout<IContactPageAdminProps> = ({
               required
               variant="outlined"
               value="contact"
-              multiline
-              maxRows={4}
+              hidden
               sx={customMuiTextFieldBrick}
             />
           </AccordionDetails>

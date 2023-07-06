@@ -129,6 +129,7 @@ const AboutAdmin: NextPageWithLayout<IAboutPageAdminProps> = ({
               required
               variant="outlined"
               value="about"
+              hidden
               sx={customMuiTextFieldBrick}
             />
             <SelectImageField

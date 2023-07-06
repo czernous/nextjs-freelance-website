@@ -145,8 +145,7 @@ const HomeAdmin: NextPageWithLayout<IHomePageAdminProps> = ({
               required
               variant="outlined"
               value="home"
-              multiline
-              maxRows={4}
+              hidden
               sx={customMuiTextFieldBrick}
             />
           </AccordionDetails>

@@ -114,8 +114,7 @@ const BlogAdmin: NextPageWithLayout<IBlogPageAdminProps> = ({
               required
               variant="outlined"
               value="blog"
-              multiline
-              maxRows={4}
+              hidden
               sx={customMuiTextFieldBrick}
             />
           </AccordionDetails>
