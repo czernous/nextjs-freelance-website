@@ -13,9 +13,14 @@ import {
 } from '@mui/material';
 import { customMuiButtonBrick } from '@src/mui-theme/custom-styles';
 import { fileToBase64 } from '@src/utils/data-fetching/client';
-import getConfig from 'next/config';
 import Image from 'next/image';
-import React, { ChangeEvent, useCallback, useContext, useState } from 'react';
+import React, {
+  ChangeEvent,
+  useCallback,
+  useContext,
+  useRef,
+  useState,
+} from 'react';
 import style from './image-upload.module.scss';
 import { GalleryContext } from '@src/components/organisms/image-gallery/state/image-gallery.base';
 
@@ -27,16 +32,19 @@ interface IImageUploadProps {
 const ImageUpload = ({ isOpen, toggleOpen }: IImageUploadProps) => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
-
+  const fileRef = useRef<File | null>(null);
+  const formDataRef = useRef<FormData | null>(null);
   const [base64Image, setBase64FromImage] = useState('');
   const [responseMessage, setResponseMessage] = useState<string | null>(null);
   const [isLoading, setIsloading] = useState(false);
   const [fileName, setFilename] = useState('');
   const galleryContext = useContext(GalleryContext);
   const { fetchImages } = galleryContext;
+
   /* istanbul ignore next */
   const resetState = useCallback(() => {
     setBase64FromImage('');
+
     setResponseMessage(null);
     setIsloading(false);
   }, []);
@@ -60,34 +68,42 @@ const ImageUpload = ({ isOpen, toggleOpen }: IImageUploadProps) => {
       if (!e?.currentTarget) return;
 
       e.preventDefault();
-      const apiKey = getConfig()?.publicRuntimeConfig?.API_KEY ?? null;
 
       if (fileName.length < 1) {
         setResponseMessage('Filename cannot be blank');
         return;
       }
 
-      if (!apiKey) return;
       setIsloading(true);
+
+      formDataRef.current = new FormData();
+      formDataRef.current.append('image', fileRef.current as File);
+
       const response = await fetch(
-        `${window.location.origin}/backend/images?filename=${fileName}&folder=test-api-folder/test-images/&maxWidth=2400&widths=512,768,1140,1920&quality=70`,
+        `${new URL(
+          '/api/upload-image',
+          window.location.origin,
+        )}?url=/images&filename=${fileName}&method=POST&contentType=${
+          fileRef.current?.type
+        }`,
         {
           method: 'POST',
-          body: new FormData(e.currentTarget),
-          headers: {
-            Accept: 'application/json',
-            apiKey: getConfig()?.publicRuntimeConfig?.API_KEY,
-          },
+
+          body: formDataRef.current,
         },
       );
 
-      if (response.ok) {
+      const clonedResponse = response.clone();
+
+      const res = await response?.json();
+
+      if (String(clonedResponse.status).startsWith('2')) {
         await fetchImages();
         setResponseMessage('Image successfully uploaded.');
         // add a way to refetch images within image gallery on image upload
       } else {
-        const json = await response.json();
-        setResponseMessage(json);
+        const errorMsg = res.error.message;
+        setResponseMessage(errorMsg);
       }
       setIsloading(false);
     },
@@ -101,19 +117,15 @@ const ImageUpload = ({ isOpen, toggleOpen }: IImageUploadProps) => {
       onClose={handleClose}
       aria-labelledby="responsive-dialog-title"
     >
-      <form
-        action={`${window.location.origin}/backend/images`}
-        method="POST"
-        onSubmit={async (e) => await uploadImage(e)}
-      >
+      <form onSubmit={async (e) => await uploadImage(e)}>
         <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between' }}>
           <input
             accept="image/*"
             style={{ display: 'none' }}
             id="button-file"
             type="file"
-            name="file"
-            title="file"
+            name="binaryImage"
+            title="binaryImage"
             onChange={
               /* istanbul ignore next */
               async (e) => {
@@ -121,6 +133,7 @@ const ImageUpload = ({ isOpen, toggleOpen }: IImageUploadProps) => {
                   const b64 = await fileToBase64(
                     e.target.files[0] as unknown as File,
                   );
+                  fileRef.current = e.target.files[0];
 
                   if (b64 && typeof b64 === 'string') setBase64FromImage(b64);
                 }

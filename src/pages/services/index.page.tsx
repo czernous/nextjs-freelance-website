@@ -35,8 +35,17 @@ Services.getLayout = function getLayout(page: ReactElement) {
 /* istanbul ignore next */
 export async function getStaticProps() {
   try {
-    const data = await serverSideBackendFetch<IServicesPage>('/pages/services');
-
+    const { data } = await serverSideBackendFetch<IServicesPage>({
+      endpoint: '/pages/services',
+      method: 'GET',
+      headers: process.env.API_KEY
+        ? new Headers({
+            'Content-Type': 'application/json',
+            apiKey: process.env.API_KEY,
+          })
+        : null,
+      serverUrl: process.env.BLOG_API_URL ?? null,
+    });
     return {
       props: {
         data,

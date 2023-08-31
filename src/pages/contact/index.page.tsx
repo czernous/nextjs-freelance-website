@@ -77,8 +77,17 @@ Contact.getLayout = function getLayout(page: ReactElement) {
 /* istanbul ignore next */
 export async function getStaticProps() {
   try {
-    const data = await serverSideBackendFetch<IContactPage>('/pages/contact');
-
+    const { data } = await serverSideBackendFetch<IContactPage>({
+      endpoint: '/pages/contact',
+      method: 'GET',
+      headers: process.env.API_KEY
+        ? new Headers({
+            'Content-Type': 'application/json',
+            apiKey: process.env.API_KEY,
+          })
+        : null,
+      serverUrl: process.env.BACKEND_URL ?? null,
+    });
     return {
       props: {
         data,

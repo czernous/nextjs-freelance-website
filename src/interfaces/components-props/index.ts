@@ -1,4 +1,3 @@
-import { NextConfig } from 'next';
 import { Color, InputTypes, Size } from '../../enums';
 import { IBlogPage, IError, IPaginatedData, IPost, ISeo } from '../entities';
 
@@ -94,7 +93,6 @@ export interface IPaginationSettings {
 export interface IPostsListProps {
   postsResponse: IPostsResponse;
   paginationSettings: IPaginationSettings;
-  cfg: NextConfig;
   updatePaginationSettings: (paginationSettings: IPaginationSettings) => void;
   updatePostsResponse: (postsResponse: IPostsResponse) => void;
 }

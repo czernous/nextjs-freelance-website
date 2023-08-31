@@ -7,7 +7,6 @@ import { ReactElement } from 'react';
 import { NextPageContext } from 'next';
 import { ServerResponse } from 'http';
 import Link from 'next/link';
-
 import { colors } from '@src/mui-theme/colors';
 import { ImageGalleryProvider } from '../../../components/organisms/image-gallery/state/image-gallery.provider';
 
@@ -45,7 +44,7 @@ PagesAdmin.getLayout = function getLayout(page: ReactElement) {
   );
 };
 /* istanbul ignore next */
-export async function getServerSideProps(ctx: NextPageContext) {
+export async function getStaticProps(ctx: NextPageContext) {
   const { res } = ctx;
 
   try {

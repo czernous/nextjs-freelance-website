@@ -25,13 +25,12 @@ import {
   customMuiTextFieldBrick,
   flexColumn,
 } from '@src/mui-theme/custom-styles';
-import { handleSubmit, fetchData } from '@src/utils/data-fetching/client';
+import { handleSubmit } from '@src/utils/data-fetching/client';
 import CustomSnackbar from '@src/components/molecules/custom-snackbar';
 import { updateSnackbarProps } from '@src/components/molecules/custom-snackbar/utils';
 import SeoFormFields from '@src/components/molecules/seo-form-fields';
 import { NextPageContext } from 'next';
 import { ServerResponse } from 'http';
-import getConfig from 'next/config';
 import { ImageGalleryProvider } from '@src/components/organisms/image-gallery/state/image-gallery.provider';
 
 interface IHomePageAdminProps {
@@ -56,29 +55,23 @@ const HomeAdmin: NextPageWithLayout<IHomePageAdminProps> = ({
         sx={{ marginBottom: 5 }}
         onSubmit={async (e) => {
           /* istanbul ignore next */
+
           const response = await handleSubmit({
             event: e as unknown as SubmitEvent,
             formRef,
-            handler: fetchData,
-            handlerProps: {
+            fetchOptions: {
+              baseUrl: window.location.origin,
+              pagePath: '/posts',
               url:
-                /* istanbul ignore next */
-                (props.data as unknown as IErrorResponse)?.status === 404
-                  ? '/backend/pages'
-                  : '/backend/pages/home',
-              options: {
-                method:
-                  /* istanbul ignore next */
+                `${new URL('/api/blog-data', window.location.origin)}?url=${
+                  (props.data as unknown as IErrorResponse)?.status === 404
+                    ? '/pages'
+                    : '/pages/home'
+                }&method=${
                   (props.data as unknown as IErrorResponse)?.status === 404
                     ? 'POST'
-                    : 'PUT',
-                headers: {
-                  Accept: 'application/json',
-                  'Content-Type': 'application/json',
-                  apiKey: getConfig().publicRuntimeConfig.API_KEY,
-                },
-              },
-              location: window.location.origin,
+                    : 'PUT'
+                }` ?? '', // conditionally add based on query params
             },
           });
           /* istanbul ignore next */
@@ -183,7 +176,17 @@ export async function getServerSideProps(ctx: NextPageContext) {
   const { res } = ctx;
 
   try {
-    const data = await serverSideBackendFetch<IHomePage>('/pages/home');
+    const { data } = await serverSideBackendFetch<IHomePage>({
+      endpoint: '/pages/home',
+      method: 'GET',
+      headers: process.env.API_KEY
+        ? new Headers({
+            'Content-Type': 'application/json',
+            apiKey: process.env.API_KEY,
+          })
+        : null,
+      serverUrl: process.env.BLOG_API_URL ?? null,
+    });
 
     return {
       props: {

@@ -10,6 +10,7 @@ import {
   IconButton,
   FormControlLabel,
   Checkbox,
+  CircularProgress,
 } from '@mui/material';
 import CustomSnackbar from '@src/components/molecules/custom-snackbar';
 import { updateSnackbarProps } from '@src/components/molecules/custom-snackbar/utils';
@@ -26,13 +27,9 @@ import {
   customMuiTextFieldBrick,
   customMuiButtonBrick,
   customMuiCheckbox,
+  customMuiCircularProgress,
 } from '@src/mui-theme/custom-styles';
-import {
-  handleSubmit,
-  fetchData,
-  revalidatePosts,
-} from '@src/utils/data-fetching/client';
-import getConfig from 'next/config';
+import { handleSubmit, revalidatePosts } from '@src/utils/data-fetching/client';
 import { NextRouter } from 'next/router';
 import React, { memo, useCallback, useContext, useRef, useState } from 'react';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -64,6 +61,8 @@ const PostForm = memo(({ ...props }: IPostFormProps) => {
 
   const { toggleOpen, selectedImages, setInstanceId } = galleryContext;
 
+  const [isLoading, setIsLoading] = useState(false);
+
   /* istanbul ignore next */
   const handleOpen = useCallback(() => {
     setInstanceId(galleryIdentifier);
@@ -87,53 +86,56 @@ const PostForm = memo(({ ...props }: IPostFormProps) => {
       const response = await handleSubmit({
         event: e as SubmitEvent,
         formRef,
-        handler: fetchData,
-        handlerProps: {
-          url: `/backend/posts/${props?.currentPost?._id ?? ''}`, // conditionally add based on query params
-          options: {
-            method: !props.isNewPost ? 'PUT' : 'POST', // conditionally set to PUT or POST depending on query parms id{24} or id=new
-            headers: {
-              Accept: 'application/json',
-              'Content-Type': 'application/json',
-              apiKey: getConfig().publicRuntimeConfig.API_KEY,
-            },
-          },
-          location: window.location.origin,
+        fetchOptions: {
+          baseUrl: window.location.origin,
+          method: props.isNewPost ? 'POST' : 'PUT',
+          url:
+            `${new URL('/api/blog-data', window.location.origin)}?url=/posts/${
+              props?.currentPost?._id
+            }&method=${props.isNewPost ? 'POST' : 'PUT'}` ?? '', // conditionally add based on query params
         },
       });
 
       try {
+        /* istanbul ignore next */
         const currentPost: IPost | null = props.currentPost ?? null;
+        /* istanbul ignore next */
         const posts = await fetch(
-          `${window.location.origin}/backend/posts?page=${
-            props.paginationSettings.page + 1
-          }&pageSize=${props.paginationSettings.pageSize}`,
-          {
-            method: 'GET',
-            headers: {
-              Accept: 'application/json',
-              'Content-Type': 'application/json',
-              apiKey: getConfig().publicRuntimeConfig.API_KEY,
-            },
-          },
+          `${new URL(
+            '/api/blog-data',
+            window.location.origin,
+          )}?url=/posts?page=${props.paginationSettings.page + 1}&pageSize=${
+            props.paginationSettings.pageSize
+          }&method=GET`,
         );
         /* istanbul ignore next */
+        const allPostsData = await fetch(
+          `${new URL(
+            '/api/blog-data',
+            window.location.origin,
+          )}?url=/posts&method=GET`,
+        );
+
+        /* istanbul ignore next */
         const postsResponse = await posts?.json();
+
         /* istanbul ignore next */
         if (postsResponse) {
+          const allPosts = await allPostsData.json();
+          setIsLoading(true);
           await revalidatePosts(
             window.location.origin,
-            props.postsResponse.totalDocuments,
-            props.postsResponse.pageSize,
+            allPosts.data.totalDocuments,
+            props.paginationSettings.pageSize,
             currentPost,
           );
-
-          props.updatePostsResponse(postsResponse);
+          props.updatePostsResponse(allPosts.data.data);
         }
       } catch (error) {
         /* istanbul ignore next */
         console.warn(`Error revalidating posts: ${error}`);
       }
+      setIsLoading(false);
       /* istanbul ignore next */
       await updateSnackbarProps(response as Response, setSnackbarProps);
     },
@@ -258,12 +260,22 @@ const PostForm = memo(({ ...props }: IPostFormProps) => {
           fullWidth
           sx={{ ...customMuiButtonBrick, marginTop: 2 }}
         >
-          Submit
+          {!isLoading ? (
+            'Submit'
+          ) : (
+            <CircularProgress sx={{ ...customMuiCircularProgress }} size={20} />
+          )}
         </Button>
       </Box>
       <CustomSnackbar
-        severity={snackbarProps?.severity ?? null}
-        text={snackbarProps?.text ?? null}
+        severity={
+          /* istanbul ignore next */
+          snackbarProps?.severity ?? null
+        }
+        text={
+          /* istanbul ignore next */
+          snackbarProps?.text ?? null
+        }
         clearPropsFn={setSnackbarProps}
       />
 

@@ -85,9 +85,18 @@ const BlogPost: NextPage<IBlogPostProps> = ({ ...props }: IBlogPostProps) => {
 
 /* istanbul ignore next */
 export const getStaticPaths: GetStaticPaths = async () => {
-  const res = await serverSideBackendFetch<{ data: IPost[] }>('/posts');
-
-  const paths = res?.data.filter((p) => p.isPublished) ?? [];
+  const res = await serverSideBackendFetch<{ data: IPost[] }>({
+    endpoint: '/posts',
+    method: 'GET',
+    headers: process.env.API_KEY
+      ? new Headers({
+          'Content-Type': 'application/json',
+          apiKey: process.env.API_KEY,
+        })
+      : null,
+    serverUrl: process.env.BLOG_API_URL ?? null,
+  });
+  const paths = res?.data?.data?.filter((p) => p.isPublished) ?? [];
 
   return {
     paths: paths.map((post) => ({
@@ -104,7 +113,17 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const slug = params?.slug as string;
 
   try {
-    const data = await serverSideBackendFetch<IPost>(`/posts/slug/${slug}`);
+    const { data } = await serverSideBackendFetch<IPost>({
+      endpoint: `/posts/slug/${slug}`,
+      method: 'GET',
+      headers: process.env.API_KEY
+        ? new Headers({
+            'Content-Type': 'application/json',
+            apiKey: process.env.API_KEY,
+          })
+        : null,
+      serverUrl: process.env.BLOG_API_URL ?? null,
+    });
 
     return {
       props: {

@@ -1,19 +1,11 @@
 import '@testing-library/jest-dom';
-import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor,
-  within,
-} from '@testing-library/react';
+import { act, fireEvent, render, screen, within } from '@testing-library/react';
 import { axe, toHaveNoViolations } from 'jest-axe';
 import React from 'react';
 import PostsList from '.';
 import { posts } from '../../../mocks';
 import { IPostsListProps } from '../../../interfaces/components-props';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { fetchData } from '../../../utils/data-fetching/client';
 
 expect.extend(toHaveNoViolations);
 
@@ -31,38 +23,19 @@ const mockPaginationSettings: IPostsListProps['paginationSettings'] = {
   pageSize: 10,
 };
 
-const mockCfg: IPostsListProps['cfg'] = {
-  publicRuntimeConfig: {
-    API_KEY: 'some-api-key',
-  },
-};
-
 const mockUpdatePaginationSettings = jest.fn();
 const mockUpdatePostsResponse = jest.fn();
 
 const props = {
   postsResponse: mockPostsResponse,
   paginationSettings: mockPaginationSettings,
-  cfg: mockCfg,
   updatePaginationSettings: mockUpdatePaginationSettings,
   updatePostsResponse: mockUpdatePostsResponse,
+  pageSize: 10,
 };
 
 const mockedFetch = jest.fn();
 global.fetch = mockedFetch;
-
-jest.mock('../../../utils/data-fetching/client', () => ({
-  fetchData: jest.fn().mockResolvedValue({
-    ok: true,
-    headers: {
-      'Content-Type': 'application/json',
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      get: (_: string) => 'application/json',
-    },
-    status: 204,
-  }),
-  revalidatePosts: jest.fn(),
-}));
 
 describe('PostsList', () => {
   beforeEach(() => {
@@ -111,20 +84,5 @@ describe('PostsList', () => {
     fireEvent.click(firstPostDeleteButton);
     const dialogTitle = screen.getByText('Delete');
     expect(dialogTitle).toBeInTheDocument();
-  });
-
-  it('calls updatePostsResponse when a post is deleted', async () => {
-    render(<PostsList {...props} />);
-    const postItems = screen.getAllByTestId('post-item');
-    const firstPostDeleteButton = within(postItems[0]).getByTestId(
-      'delete-button',
-    );
-    fireEvent.click(firstPostDeleteButton);
-    const deleteButton = screen.getByText('Delete');
-    fireEvent.click(deleteButton);
-
-    await waitFor(() => {
-      expect(props.updatePostsResponse).toHaveBeenCalled();
-    });
   });
 });

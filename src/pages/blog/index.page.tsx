@@ -13,6 +13,7 @@ const Blog: NextPageWithLayout<IBlogProps> = ({ ...props }: IBlogProps) => {
   if (props.error) return <StaticPageError {...props.error} />;
 
   // posts are stored in data.data
+
   return (
     <div id="blog" className="d-flex flex-column gap-5">
       <SearchField searchUrl="/blog/search" />
@@ -43,19 +44,37 @@ Blog.getLayout = function getLayout(page: ReactElement) {
 /* istanbul ignore next */
 export const getStaticProps: GetStaticProps = async () => {
   try {
-    const data = await serverSideBackendFetch<IPaginatedData<IPost>>(
-      '/posts?page=1&pagesize=10',
-    );
+    const { data } = await serverSideBackendFetch<IPaginatedData<IPost>>({
+      endpoint: '/posts?page=1&pagesize=10',
+      method: 'GET',
+      headers: process.env.API_KEY
+        ? new Headers({
+            'Content-Type': 'application/json',
+            apiKey: process.env.API_KEY,
+          })
+        : null,
+      serverUrl: process.env.BLOG_API_URL ?? null,
+    });
 
-    const pageMetaData = await serverSideBackendFetch<IBlogPage>('/pages/blog');
+    const pageMetaDataRes = await serverSideBackendFetch<IBlogPage>({
+      endpoint: '/pages/blog',
+      method: 'GET',
+      headers: process.env.API_KEY
+        ? new Headers({
+            'Content-Type': 'application/json',
+            apiKey: process.env.API_KEY,
+          })
+        : null,
+      serverUrl: process.env.BLOG_API_URL ?? null,
+    });
 
-    const publishedPosts = data.data.filter((p) => p.isPublished);
+    const publishedPosts = data?.data.filter((p) => p.isPublished);
     const filteredData = { ...data, data: publishedPosts };
 
     return {
       props: {
         data: filteredData,
-        meta: pageMetaData.meta,
+        meta: pageMetaDataRes?.data,
       },
     };
   } catch (error) {

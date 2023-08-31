@@ -25,13 +25,12 @@ import {
   customMuiTextFieldBrick,
   flexColumn,
 } from '@src/mui-theme/custom-styles';
-import { handleSubmit, fetchData } from '@src/utils/data-fetching/client';
+import { handleSubmit } from '@src/utils/data-fetching/client';
 import CustomSnackbar from '@src/components/molecules/custom-snackbar';
 import { updateSnackbarProps } from '@src/components/molecules/custom-snackbar/utils';
 import SeoFormFields from '@src/components/molecules/seo-form-fields';
 import { NextPageContext } from 'next';
 import { ServerResponse } from 'http';
-import getConfig from 'next/config';
 import RichEditor from '@src/components/organisms/rich-editor';
 import { ImageGalleryProvider } from '@src/components/organisms/image-gallery/state/image-gallery.provider';
 
@@ -45,6 +44,7 @@ const ServicesAdmin: NextPageWithLayout<IServicesPageAdminProps> = ({
 }: IServicesPageAdminProps) => {
   const formRef = useRef<HTMLFormElement | null>(null);
   const [editorHtml, setEditorHtml] = useState(
+    /* istanbul ignore next */
     props.data.pageFields.content ?? '',
   );
   const [snackbarProps, setSnackbarProps] =
@@ -54,7 +54,7 @@ const ServicesAdmin: NextPageWithLayout<IServicesPageAdminProps> = ({
     <>
       <Box
         component="form"
-        action="/"
+        action=""
         method="PUT"
         ref={formRef}
         sx={{ marginBottom: 5 }}
@@ -63,28 +63,22 @@ const ServicesAdmin: NextPageWithLayout<IServicesPageAdminProps> = ({
           const response = await handleSubmit({
             event: e as unknown as SubmitEvent,
             formRef,
-            handler: fetchData,
-            handlerProps: {
+            fetchOptions: {
+              baseUrl: window.location.origin,
+              pagePath: 'services',
               url:
-                /* istanbul ignore next */
-                (props.data as unknown as IErrorResponse)?.status === 404
-                  ? '/backend/pages'
-                  : '/backend/pages/services',
-              options: {
-                method:
-                  /* istanbul ignore next */
+                `${new URL('/api/blog-data', window.location.origin)}?url=${
+                  (props.data as unknown as IErrorResponse)?.status === 404
+                    ? '/pages'
+                    : '/pages/services'
+                }&method=${
                   (props.data as unknown as IErrorResponse)?.status === 404
                     ? 'POST'
-                    : 'PUT',
-                headers: {
-                  Accept: 'application/json',
-                  'Content-Type': 'application/json',
-                  apiKey: getConfig().publicRuntimeConfig.API_KEY,
-                },
-              },
-              location: window.location.origin,
+                    : 'PUT'
+                }` ?? '', // conditionally add based on query params
             },
           });
+
           /* istanbul ignore next */
           updateSnackbarProps(response as Response, setSnackbarProps);
         }}
@@ -131,8 +125,14 @@ const ServicesAdmin: NextPageWithLayout<IServicesPageAdminProps> = ({
         </Button>
       </Box>
       <CustomSnackbar
-        severity={snackbarProps?.severity ?? null}
-        text={snackbarProps?.text ?? null}
+        severity={
+          /* istanbul ignore next */
+          snackbarProps?.severity ?? null
+        }
+        text={
+          /* istanbul ignore next */
+          snackbarProps?.text ?? null
+        }
         clearPropsFn={setSnackbarProps}
       />
     </>
@@ -151,7 +151,17 @@ export async function getServerSideProps(ctx: NextPageContext) {
   const { res } = ctx;
 
   try {
-    const data = await serverSideBackendFetch<IServicesPage>('/pages/services');
+    const { data } = await serverSideBackendFetch<IServicesPage>({
+      endpoint: '/pages/services',
+      method: 'GET',
+      headers: process.env.API_KEY
+        ? new Headers({
+            'Content-Type': 'application/json',
+            apiKey: process.env.API_KEY,
+          })
+        : null,
+      serverUrl: process.env.BLOG_API_URL ?? null,
+    });
 
     return {
       props: {

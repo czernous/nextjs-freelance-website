@@ -17,9 +17,9 @@ const BlogSearchResults: NextPageWithLayout<
   if (!props.data.data.length)
     return <h3>No posts matching your search term were found.</h3>;
 
-  const isPaginated = props.data.data.length > 10;
+  const isPaginated = props.data.totalPages > 1;
   /* istanbul ignore next*/
-  const baseUrl = isPaginated ? '/blog/search' : '/blog';
+  const baseUrl = isPaginated ? '/blog/search/' : '/blog';
 
   return (
     <div id="blog-search" className="d-flex flex-column gap-5">
@@ -54,11 +54,18 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const page = Number(context.query?.page) || 1;
 
   try {
-    const data = await serverSideBackendFetch<IPaginatedData<IPost>>( //TODO: read search term from query and pass into component
-      `/posts?search=${query}&page=${page}&pagesize=10`,
-    );
-
-    const publishedPosts = data.data.filter((p) => p.isPublished);
+    const { data } = await serverSideBackendFetch<IPaginatedData<IPost>>({
+      endpoint: `/posts?search=${query}&page=${page}&pagesize=10`,
+      method: 'GET',
+      headers: process.env.API_KEY
+        ? new Headers({
+            'Content-Type': 'application/json',
+            apiKey: process.env.API_KEY,
+          })
+        : null,
+      serverUrl: process.env.BLOG_API_URL ?? null,
+    });
+    const publishedPosts = data?.data.filter((p) => p.isPublished);
     const filteredData = { ...data, data: publishedPosts };
 
     return {

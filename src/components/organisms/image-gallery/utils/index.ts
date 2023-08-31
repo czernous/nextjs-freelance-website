@@ -1,70 +1,44 @@
 import { IImage } from '@src/interfaces';
-import { fetchData } from '@src/utils/data-fetching/client';
-import getConfig from 'next/config';
 import { Dispatch, SetStateAction } from 'react';
 
 /* istanbul ignore next */
 export const getImages = async (): Promise<IImage[]> => {
-  const cfg = getConfig();
-  const apiKey = cfg.publicRuntimeConfig.API_KEY;
+  const imageResponse = await fetch(
+    `${new URL(
+      '/api/blog-data',
+      window.location.origin,
+    )}?url=/images&method=GET`,
+  );
 
-  const imageResponse = await fetchData({
-    url: '/backend/images',
-    options: {
-      method: 'GET',
+  const r = await imageResponse?.json();
 
-      headers: {
-        'Content-Type': 'application/json',
-        apiKey,
-      },
-    },
-    location: `${window.location.origin}`,
-  });
-
-  return await imageResponse?.json();
+  return r?.data;
 };
 
 /* istanbul ignore next */
 export const handleGalleryOpen = async (
   setImages: Dispatch<SetStateAction<IImage[] | null>>,
 ) => {
-  const cfg = getConfig();
-  const apiKey = cfg.publicRuntimeConfig.API_KEY;
-
-  const imageResponse = await fetchData({
-    url: '/backend/images',
-    options: {
-      method: 'GET',
-
-      headers: {
-        'Content-Type': 'application/json',
-        apiKey,
-      },
-    },
-    location: `${window.location.origin}`,
-  });
+  const imageResponse = await fetch(
+    `${new URL(
+      '/api/blog-data',
+      window.location.origin,
+    )}?url=/images&method=GET`,
+  );
 
   const imagesData = await imageResponse?.json();
-  setImages(imagesData);
+
+  setImages(imagesData?.data);
 };
 
 /* istanbul ignore next */
 export const handleImageDelete = async (imageId: string) => {
-  const cfg = getConfig();
-  const apiKey = cfg.publicRuntimeConfig.API_KEY;
-
-  const imageDeleteResponse = await fetchData({
-    url: `/backend/images/${imageId}`,
-    options: {
-      method: 'DELETE',
-
-      headers: {
-        'Content-Type': 'application/json',
-        apiKey,
-      },
-    },
-    location: `${window.location.origin}`,
-  });
+  const imageDeleteResponse = await fetch(
+    `${new URL(
+      '/api/blog-data',
+      window.location.origin,
+    )}?url=/images/${imageId}&method=DELETE`,
+  );
 
   if (imageDeleteResponse?.status === 204) {
     // TODO: add toast notification upon delete

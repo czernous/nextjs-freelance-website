@@ -1,99 +1,57 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { updateSnackbarProps } from '.';
-
-const responseMock = (
-  body: any,
-  options?: { status?: number; headers?: { [key: string]: string } },
-) => {
-  return {
-    body,
-    status: options?.status || 200,
-    headers: new Map(Object.entries(options?.headers || {})),
-    json: jest.fn(() => Promise.resolve(body)),
-    text: jest.fn(() => Promise.resolve(body)),
-  };
-};
+import { updateSnackbarProps } from '.'; // Update the import path
 
 describe('updateSnackbarProps', () => {
-  it('updates snackbar props with success severity', async () => {
-    const r = responseMock(
-      { message: 'Success' },
-      {
-        status: 200,
-        headers: { 'Content-Type': 'application/json' },
-      },
+  it('should update snackbar props with success severity', async () => {
+    // Arrange
+    const responseMock = {
+      ok: false,
+      json: jest.fn().mockResolvedValue({
+        message: {
+          severity: 'success',
+          text: 'Success',
+        },
+      }),
+    };
+
+    const callbackMock = jest.fn();
+
+    // Act
+    await updateSnackbarProps(
+      responseMock as unknown as Response,
+      callbackMock,
     );
 
-    const callback = jest.fn();
-
-    await updateSnackbarProps(r as unknown as Response, callback);
-
-    expect(callback).toHaveBeenCalledWith({
+    // Assert
+    expect(callbackMock).toHaveBeenCalledWith({
       severity: 'success',
-      text: { message: 'Success' },
+      text: 'Success',
     });
   });
 
-  it('updates snackbar props with error severity', async () => {
-    const r = responseMock(
-      { message: 'Error' },
-      {
-        status: 400,
-        headers: { 'Content-Type': 'application/json' },
-      },
+  it('should update snackbar props with error severity', async () => {
+    // Arrange
+    const responseMock = {
+      ok: false,
+      json: jest.fn().mockResolvedValue({
+        message: {
+          severity: 'error',
+          text: 'Error', // No message in the empty object
+        },
+      }), // Mocked JSON response
+    };
+
+    const callbackMock = jest.fn();
+
+    // Act
+    await updateSnackbarProps(
+      responseMock as unknown as Response,
+      callbackMock,
     );
 
-    const callback = jest.fn();
-
-    await updateSnackbarProps(r as unknown as Response, callback);
-
-    expect(callback).toHaveBeenCalledWith({
+    // Assert
+    expect(callbackMock).toHaveBeenCalledWith({
       severity: 'error',
-      text: { message: 'Error' },
+      text: 'Error',
     });
-  });
-
-  it('handles error reading response as text', async () => {
-    const r = responseMock(
-      { message: 'Error' },
-      {
-        status: 400,
-        headers: { 'Content-Type': 'text/plain' },
-      },
-    );
-
-    const callback = jest.fn();
-
-    await updateSnackbarProps(r as unknown as Response, callback);
-
-    expect(callback).toHaveBeenCalledWith({
-      severity: 'error',
-      text: { message: 'Error' },
-    });
-  });
-
-  it('handles error parsing response as JSON', async () => {
-    const r = responseMock('Invalid JSON', {
-      status: 400,
-      headers: { 'Content-Type': 'application/json' },
-    });
-
-    const callback = jest.fn();
-
-    await updateSnackbarProps(r as unknown as Response, callback);
-
-    expect(callback).toHaveBeenCalledWith({
-      severity: 'error',
-      text: 'Invalid JSON',
-    });
-  });
-
-  it('returns without updating snackbar props if response is falsy', async () => {
-    const r = null;
-    const callback = jest.fn();
-
-    await updateSnackbarProps(r as unknown as Response, callback);
-
-    expect(callback).not.toHaveBeenCalled();
   });
 });

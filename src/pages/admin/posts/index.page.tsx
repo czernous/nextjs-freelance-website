@@ -4,14 +4,12 @@ import PostForm from '@src/components/organisms/post-form';
 import { IPaginationSettings, IPostsResponse } from '@src/interfaces';
 
 import { NextPageWithLayout } from '@src/pages/_app.page';
-import { fetchData } from '@src/utils/data-fetching/client';
-import getConfig from 'next/config';
 
 import { useRouter } from 'next/router';
 
 import React, { ReactElement, useEffect, useState } from 'react';
 import PostsList from '@src/components/organisms/posts-list';
-import { NextConfig } from 'next';
+
 import { ImageGalleryProvider } from '@src/components/organisms/image-gallery/state/image-gallery.provider';
 
 const PostsAdmin: NextPageWithLayout = () => {
@@ -25,29 +23,19 @@ const PostsAdmin: NextPageWithLayout = () => {
       pageSize: postsResponse?.pageSize ?? 10,
     });
 
-  const cfg: NextConfig = getConfig();
   const router = useRouter();
 
   useEffect(() => {
-    fetchData({
-      url: `/backend/posts?page=${paginationSettings.page + 1}&pageSize=${
-        paginationSettings.pageSize
-      }`,
-      options: {
-        method: 'GET',
-        headers: {
-          apiKey: cfg.publicRuntimeConfig?.API_KEY,
-        },
-      },
-      location: window.location.origin,
-    })
+    fetch(
+      `${new URL('/api/blog-data', window.location.origin)}?url=/posts?page=${
+        paginationSettings.page + 1
+      }&pageSize=${paginationSettings.pageSize}&method=GET`,
+    )
       .then((r) => r?.json())
-      .then((p) => setPostsResponse(p));
-  }, [
-    paginationSettings.page,
-    paginationSettings.pageSize,
-    cfg.publicRuntimeConfig?.API_KEY,
-  ]);
+      .then((p) => {
+        setPostsResponse(p?.data);
+      });
+  }, [paginationSettings.page, paginationSettings.pageSize]);
 
   const isNewPost = router.query.id === 'new';
   /* istanbul ignore next */
@@ -65,7 +53,7 @@ const PostsAdmin: NextPageWithLayout = () => {
             currentPost={
               isNewPost
                 ? undefined
-                : postsResponse.data.find((p) => p._id === router.query.id)
+                : postsResponse?.data?.find((p) => p._id === router.query.id)
             }
           />
         )}
@@ -81,7 +69,6 @@ const PostsAdmin: NextPageWithLayout = () => {
           paginationSettings={paginationSettings}
           updatePaginationSettings={setPaginationSettings}
           updatePostsResponse={setPostsResponse}
-          cfg={cfg}
         />
       )}{' '}
     </>

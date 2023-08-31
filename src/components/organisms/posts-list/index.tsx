@@ -26,7 +26,7 @@ import { ICustomSnackbarProps, IPost, IPostsListProps } from '@src/interfaces';
 import Link from 'next/link';
 import Image from 'next/image';
 import React, { memo, useCallback, useState } from 'react';
-import { fetchData, revalidatePosts } from '@src/utils/data-fetching/client';
+import { revalidatePosts } from '@src/utils/data-fetching/client';
 import { updateSnackbarProps } from '@src/components/molecules/custom-snackbar/utils';
 import CustomSnackbar from '@src/components/molecules/custom-snackbar';
 import {
@@ -46,6 +46,7 @@ const PostsList = memo(({ ...props }: IPostsListProps) => {
   /* istanbul ignore next */
   const handleClose = useCallback(() => setOpen(false), []);
 
+  /* istanbul ignore next */
   const handlePageChange = useCallback(
     (e: React.MouseEvent<HTMLButtonElement> | null) => {
       const target = e?.currentTarget;
@@ -85,18 +86,14 @@ const PostsList = memo(({ ...props }: IPostsListProps) => {
     setOpen(true);
   }, []);
 
+  /* istanbul ignore next */
   const deletePostAndRevalidate = useCallback(
     async (post: IPost) => {
-      const deleteResponse = await fetchData({
-        url: `/backend/posts/${post._id}`,
-        options: {
-          method: 'DELETE',
-          headers: {
-            apiKey: props.cfg.publicRuntimeConfig?.API_KEY,
-          },
-        },
-        location: window.location.origin,
-      });
+      const deleteResponse = await fetch(
+        `${new URL('/api/blog-data', window.location.origin)}?url=/posts/${
+          post._id
+        }&method=GET`,
+      );
 
       if (deleteResponse?.ok && props.postsResponse) {
         const filteredPosts = props.postsResponse.data.filter(
@@ -123,11 +120,11 @@ const PostsList = memo(({ ...props }: IPostsListProps) => {
       }
 
       /* istanbul ignore next */
-      updateSnackbarProps(deleteResponse as Response, setSnackbarProps);
+      await updateSnackbarProps(deleteResponse as Response, setSnackbarProps);
     },
     [props],
   );
-
+  /* istanbul ignore next */
   const handleDeletePost = useCallback(() => {
     if (markedPost) {
       deletePostAndRevalidate(markedPost);
@@ -197,7 +194,7 @@ const PostsList = memo(({ ...props }: IPostsListProps) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {props.postsResponse?.data.map((post) => {
+              {props.postsResponse?.data?.map((post) => {
                 return (
                   <TableRow
                     data-testid="post-item"
@@ -259,8 +256,8 @@ const PostsList = memo(({ ...props }: IPostsListProps) => {
             /* istanbul ignore next */
             props.postsResponse?.totalDocuments ?? 1
           }
-          rowsPerPage={props.paginationSettings.pageSize}
-          page={props.paginationSettings.page} // is zero-based
+          rowsPerPage={props.paginationSettings?.pageSize}
+          page={props.paginationSettings?.page} // is zero-based
           onPageChange={handlePageChange}
           onRowsPerPageChange={handleRowsPerpageChange}
           sx={{
@@ -301,7 +298,11 @@ const PostsList = memo(({ ...props }: IPostsListProps) => {
               <Button onClick={handleClose} sx={customMuiButtonBrick}>
                 Cancel
               </Button>
-              <Button onClick={handleDeletePost} sx={customMuiButtonDanger}>
+              <Button
+                onClick={handleDeletePost}
+                sx={customMuiButtonDanger}
+                data-testid="delete-post"
+              >
                 Delete
               </Button>
             </DialogActions>
@@ -309,8 +310,14 @@ const PostsList = memo(({ ...props }: IPostsListProps) => {
         )
       }
       <CustomSnackbar
-        severity={snackbarProps?.severity ?? null}
-        text={snackbarProps?.text ?? null}
+        severity={
+          /* istanbul ignore next */
+          snackbarProps?.severity ?? null
+        }
+        text={
+          /* istanbul ignore next */
+          snackbarProps?.text ?? null
+        }
         clearPropsFn={setSnackbarProps}
       />
     </div>

@@ -2,7 +2,7 @@ import { ChangeEvent, useState } from 'react';
 import { Box, Button, CircularProgress, TextField } from '@mui/material';
 
 import { NextPage } from 'next';
-import getConfig from 'next/config';
+
 import {
   customMuiButtonBrick,
   customMuiTextFieldBrick,
@@ -22,46 +22,28 @@ const Login: NextPage = () => {
     setEmail(e.target.value);
   };
 
-  const cfg = getConfig();
-
   const tryAuthenticate = async () => {
-    const allowedEmails: string[] = cfg.publicRuntimeConfig.ADMIN_EMAILS;
-
-    if (!allowedEmails) {
-      setErrorText('Could not find email whitelist, contact administrator');
-      return;
-    }
-
-    if (!allowedEmails.includes(email)) {
-      setErrorText('This email does not have admin privileges');
-      return;
-    }
-
     setStatus('loading');
+
     const response = await fetch(
-      `${window.location.origin}/auth/token?email=${email}&protected-url=${window.location.origin}/admin`,
+      new URL(
+        `/api/auth?email=${email}&protected_url=${window.location.origin}/admin`,
+        window.location.origin,
+      ),
     );
 
-    const clonedResponse = response.clone();
-
     try {
-      const r: { Ok: boolean; Message: string } = await response.json();
-      if (!r.Ok) {
-        setErrorText(`Error: ${r.Message}`);
+      const r = await response.json();
+
+      if (!r.ok) {
+        setErrorText(`Error: ${r.message}`);
+      } else {
+        return setStatus('done');
       }
-
-      console.log(r.Message);
-      return setStatus('done');
     } catch (e) {
       console.warn((e as Error).message);
     }
 
-    try {
-      const msg = await clonedResponse.text();
-      setErrorText(`Error: ${msg}`);
-    } catch (e) {
-      console.warn((e as Error).message);
-    }
     setStatus('default');
   };
 

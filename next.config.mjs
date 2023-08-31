@@ -1,3 +1,15 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+// import webpack from 'webpack';
+// import dotenv from 'dotenv';
+
+// const {
+//   parsed: BACKEND_URL,
+//   HOST,
+//   API_KEY,
+// } = dotenv.config({
+//   path: '.env.local',
+// });
+
 /**
  * @type {import('next').NextConfig}
  */
@@ -5,7 +17,14 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   poweredByHeader: false,
+  output: 'standalone',
+  staticPageGenerationTimeout: 2000,
   pageExtensions: ['page.tsx', 'page.jsx', 'ts'],
+  api: {
+    bodyParser: {
+      sizeLimit: '20mb',
+    },
+  },
   images: {
     remotePatterns: [
       {
@@ -32,10 +51,8 @@ const nextConfig = {
 
     deviceSizes: [320, 640, 750, 828, 1080, 1200, 1920, 2048, 3840],
   },
-  serverRuntimeConfig: {
-    PROJECT_ROOT: __dirname,
-  },
-  publicRuntimeConfig: {
+
+  env: {
     APP_HOST: process.env.HOST,
     APP_NAME: process.env.APP_NAME ?? '',
     API_KEY: process.env.API_KEY,
@@ -43,6 +60,19 @@ const nextConfig = {
     AUTH_URL: process.env.AUTH_URL,
     ADMIN_EMAILS: process.env.ADMIN_EMAILS,
   },
+  serverRuntimeConfig: {
+    PROJECT_ROOT: process.cwd(),
+    BACKEND_URL: process.env.BACKEND_URL,
+    API_KEY: process.env.API_KEY,
+  },
+  publicRuntimeConfig: {
+    APP_HOST: process.env.HOST,
+    APP_NAME: process.env.APP_NAME ?? '',
+    // API_KEY: process.env.API_KEY,
+    // BACKEND_URL: process.env.BACKEND_URL,
+    AUTH_URL: process.env.AUTH_URL,
+    ADMIN_EMAILS: process.env.ADMIN_EMAILS,
+  },
 };
 
-module.exports = nextConfig;
+export default nextConfig;

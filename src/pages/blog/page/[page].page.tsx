@@ -63,11 +63,18 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   }
 
   try {
-    const data = await serverSideBackendFetch<{ data: IPost[] }>(
-      `/posts?page=${page}&pagesize=10`,
-    );
-
-    const publishedPosts = data.data.filter((p) => p.isPublished);
+    const { data } = await serverSideBackendFetch<{ data: IPost[] }>({
+      endpoint: `/posts?page=${page}&pagesize=10`,
+      method: 'GET',
+      headers: process.env.API_KEY
+        ? new Headers({
+            'Content-Type': 'application/json',
+            apiKey: process.env.API_KEY,
+          })
+        : null,
+      serverUrl: process.env.BLOG_API_URL ?? null,
+    });
+    const publishedPosts = data?.data.filter((p) => p.isPublished);
     const filteredData = { ...data, data: publishedPosts };
 
     return {

@@ -7,8 +7,9 @@ import { Color, Size } from '../enums';
 import styles from '@src/styles/pages/Home.module.scss';
 import { navItems } from '@src/settings/navbar-settings';
 import { IError, IHomePage } from '@src/interfaces';
-import { serverSideBackendFetch } from '@src/utils';
+
 import StaticPageError from '@src/components/atoms/static-page-error';
+import { serverSideBackendFetch } from '@src/utils/data-fetching/server';
 
 interface IHomeProps {
   data?: IHomePage;
@@ -17,7 +18,6 @@ interface IHomeProps {
 
 const Home: NextPage<IHomeProps> = ({ ...props }: IHomeProps) => {
   if (props.error) return <StaticPageError {...props.error} />;
-
   return (
     <>
       <Head>
@@ -91,8 +91,17 @@ const Home: NextPage<IHomeProps> = ({ ...props }: IHomeProps) => {
 /* istanbul ignore next */
 export async function getStaticProps() {
   try {
-    const data = await serverSideBackendFetch<IHomePage>('/pages/home');
-
+    const { data } = await serverSideBackendFetch<IHomePage>({
+      endpoint: '/pages/home',
+      method: 'GET',
+      headers: process.env.API_KEY
+        ? new Headers({
+            'Content-Type': 'application/json',
+            apiKey: process.env.API_KEY,
+          })
+        : null,
+      serverUrl: process.env.BLOG_API_URL ?? null,
+    });
     return {
       props: {
         data,

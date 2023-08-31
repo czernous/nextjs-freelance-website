@@ -4,7 +4,10 @@ const COOKIE_NAME = `${process.env.HOST}-auth-token`;
 
 const validateToken = async (token: string) => {
   const response = await fetch(
-    `http://${process.env.AUTH_URL}/token?validate=${token}`, // read auth url from env variable
+    `${process.env.AUTH_API_URL}/api/token?validate=${token}`,
+    {
+      headers: new Headers({ authApiKey: process.env.AUTH_API_KEY ?? '' }),
+    }, // read auth url from env variable
   );
 
   const json: { Ok: boolean; Message: string } = await response.json();
@@ -45,11 +48,11 @@ export default async function middleware(req: NextRequest) {
   // restrict /api routes to only be used from /admin
   if (req?.url?.includes('/api/')) {
     const { headers } = req;
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
     const referer = headers.get('referer');
 
-    return !referer?.includes('admin')
+    console.log(referer, req.url);
+    return process.env?.CLIENT_URL &&
+      !referer?.includes(process.env?.CLIENT_URL)
       ? NextResponse.json(
           {
             status: 403,
@@ -62,11 +65,6 @@ export default async function middleware(req: NextRequest) {
   }
 
   if (req?.url?.includes('/admin')) {
-    const adminEmails =
-      process.env.ADMIN_EMAILS?.includes(',') &&
-      process.env.ADMIN_EMAILS.split(',');
-    console.log('deez nutz', adminEmails);
-
     // try to get token out of cookie
 
     // verify token with /auth/token?verify=<token>
@@ -78,8 +76,6 @@ export default async function middleware(req: NextRequest) {
     // verify new token and set cookie
 
     const token = tryGetToken(req) ?? req?.nextUrl.searchParams.get('token');
-
-    console.log('asda', token);
 
     const mustLogin = await loginIfTokenIsInValid(token);
 
@@ -98,7 +94,6 @@ export default async function middleware(req: NextRequest) {
   }
 
   if (req?.url.endsWith('/logout')) {
-    console.log('logout');
     const cookie = req.cookies.get(COOKIE_NAME);
 
     if (cookie) {

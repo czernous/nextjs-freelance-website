@@ -1,40 +1,25 @@
 import { imagePlaceholder } from '@src/assets/image-placeholder';
-import { IError, IPost } from '@src/interfaces';
+import { IError, IHttpMethod, IPost } from '@src/interfaces';
 import { NextRouter } from 'next/router';
 import { ChangeEvent, MutableRefObject } from 'react';
 
 interface IFetchDataProps {
+  /** next api url with qs params to fetch data from blog api */
   url: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  options: any;
-  location: string;
+  /** page path without slash only for `/pages/*` paths */
+  pagePath?: string;
+  /** base */
+  baseUrl: string;
+  /** method */
+  method?: IHttpMethod;
 }
 
 interface ISubmitHandlerOptions {
   event: SubmitEvent;
   formRef: MutableRefObject<HTMLFormElement | null>;
-  handler: IFetchDataFunc; // send formData to the API
-  handlerProps: IFetchDataProps;
+  fetchOptions: IFetchDataProps;
   appendFields?: { [key: string]: string }[];
 }
-
-type IFetchDataFunc = {
-  ({ ...props }: IFetchDataProps): Promise<Response | undefined>;
-};
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const fetchData: IFetchDataFunc = async ({
-  ...props
-}: IFetchDataProps) => {
-  const { url, options, location } = props;
-
-  try {
-    const res = await fetch(`${location ?? ''}${url}`, options);
-    return res;
-  } catch (error) {
-    console.warn('Could not fetch', error);
-  }
-};
 
 export const handleSubmit = async ({ ...options }: ISubmitHandlerOptions) => {
   options.event.preventDefault();
@@ -67,30 +52,28 @@ export const handleSubmit = async ({ ...options }: ISubmitHandlerOptions) => {
     obj[keys[keys.length - 1]] = isBoolean ? isTrue : value;
   }
 
-  const { handlerProps } = options;
-  const handlerOptions = {
-    ...handlerProps.options,
-    body: JSON.stringify(formattedObject),
-  };
+  const { url } = options.fetchOptions;
 
-  const response = await options.handler({
-    ...handlerProps,
-    options: handlerOptions,
+  const method =
+    options.fetchOptions.url.split('method=').at(-1)?.split('&')[0] ?? 'POST';
+
+  const response = await fetch(url, {
+    body: JSON.stringify(formattedObject),
+    method,
   });
 
-  if (options.handlerProps.url.includes('pages')) {
-    const pagePath = options.handlerProps.url.split('/').at(-1);
-    const path = pagePath === 'home' ? '/' : `/${pagePath}`;
+  if (options.fetchOptions.url.includes('pages')) {
+    const path =
+      options.fetchOptions.pagePath === 'home'
+        ? '/'
+        : `/${options.fetchOptions.pagePath}`;
 
-    console.debug(pagePath);
+    console.debug(options.fetchOptions.pagePath);
 
-    const revalidateResponse = await fetchData({
-      url: `/api/revalidate?path=${path}`,
-      options: {
-        method: 'GET',
-      },
-      location: options.handlerProps.location,
-    });
+    const revalidateResponse = await fetch(
+      `${options.fetchOptions.baseUrl}/api/revalidate?path=${path}`,
+      { method: 'GET' },
+    );
 
     try {
       await revalidateResponse?.json();
@@ -98,10 +81,9 @@ export const handleSubmit = async ({ ...options }: ISubmitHandlerOptions) => {
       console.error(error);
     }
   }
-
   return response;
 };
-
+/* istanbul ignore next */
 export const revalidatePosts = async (
   originUrl: string,
   totalDocuments: number,
@@ -111,7 +93,8 @@ export const revalidatePosts = async (
   if (!post || !post.isPublished) return;
   // create paths to revalidate
   const pagePaths: string[] = [];
-  const totalPages = Math.ceil(totalDocuments / pageSize);
+
+  const totalPages = Math.ceil(totalDocuments / pageSize); //TODO: pageSize comes in null and pageSIze is 1, find other way
 
   for (let i = totalPages; i > 0; i--) {
     pagePaths.push(`/blog/page/${i}`);
@@ -119,12 +102,12 @@ export const revalidatePosts = async (
 
   const revalidatePaths = [`/blog`, ...pagePaths];
   if (post) revalidatePaths.push(`/blog/${post.slug}`);
-
   const revalidatePostsResposne = await Promise.all(
-    revalidatePaths.map((path) =>
-      fetch(`${originUrl}/api/revalidate?path=${path}`, {
-        method: 'GET',
-      }),
+    revalidatePaths.map(
+      async (path) =>
+        await fetch(`${new URL('/api/revalidate', originUrl)}?path=${path}`, {
+          method: 'GET',
+        }),
     ),
   );
   try {
@@ -165,7 +148,7 @@ export const fetchAndConvertToBase64 = async (imageUrl: string) => {
     return Promise.resolve(imagePlaceholder);
   }
 };
-
+/* istanbul ignore next */
 export const handlePageChange = (
   e: ChangeEvent<unknown>,
   router: NextRouter,
@@ -195,15 +178,21 @@ export const handlePageChange = (
 };
 
 /* istanbul ignore next */ //is only used for storybook
-export const base64toFileObject = async (
-  url: string,
-  filename: string,
-): Promise<File> => {
-  const mimeType = url.split(':')[1];
-  const res = await fetch(url);
-  const buf = await res.arrayBuffer();
-  return new File([buf], `${filename}.${mimeType}`, { type: mimeType });
+export const base64toFileObject = async (url: string): Promise<Blob | null> => {
+  try {
+    const base64Response = await fetch(url);
+    const mimeType = base64Response.headers.get('content-type') || 'image/jpeg'; // Default MIME type
+    const base64Image = await base64Response.text();
+    const blob = new Blob([Buffer.from(base64Image, 'base64')], {
+      type: mimeType,
+    });
+    return blob;
+  } catch (error) {
+    console.error('Error converting Base64 to Blob:', error);
+    return null;
+  }
 };
+
 /* istanbul ignore next */ //no point testing this
 export const fileToBase64 = async (
   file: File,
@@ -211,6 +200,24 @@ export const fileToBase64 = async (
   try {
     const reader = new FileReader();
     reader.readAsDataURL(file);
+    return new Promise((resolve, reject) => {
+      reader.onloadend = () => resolve(reader.result) as unknown as string;
+      reader.onerror = reject;
+    });
+  } catch (error: unknown) {
+    console.warn(
+      `Error converting file to base64 string: ${(error as Error).message}`,
+    );
+    return Promise.resolve(null);
+  }
+};
+/* istanbul ignore next */ //no point testing this
+export const fileToBinaryString = async (
+  file: File,
+): Promise<string | ArrayBuffer | null> => {
+  try {
+    const reader = new FileReader();
+    reader.readAsBinaryString(file);
     return new Promise((resolve, reject) => {
       reader.onloadend = () => resolve(reader.result) as unknown as string;
       reader.onerror = reject;

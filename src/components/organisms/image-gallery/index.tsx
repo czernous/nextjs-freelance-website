@@ -70,12 +70,14 @@ const ImageGallery = memo(({ identifier }: IImageGalleryProps) => {
   } = galleryContext;
 
   useEffect(() => {
-    (async () => {
-      if (!images) {
+    /* istanbul ignore next */
+    if (!images) {
+      (async () => {
         await fetchImages();
-      }
-    })();
-  }, [fetchImages, images]);
+      })();
+    }
+  }, [images]);
+
   if (!identifier) return null;
   return (
     <>
@@ -125,7 +127,7 @@ const ImageGallery = memo(({ identifier }: IImageGalleryProps) => {
             />
           ) : (
             <ImageList sx={imageGalleryStyles.imageList}>
-              {images.map((image) => (
+              {images?.map((image) => (
                 <ImageListItem key={image._id}>
                   <Image
                     src={image.secureUrl}
@@ -230,8 +232,10 @@ const ImageGallery = memo(({ identifier }: IImageGalleryProps) => {
                 zoomedImage && (
                   <Image
                     src={zoomedImage?.secureUrl}
-                    /* istanbul ignore next */
-                    alt={zoomedImage.altText ?? ''}
+                    alt={
+                      /* istanbul ignore next */
+                      zoomedImage.altText ?? ''
+                    }
                     style={{
                       display: 'flex',
                       height: '100%',

@@ -8,6 +8,8 @@ COPY package*.json ./
 
 RUN node --use-openssl-ca
 
-RUN npm i
+RUN  npm i
+#RUN sh -c 'while [[ "$(curl --connect-timeout 1 -s -o /dev/null -w "%{http_code}" api:5000/ready)" != "200" ]]; do echo ..; sleep 2; done; echo backend is up; npm i'
+#RUN npm i
 
 COPY . .
