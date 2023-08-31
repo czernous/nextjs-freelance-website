@@ -75,7 +75,7 @@ interface IServerSideFetchProps {
   duplex?: boolean;
 }
 
-interface IServerSideFetchResult<T> {
+export interface IServerSideFetchResult<T> {
   message: {
     text: string;
     severity: 'success' | 'error' | 'warning' | null;
