@@ -1,5 +1,5 @@
 import { IError, IPost } from '@src/interfaces';
-import { IServerSideFetchResult, serverSideBackendFetch } from '@src/utils';
+import { serverSideBackendFetch } from '@src/utils';
 
 import StaticPageError from '@src/components/atoms/static-page-error';
 import { GetStaticProps, GetStaticPaths, NextPage } from 'next';
@@ -85,16 +85,18 @@ const BlogPost: NextPage<IBlogPostProps> = ({ ...props }: IBlogPostProps) => {
 
 /* istanbul ignore next */
 export const getStaticPaths: GetStaticPaths = async () => {
-  const res = await fetch(
-    `${new URL(
-      '/api/blog-data',
-      window.location.origin,
-    )}?url=/posts&method=GET`,
-  );
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const data: IServerSideFetchResult<IPost[]> = await res.json();
-  const paths = data?.data?.filter((p) => p.isPublished) ?? [];
+  const res = await serverSideBackendFetch<{ data: IPost[] }>({
+    endpoint: '/posts',
+    method: 'GET',
+    headers: process.env.API_KEY
+      ? new Headers({
+          'Content-Type': 'application/json',
+          apiKey: process.env.API_KEY,
+        })
+      : null,
+    serverUrl: process.env.BLOG_API_URL ?? null,
+  });
+  const paths = res?.data?.data?.filter((p) => p.isPublished) ?? [];
 
   return {
     paths: paths.map((post) => ({
