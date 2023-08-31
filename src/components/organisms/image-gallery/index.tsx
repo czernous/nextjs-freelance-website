@@ -76,6 +76,7 @@ const ImageGallery = memo(({ identifier }: IImageGalleryProps) => {
         await fetchImages();
       })();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [images]);
 
   if (!identifier) return null;

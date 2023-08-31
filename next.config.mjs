@@ -20,11 +20,6 @@ const nextConfig = {
   output: 'standalone',
   staticPageGenerationTimeout: 2000,
   pageExtensions: ['page.tsx', 'page.jsx', 'ts'],
-  api: {
-    bodyParser: {
-      sizeLimit: '20mb',
-    },
-  },
   images: {
     remotePatterns: [
       {
