@@ -1,6 +1,0 @@
-- name: Build docker images
-  Id: build-image
-  run: | 
-    echo ---Building images and starting up docker---
-    {{ docker-compose -f docker-compose.yml up --build -d  }}
-    echo ---Containers up—
