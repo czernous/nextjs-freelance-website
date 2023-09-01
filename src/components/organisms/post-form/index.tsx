@@ -90,12 +90,9 @@ const PostForm = memo(({ ...props }: IPostFormProps) => {
           baseUrl: window.location.origin,
           method: props.isNewPost ? 'POST' : 'PUT',
           url:
-            `${new URL(
-              '/api/blog-data',
-              window.location.origin,
-            )}?url=/posts/${props?.currentPost?._id}&method=${
-              props.isNewPost ? 'POST' : 'PUT'
-            }` ?? '', // conditionally add based on query params
+            `${new URL('/api/blog-data', window.location.origin)}?url=/posts${
+              props.isNewPost ? '' : '/' + props?.currentPost?._id
+            }&method=${props.isNewPost ? 'POST' : 'PUT'}` ?? '', // conditionally add based on query params
         },
       });
 
