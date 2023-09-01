@@ -54,7 +54,10 @@ function formidablePromise(
   });
 }
 
-const CLOUDINARY_FOLDER = process.env.NODE_ENV === 'production' ?'test-api-folder/test-images/' : process.env.CLOUDINARY_FOLDER;
+const CLOUDINARY_FOLDER =
+  process.env.NODE_ENV === 'production'
+    ? 'test-api-folder/test-images/'
+    : process.env.CLOUDINARY_FOLDER;
 const IMAGE_UPLOAD_PARAMS = `&folder=${CLOUDINARY_FOLDER}&maxWidth=2400&widths=512,768,1140,1920&quality=70`;
 
 export default async function handler(
