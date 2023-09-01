@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useCallback, useState } from 'react';
 import { Box, Button, CircularProgress, TextField } from '@mui/material';
 
 import { NextPage } from 'next';
@@ -22,7 +22,7 @@ const Login: NextPage = () => {
     setEmail(e.target.value);
   };
 
-  const tryAuthenticate = async () => {
+  const tryAuthenticate = useCallback(async () => {
     setStatus('loading');
 
     const response = await fetch(
@@ -45,9 +45,9 @@ const Login: NextPage = () => {
     }
 
     setStatus('default');
-  };
+  }, [email]);
 
-  const renderUi = () => {
+  const renderUi = useCallback(() => {
     switch (status) {
       case 'loading':
         return <CircularProgress size={90} sx={{ color: 'unset' }} />;
@@ -81,7 +81,7 @@ const Login: NextPage = () => {
           </Box>
         );
     }
-  };
+  }, [errorText, status, tryAuthenticate]);
 
   return (
     <Box
