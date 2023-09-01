@@ -93,10 +93,13 @@ const reducer = (state: IImageGalleryContext, action: IGalleryAction) => {
         const updatedSelectedImages: Record<string, IImage | null> =
           Object.keys(selectedImages)
             .filter((key) => key !== instanceid)
-            .reduce((obj, key) => {
-              obj[key] = selectedImages[key];
-              return obj;
-            }, {} as Record<string, IImage | null>);
+            .reduce(
+              (obj, key) => {
+                obj[key] = selectedImages[key];
+                return obj;
+              },
+              {} as Record<string, IImage | null>,
+            );
         return { ...state, selectedImages: updatedSelectedImages };
       }
 

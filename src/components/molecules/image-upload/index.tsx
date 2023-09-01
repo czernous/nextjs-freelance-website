@@ -83,9 +83,8 @@ const ImageUpload = ({ isOpen, toggleOpen }: IImageUploadProps) => {
         `${new URL(
           '/api/upload-image',
           window.location.origin,
-        )}?url=/images&filename=${fileName}&method=POST&contentType=${
-          fileRef.current?.type
-        }`,
+        )}?url=/images&filename=${fileName}&method=POST&contentType=${fileRef
+          .current?.type}`,
         {
           method: 'POST',
 
