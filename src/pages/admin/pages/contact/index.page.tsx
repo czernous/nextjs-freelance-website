@@ -1,11 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import AdminPageLayout from '@src/components/layouts/admin-page-layout';
-import {
-  IContactPage,
-  ICustomSnackbarProps,
-  IError,
-  IErrorResponse,
-} from '@src/interfaces';
+import { IContactPage, ICustomSnackbarProps, IError } from '@src/interfaces';
 import { NextPageWithLayout } from '@src/pages/_app.page';
 import { handleServerError, serverSideBackendFetch } from '@src/utils';
 import { ReactElement, useRef, useState } from 'react';
@@ -36,6 +31,7 @@ import { ImageGalleryProvider } from '@src/components/organisms/image-gallery/st
 interface IContactPageAdminProps {
   data: IContactPage;
   error?: Error;
+  statusCode: number;
 }
 
 const ContactAdmin: NextPageWithLayout<IContactPageAdminProps> = ({
@@ -63,14 +59,8 @@ const ContactAdmin: NextPageWithLayout<IContactPageAdminProps> = ({
               pagePath: '/posts',
               url:
                 `${new URL('/api/blog-data', window.location.origin)}?url=${
-                  (props.data as unknown as IErrorResponse)?.status === 404
-                    ? '/pages'
-                    : '/pages/contact'
-                }&method=${
-                  (props.data as unknown as IErrorResponse)?.status === 404
-                    ? 'POST'
-                    : 'PUT'
-                }` ?? '', // conditionally add based on query params
+                  props.statusCode === 404 ? '/pages' : '/pages/contact'
+                }&method=${props.statusCode === 404 ? 'POST' : 'PUT'}` ?? '', // conditionally add based on query params
             },
           });
           /* istanbul ignore next */
@@ -91,7 +81,7 @@ const ContactAdmin: NextPageWithLayout<IContactPageAdminProps> = ({
               name="pageFields.description"
               label="Description"
               variant="outlined"
-              defaultValue={props.data.pageFields?.description}
+              defaultValue={props.data?.pageFields?.description}
               multiline
               maxRows={4}
               sx={customMuiTextFieldBrick}
@@ -102,7 +92,7 @@ const ContactAdmin: NextPageWithLayout<IContactPageAdminProps> = ({
               label="Form action URL"
               required
               variant="outlined"
-              defaultValue={props.data.formActionUrl}
+              defaultValue={props?.data?.formActionUrl}
               multiline
               maxRows={4}
               sx={customMuiTextFieldBrick}
@@ -150,7 +140,7 @@ export async function getServerSideProps(ctx: NextPageContext) {
   const { res } = ctx;
 
   try {
-    const { data } = await serverSideBackendFetch<IContactPage>({
+    const { data, statusCode } = await serverSideBackendFetch<IContactPage>({
       endpoint: '/pages/contact',
       method: 'GET',
       headers: process.env.API_KEY
@@ -165,6 +155,7 @@ export async function getServerSideProps(ctx: NextPageContext) {
     return {
       props: {
         data,
+        statusCode,
       },
     };
   } catch (error) {

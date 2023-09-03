@@ -30,7 +30,7 @@ export default async function handler(
       const body =
         req.method !== 'GET' && req.method !== 'DELETE' ? req.body : undefined;
 
-      if (method === 'PUT') {
+      if (method === 'PUT' || method === 'POST') {
         headers?.append('Content-Type', 'application/json');
       }
 

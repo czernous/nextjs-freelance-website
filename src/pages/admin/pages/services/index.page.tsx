@@ -1,11 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import AdminPageLayout from '@src/components/layouts/admin-page-layout';
-import {
-  ICustomSnackbarProps,
-  IError,
-  IErrorResponse,
-  IServicesPage,
-} from '@src/interfaces';
+import { ICustomSnackbarProps, IError, IServicesPage } from '@src/interfaces';
 import { NextPageWithLayout } from '@src/pages/_app.page';
 import { handleServerError, serverSideBackendFetch } from '@src/utils';
 import { ReactElement, useRef, useState } from 'react';
@@ -37,6 +32,7 @@ import { ImageGalleryProvider } from '@src/components/organisms/image-gallery/st
 interface IServicesPageAdminProps {
   data: IServicesPage;
   error?: Error;
+  statusCode?: number;
 }
 
 const ServicesAdmin: NextPageWithLayout<IServicesPageAdminProps> = ({
@@ -45,7 +41,7 @@ const ServicesAdmin: NextPageWithLayout<IServicesPageAdminProps> = ({
   const formRef = useRef<HTMLFormElement | null>(null);
   const [editorHtml, setEditorHtml] = useState(
     /* istanbul ignore next */
-    props.data.pageFields.content ?? '',
+    props.data?.pageFields?.content ?? '',
   );
   const [snackbarProps, setSnackbarProps] =
     useState<ICustomSnackbarProps | null>(null);
@@ -68,14 +64,8 @@ const ServicesAdmin: NextPageWithLayout<IServicesPageAdminProps> = ({
               pagePath: 'services',
               url:
                 `${new URL('/api/blog-data', window.location.origin)}?url=${
-                  (props.data as unknown as IErrorResponse)?.status === 404
-                    ? '/pages'
-                    : '/pages/services'
-                }&method=${
-                  (props.data as unknown as IErrorResponse)?.status === 404
-                    ? 'POST'
-                    : 'PUT'
-                }` ?? '', // conditionally add based on query params
+                  props.statusCode === 404 ? '/pages' : '/pages/services'
+                }&method=${props.statusCode === 404 ? 'POST' : 'PUT'}` ?? '', // conditionally add based on query params
             },
           });
 
@@ -151,7 +141,7 @@ export async function getServerSideProps(ctx: NextPageContext) {
   const { res } = ctx;
 
   try {
-    const { data } = await serverSideBackendFetch<IServicesPage>({
+    const { data, statusCode } = await serverSideBackendFetch<IServicesPage>({
       endpoint: '/pages/services',
       method: 'GET',
       headers: process.env.API_KEY
@@ -166,6 +156,7 @@ export async function getServerSideProps(ctx: NextPageContext) {
     return {
       props: {
         data,
+        statusCode,
       },
     };
   } catch (error) {

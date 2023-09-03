@@ -21,10 +21,10 @@ const PaginatedBlog: NextPageWithLayout<
         /* istanbul ignore next */
         props.data && (
           <PaginatedCards
-            currentPage={props.currentPage}
+            currentPage={props?.currentPage}
             currentUrl="/blog"
             pageUrl="/page/"
-            data={props.data}
+            data={props?.data}
           />
         )
       }
@@ -34,7 +34,7 @@ const PaginatedBlog: NextPageWithLayout<
 /* istanbul ignore next */
 PaginatedBlog.getLayout = function getLayout(page: ReactElement) {
   return (
-    <ClientPageLayout pageTitle={'Blog'} meta={page.props.data?.meta}>
+    <ClientPageLayout pageTitle={'Blog'} meta={page.props?.data?.meta}>
       {page}
     </ClientPageLayout>
   );

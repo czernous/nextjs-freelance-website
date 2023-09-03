@@ -1,11 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import AdminPageLayout from '@src/components/layouts/admin-page-layout';
-import {
-  IBlogPage,
-  ICustomSnackbarProps,
-  IError,
-  IErrorResponse,
-} from '@src/interfaces';
+import { IBlogPage, ICustomSnackbarProps, IError } from '@src/interfaces';
 import { NextPageWithLayout } from '@src/pages/_app.page';
 import { handleServerError, serverSideBackendFetch } from '@src/utils';
 import { ReactElement, useRef, useState } from 'react';
@@ -36,6 +31,7 @@ import { ImageGalleryProvider } from '@src/components/organisms/image-gallery/st
 interface IBlogPageAdminProps {
   data: IBlogPage;
   error?: Error;
+  statusCode: number;
 }
 
 const BlogAdmin: NextPageWithLayout<IBlogPageAdminProps> = ({
@@ -62,14 +58,8 @@ const BlogAdmin: NextPageWithLayout<IBlogPageAdminProps> = ({
               pagePath: '/posts',
               url:
                 `${new URL('/api/blog-data', window.location.origin)}?url=${
-                  (props.data as unknown as IErrorResponse)?.status === 404
-                    ? '/pages'
-                    : '/pages/blog'
-                }&method=${
-                  (props.data as unknown as IErrorResponse)?.status === 404
-                    ? 'POST'
-                    : 'PUT'
-                }` ?? '', // conditionally add based on query params
+                  props.statusCode === 404 ? '/pages' : '/pages/blog'
+                }&method=${props.statusCode === 404 ? 'POST' : 'PUT'}` ?? '', // conditionally add based on query params
             },
           });
           /* istanbul ignore next */
@@ -93,7 +83,7 @@ const BlogAdmin: NextPageWithLayout<IBlogPageAdminProps> = ({
               variant="outlined"
               defaultValue={
                 /* istanbul ignore next*/
-                props.data.pageFields?.unused ?? ''
+                props?.data?.pageFields?.unused ?? ''
               }
               multiline
               maxRows={4}
@@ -154,11 +144,12 @@ export async function getServerSideProps(ctx: NextPageContext) {
       serverUrl: process.env.BLOG_API_URL ?? null,
     });
 
-    const { data } = response;
+    const { data, statusCode } = response;
 
     return {
       props: {
         data,
+        statusCode,
       },
     };
   } catch (error) {

@@ -19,7 +19,7 @@ interface IBlogPostProps {
 const BlogPost: NextPage<IBlogPostProps> = ({ ...props }: IBlogPostProps) => {
   const APP_NAME = getConfig().publicRuntimeConfig.APP_NAME;
 
-  const pageTitle = `| ${props.data.slug.replaceAll('-', ' ')}`;
+  const pageTitle = `| ${props?.data?.slug?.replaceAll('-', ' ')}`;
   const fullTitle = `${APP_NAME} ${pageTitle}`;
 
   /* istanbul ignore next*/
@@ -29,28 +29,34 @@ const BlogPost: NextPage<IBlogPostProps> = ({ ...props }: IBlogPostProps) => {
     <>
       <Head>
         <title>{fullTitle}</title>
-        <meta name="description" content={props.data.meta?.metaDescription} />
-        <meta name="keywords" content={props.data.meta?.metaKeywords} />
-        <meta property="og:title" content={props.data.meta?.openGraph.title} />
+        <meta name="description" content={props.data?.meta?.metaDescription} />
+        <meta name="keywords" content={props.data?.meta?.metaKeywords} />
+        <meta
+          property="og:title"
+          content={props.data?.meta?.openGraph?.title}
+        />
         <meta
           property="og:description"
-          content={props.data.meta?.openGraph.description}
+          content={props.data?.meta?.openGraph?.description}
         />
 
-        {props.data.meta?.openGraph?.imageUrl && (
+        {props.data?.meta?.openGraph?.imageUrl && (
           /* istanbul ignore next */
           <meta
             property="og:image"
-            content={props.data.meta?.openGraph.imageUrl}
+            content={props.data?.meta?.openGraph?.imageUrl}
           />
         )}
-        {props.data.meta?.openGraph?.type && (
+        {props.data?.meta?.openGraph?.type && (
           /* istanbul ignore next */
-          <meta property="og:type" content={props.data.meta?.openGraph.type} />
+          <meta
+            property="og:type"
+            content={props.data?.meta?.openGraph?.type}
+          />
         )}
-        {props.data.meta?.openGraph?.url && (
+        {props.data?.meta?.openGraph?.url && (
           /* istanbul ignore next */
-          <meta property="og:url" content={props.data.meta?.openGraph.url} />
+          <meta property="og:url" content={props.data?.meta?.openGraph?.url} />
         )}
 
         <link rel="icon" href="/favicon.ico" />
@@ -65,16 +71,20 @@ const BlogPost: NextPage<IBlogPostProps> = ({ ...props }: IBlogPostProps) => {
             style={{ zIndex: 3 }}
           >
             <div className="custom-container">
-              <h1>{props.data.title}</h1>
+              <h1>{props?.data?.title}</h1>
             </div>
           </div>
           <div className={style.gradient}></div>
-          <Image src={props.data.imageUrl} alt={props.data.imageAltText} fill />
+          <Image
+            src={props?.data?.imageUrl}
+            alt={props?.data?.imageAltText}
+            fill
+          />
         </div>
         <div className={`custom-container w-100 ${style.body}`}>
-          <h1 className={style.title}>{props.data.title}</h1>
+          <h1 className={style.title}>{props?.data?.title}</h1>
           <div
-            dangerouslySetInnerHTML={{ __html: props.data.body }}
+            dangerouslySetInnerHTML={{ __html: props?.data?.body }}
             className="rich-text post"
           />
         </div>
@@ -101,7 +111,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   return {
     paths: paths.map((post) => ({
       params: {
-        slug: post.slug,
+        slug: post?.slug,
       },
     })),
     fallback: false,

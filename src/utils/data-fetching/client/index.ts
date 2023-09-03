@@ -66,9 +66,13 @@ export const handleSubmit = async ({ ...options }: ISubmitHandlerOptions) => {
     const path =
       options.fetchOptions.pagePath === 'home'
         ? '/'
-        : `/${options.fetchOptions.pagePath}`;
+        : `${options.fetchOptions.pagePath}`;
 
     console.debug(options.fetchOptions.pagePath);
+
+    if (response.status === 404) {
+      return response;
+    }
 
     const revalidateResponse = await fetch(
       `${options.fetchOptions.baseUrl}/api/revalidate?path=${path}`,

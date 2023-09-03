@@ -129,7 +129,7 @@ const PostForm = memo(({ ...props }: IPostFormProps) => {
             props.paginationSettings.pageSize,
             currentPost,
           );
-          props.updatePostsResponse(allPosts.data.data);
+          props.updatePostsResponse(allPosts.data);
         }
       } catch (error) {
         /* istanbul ignore next */

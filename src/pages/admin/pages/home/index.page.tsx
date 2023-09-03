@@ -1,11 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import AdminPageLayout from '@src/components/layouts/admin-page-layout';
-import {
-  ICustomSnackbarProps,
-  IError,
-  IErrorResponse,
-  IHomePage,
-} from '@src/interfaces';
+import { ICustomSnackbarProps, IError, IHomePage } from '@src/interfaces';
 import { NextPageWithLayout } from '@src/pages/_app.page';
 import { handleServerError, serverSideBackendFetch } from '@src/utils';
 import { ReactElement, useRef, useState } from 'react';
@@ -36,6 +31,7 @@ import { ImageGalleryProvider } from '@src/components/organisms/image-gallery/st
 interface IHomePageAdminProps {
   data: IHomePage;
   error?: Error;
+  statusCode?: number;
 }
 
 const HomeAdmin: NextPageWithLayout<IHomePageAdminProps> = ({
@@ -64,14 +60,8 @@ const HomeAdmin: NextPageWithLayout<IHomePageAdminProps> = ({
               pagePath: '/posts',
               url:
                 `${new URL('/api/blog-data', window.location.origin)}?url=${
-                  (props.data as unknown as IErrorResponse)?.status === 404
-                    ? '/pages'
-                    : '/pages/home'
-                }&method=${
-                  (props.data as unknown as IErrorResponse)?.status === 404
-                    ? 'POST'
-                    : 'PUT'
-                }` ?? '', // conditionally add based on query params
+                  props?.statusCode === 404 ? '/pages' : '/pages/home'
+                }&method=${props?.statusCode === 404 ? 'POST' : 'PUT'}` ?? '', // conditionally add based on query params
             },
           });
           /* istanbul ignore next */
@@ -93,7 +83,7 @@ const HomeAdmin: NextPageWithLayout<IHomePageAdminProps> = ({
               label="CTA headline"
               required
               variant="outlined"
-              defaultValue={props.data.pageFields.ctaHeadline}
+              defaultValue={props.data?.pageFields?.ctaHeadline}
               multiline
               maxRows={4}
               sx={customMuiTextFieldBrick}
@@ -104,7 +94,7 @@ const HomeAdmin: NextPageWithLayout<IHomePageAdminProps> = ({
               label="CTA subheadline"
               required
               variant="outlined"
-              defaultValue={props.data.pageFields.ctaSubheadline}
+              defaultValue={props.data?.pageFields?.ctaSubheadline}
               multiline
               maxRows={4}
               sx={customMuiTextFieldBrick}
@@ -115,7 +105,7 @@ const HomeAdmin: NextPageWithLayout<IHomePageAdminProps> = ({
               label="Button text"
               required
               variant="outlined"
-              defaultValue={props.data.pageFields.ctaBtnText}
+              defaultValue={props.data?.pageFields?.ctaBtnText}
               multiline
               maxRows={4}
               sx={customMuiTextFieldBrick}
@@ -126,7 +116,7 @@ const HomeAdmin: NextPageWithLayout<IHomePageAdminProps> = ({
               label="Button href"
               required
               variant="outlined"
-              defaultValue={props.data.pageFields.ctaBtnHref}
+              defaultValue={props.data?.pageFields?.ctaBtnHref}
               multiline
               maxRows={4}
               sx={customMuiTextFieldBrick}
@@ -176,7 +166,7 @@ export async function getServerSideProps(ctx: NextPageContext) {
   const { res } = ctx;
 
   try {
-    const { data } = await serverSideBackendFetch<IHomePage>({
+    const { data, statusCode } = await serverSideBackendFetch<IHomePage>({
       endpoint: '/pages/home',
       method: 'GET',
       headers: process.env.API_KEY
@@ -191,6 +181,7 @@ export async function getServerSideProps(ctx: NextPageContext) {
     return {
       props: {
         data,
+        statusCode,
       },
     };
   } catch (error) {

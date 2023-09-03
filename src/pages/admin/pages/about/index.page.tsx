@@ -1,11 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import AdminPageLayout from '@src/components/layouts/admin-page-layout';
-import {
-  IAboutPage,
-  ICustomSnackbarProps,
-  IError,
-  IErrorResponse,
-} from '@src/interfaces';
+import { IAboutPage, ICustomSnackbarProps, IError } from '@src/interfaces';
 import { NextPageWithLayout } from '@src/pages/_app.page';
 import { handleServerError, serverSideBackendFetch } from '@src/utils';
 import { ReactElement, useCallback, useContext, useRef, useState } from 'react';
@@ -40,6 +35,7 @@ import { GalleryContext } from '@src/components/organisms/image-gallery/state/im
 interface IAboutPageAdminProps {
   data: IAboutPage;
   error?: Error;
+  statusCode: number;
 }
 
 const AboutAdmin: NextPageWithLayout<IAboutPageAdminProps> = ({
@@ -82,14 +78,8 @@ const AboutAdmin: NextPageWithLayout<IAboutPageAdminProps> = ({
               pagePath: '/posts',
               url:
                 `${new URL('/api/blog-data', window.location.origin)}?url=${
-                  (props.data as unknown as IErrorResponse)?.status === 404
-                    ? '/pages'
-                    : '/pages/about'
-                }&method=${
-                  (props.data as unknown as IErrorResponse)?.status === 404
-                    ? 'POST'
-                    : 'PUT'
-                }` ?? '', // conditionally add based on query params
+                  props.statusCode === 404 ? '/pages' : '/pages/about'
+                }&method=${props.statusCode === 404 ? 'POST' : 'PUT'}` ?? '', // conditionally add based on query params
             },
           });
           /* istanbul ignore next */
@@ -169,7 +159,7 @@ export async function getServerSideProps(ctx: NextPageContext) {
   const { res } = ctx;
 
   try {
-    const { data } = await serverSideBackendFetch<IAboutPage>({
+    const { data, statusCode } = await serverSideBackendFetch<IAboutPage>({
       endpoint: '/pages/about',
       method: 'GET',
       headers: process.env.API_KEY
@@ -184,6 +174,7 @@ export async function getServerSideProps(ctx: NextPageContext) {
     return {
       props: {
         data,
+        statusCode,
       },
     };
   } catch (error) {

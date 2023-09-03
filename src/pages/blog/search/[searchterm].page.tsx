@@ -17,7 +17,7 @@ const BlogSearchResults: NextPageWithLayout<
   if (!props.data.data.length)
     return <h3>No posts matching your search term were found.</h3>;
 
-  const isPaginated = props.data.totalPages > 1;
+  const isPaginated = props?.data?.totalPages > 1;
   /* istanbul ignore next*/
   const baseUrl = isPaginated ? '/blog/search/' : '/blog';
 
@@ -25,7 +25,7 @@ const BlogSearchResults: NextPageWithLayout<
     <div id="blog-search" className="d-flex flex-column gap-5">
       <SearchField searchUrl="/blog/search" />
       <PaginatedCards
-        currentPage={props.currentPage}
+        currentPage={props?.currentPage}
         currentUrl={`${baseUrl}${
           /* istanbul ignore next*/
           !isPaginated ? '' : props.query

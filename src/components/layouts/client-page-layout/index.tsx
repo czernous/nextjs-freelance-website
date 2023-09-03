@@ -21,15 +21,15 @@ const ClientPageLayout = ({
     <div data-testid="client-layout">
       <Head>
         <title>{fullTitle}</title>
-        <meta name="description" content={props.meta?.metaDescription} />
-        <meta name="keywords" content={props.meta?.metaKeywords} />
-        <meta property="og:title" content={props.meta?.openGraph?.title} />
+        <meta name="description" content={props?.meta?.metaDescription} />
+        <meta name="keywords" content={props?.meta?.metaKeywords} />
+        <meta property="og:title" content={props?.meta?.openGraph?.title} />
         <meta
           property="og:description"
           content={props.meta?.openGraph?.description}
         />
 
-        {props.meta?.openGraph?.imageUrl && (
+        {props?.meta?.openGraph?.imageUrl && (
           /* istanbul ignore next */
           <meta property="og:image" content={props.meta?.openGraph.imageUrl} />
         )}

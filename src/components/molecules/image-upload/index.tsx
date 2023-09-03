@@ -106,7 +106,7 @@ const ImageUpload = ({ isOpen, toggleOpen }: IImageUploadProps) => {
       }
       setIsloading(false);
     },
-    [fetchImages, fileName],
+    [fetchImages, fileName, base64Image],
   );
 
   return (

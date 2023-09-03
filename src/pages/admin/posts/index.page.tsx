@@ -7,7 +7,7 @@ import { NextPageWithLayout } from '@src/pages/_app.page';
 
 import { useRouter } from 'next/router';
 
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement, useEffect, useMemo, useState } from 'react';
 import PostsList from '@src/components/organisms/posts-list';
 
 import { ImageGalleryProvider } from '@src/components/organisms/image-gallery/state/image-gallery.provider';
@@ -28,8 +28,8 @@ const PostsAdmin: NextPageWithLayout = () => {
   useEffect(() => {
     fetch(
       `${new URL('/api/blog-data', window.location.origin)}?url=/posts?page=${
-        paginationSettings.page + 1
-      }&pageSize=${paginationSettings.pageSize}&method=GET`,
+        paginationSettings?.page + 1
+      }&pageSize=${paginationSettings?.pageSize}&method=GET`,
     )
       .then((r) => r?.json())
       .then((p) => {
@@ -37,7 +37,9 @@ const PostsAdmin: NextPageWithLayout = () => {
       });
   }, [paginationSettings.page, paginationSettings.pageSize]);
 
-  const isNewPost = router.query.id === 'new';
+  const isNewPost = useMemo(() => {
+    return router.query.id === 'new';
+  }, [router.query.id]);
   /* istanbul ignore next */
   if (router.query.id && (isNewPost || router.query.id.length === 24)) {
     return (

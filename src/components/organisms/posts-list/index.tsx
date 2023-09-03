@@ -92,7 +92,7 @@ const PostsList = memo(({ ...props }: IPostsListProps) => {
       const deleteResponse = await fetch(
         `${new URL('/api/blog-data', window.location.origin)}?url=/posts/${
           post._id
-        }&method=GET`,
+        }&method=DELETE`,
       );
 
       if (deleteResponse?.ok && props.postsResponse) {

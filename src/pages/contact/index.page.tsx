@@ -21,7 +21,7 @@ const Contact: NextPageWithLayout<IContactProps> = ({
 
   return (
     <div id="contact" className="col-xs-12 col-md-6 mx-3 mb-4">
-      <form action={props.data?.formActionUrl} method="POST" target="_blank">
+      <form action={props?.data?.formActionUrl} method="POST" target="_blank">
         <InputField
           type={'input'}
           fieldLabel="Name"
@@ -68,7 +68,7 @@ const Contact: NextPageWithLayout<IContactProps> = ({
 /* istanbul ignore next */
 Contact.getLayout = function getLayout(page: ReactElement) {
   return (
-    <ClientPageLayout pageTitle={'Contact me'} meta={page.props.data?.meta}>
+    <ClientPageLayout pageTitle={'Contact me'} meta={page.props?.data?.meta}>
       {page}
     </ClientPageLayout>
   );
