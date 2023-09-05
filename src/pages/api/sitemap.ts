@@ -7,7 +7,7 @@ const generateUrls = (pages: string[] | IPost[]) => {
 
   pages.forEach((p) => {
     xmlSinppet += `<url>
-          <loc${process.env.APP_DOMAIN}/${
+          <loc>${process.env.APP_DOMAIN}/${
             p === 'string' ? p : (p as IPost).slug
           }</loc>
           <lastmod>${Date.now().toLocaleString()}</lastmod>
@@ -43,7 +43,7 @@ export default async function handler(_: NextApiRequest, res: NextApiResponse) {
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
       <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"> 
       <url>
-      <loc${process.env.APP_DOMAIN}/</loc>
+      <loc>${process.env.APP_DOMAIN}/</loc>
       <lastmod>${Date.now().toLocaleString()}</lastmod>
     </url>
     ${generateUrls(pages)}
