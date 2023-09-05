@@ -76,7 +76,7 @@ export const handleSubmit = async ({ ...options }: ISubmitHandlerOptions) => {
 
     const revalidateResponse = await fetch(
       `${options.fetchOptions.baseUrl}/api/revalidate?path=${path}`,
-      { method: 'GET' },
+      { method: 'POST' },
     );
 
     try {
@@ -110,7 +110,7 @@ export const revalidatePosts = async (
     revalidatePaths.map(
       async (path) =>
         await fetch(`${new URL('/api/revalidate', originUrl)}?path=${path}`, {
-          method: 'GET',
+          method: 'POST',
         }),
     ),
   );

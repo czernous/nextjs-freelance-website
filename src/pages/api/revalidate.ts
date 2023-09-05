@@ -1,24 +1,17 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextRequest, NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse,
-) {
-  // Check for secret to confirm this is a valid request
-  console.log('hitting revalidate');
-  const path = req.query.path;
-  if (!path) return res.status(400).json({ error: {} });
+export async function POST(request: NextRequest) {
+  const path = request.nextUrl.searchParams.get('path');
 
-  try {
-    // this should be the actual path not a rewritten path
-    // e.g. for "/blog/[slug]" this should be "/blog/post-1"
-    console.log(path);
-    await res.revalidate(path.toString());
-    return res.json({ revalidated: true });
-  } catch (err) {
-    // If there was an error, Next.js will continue
-    // to show the last successfully generated page
-    console.log(err);
-    return res.status(500).send('Error revalidating');
+  if (!path) {
+    return NextResponse.json(
+      { message: 'Missing path param' },
+      { status: 400 },
+    );
   }
+
+  revalidatePath(path);
+
+  return NextResponse.json({ revalidated: true, now: Date.now() });
 }
