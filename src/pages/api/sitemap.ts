@@ -17,17 +17,6 @@ const generateUrls = (pages: string[] | IPost[]) => {
   return xmlSinppet;
 };
 
-module.exports = {
-  async rewrites() {
-    return [
-      {
-        source: '/sitemap.xml',
-        destination: '/api/sitemap',
-      },
-    ];
-  },
-};
-
 export default async function handler(_: NextApiRequest, res: NextApiResponse) {
   res.statusCode = 200;
   res.setHeader('Content-Type', 'text/xml');

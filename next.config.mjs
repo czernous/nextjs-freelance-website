@@ -82,6 +82,14 @@ const nextConfig = {
     ADMIN_EMAILS: process.env.ADMIN_EMAILS,
     CLIENT_URL: process.env.CLIENT_URL,
   },
+  async rewrites() {
+    return [
+      {
+        source: '/sitemap.xml',
+        destination: '/api/sitemap',
+      },
+    ];
+  },
 };
 
 export default nextConfig;
