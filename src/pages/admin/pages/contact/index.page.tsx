@@ -56,7 +56,7 @@ const ContactAdmin: NextPageWithLayout<IContactPageAdminProps> = ({
             formRef,
             fetchOptions: {
               baseUrl: window.location.origin,
-              pagePath: '/posts',
+              pagePath: 'contact',
               url:
                 `${new URL('/api/blog-data', window.location.origin)}?url=${
                   props.statusCode === 404 ? '/pages' : '/pages/contact'

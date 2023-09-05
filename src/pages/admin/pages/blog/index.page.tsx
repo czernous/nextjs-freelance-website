@@ -55,7 +55,7 @@ const BlogAdmin: NextPageWithLayout<IBlogPageAdminProps> = ({
             formRef,
             fetchOptions: {
               baseUrl: window.location.origin,
-              pagePath: '/posts',
+              pagePath: 'posts',
               url:
                 `${new URL('/api/blog-data', window.location.origin)}?url=${
                   props.statusCode === 404 ? '/pages' : '/pages/blog'

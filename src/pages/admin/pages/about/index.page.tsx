@@ -75,7 +75,7 @@ const AboutAdmin: NextPageWithLayout<IAboutPageAdminProps> = ({
             formRef,
             fetchOptions: {
               baseUrl: window.location.origin,
-              pagePath: '/posts',
+              pagePath: 'about',
               url:
                 `${new URL('/api/blog-data', window.location.origin)}?url=${
                   props.statusCode === 404 ? '/pages' : '/pages/about'

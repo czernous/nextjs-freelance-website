@@ -57,7 +57,7 @@ const HomeAdmin: NextPageWithLayout<IHomePageAdminProps> = ({
             formRef,
             fetchOptions: {
               baseUrl: window.location.origin,
-              pagePath: '/posts',
+              pagePath: 'home',
               url:
                 `${new URL('/api/blog-data', window.location.origin)}?url=${
                   props?.statusCode === 404 ? '/pages' : '/pages/home'

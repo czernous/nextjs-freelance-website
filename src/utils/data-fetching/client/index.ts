@@ -66,7 +66,7 @@ export const handleSubmit = async ({ ...options }: ISubmitHandlerOptions) => {
     const path =
       options.fetchOptions.pagePath === 'home'
         ? '/'
-        : `${options.fetchOptions.pagePath}`;
+        : `/${options.fetchOptions.pagePath}`;
 
     console.debug(options.fetchOptions.pagePath);
 
