@@ -18,9 +18,6 @@ const generateUrls = (pages: string[] | IPost[]) => {
 };
 
 export default async function handler(_: NextApiRequest, res: NextApiResponse) {
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/xml');
-
   const pages = await getDirNamesAsync('/src/pages/admin/pages');
 
   const posts = await serverSideBackendFetch<{ data: IPost[] }>({
@@ -49,6 +46,7 @@ export default async function handler(_: NextApiRequest, res: NextApiResponse) {
     ${generateUrls(pages)}
     ${generateUrls(paths)}
       </urlset>`;
-
+  res.statusCode = 200;
+  res.setHeader('Content-Type', 'text/xml');
   res.end(xml);
 }
