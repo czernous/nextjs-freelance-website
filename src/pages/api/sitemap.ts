@@ -3,12 +3,14 @@ import { getDirNamesAsync, serverSideBackendFetch } from '@src/utils';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 const generateUrls = (pages: string[] | IPost[]) => {
+  if (!pages || !pages.length) return;
+
   let xmlSinppet = '';
 
   pages.forEach((p) => {
     xmlSinppet += `<url>
           <loc>${process.env.APP_DOMAIN}/${
-            p === 'string' ? p : (p as IPost).slug
+            typeof p === 'string' ? p : (p as IPost).slug
           }</loc>
           <lastmod>${Date.now().toLocaleString()}</lastmod>
         </url>`;

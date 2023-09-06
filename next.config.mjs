@@ -9,7 +9,7 @@
 // } = dotenv.config({
 //   path: '.env.local',
 // });
-
+import path from 'path';
 /**
  * @type {import('next').NextConfig}
  */
@@ -58,9 +58,10 @@ const nextConfig = {
     ADMIN_EMAILS: process.env.ADMIN_EMAILS,
     CLIENT_URL: process.env.CLIENT_URL,
     NEXT_PUBLIC_CLIENT_URL: process.env.NEXT_PUBLIC_CLIENT_URL,
+    APP_DOMAIN: process.env.APP_DOMAIN,
   },
   serverRuntimeConfig: {
-    PROJECT_ROOT: process.cwd(),
+    PROJECT_ROOT: path.resolve('.'),
     APP_HOST: process.env.HOST,
     APP_NAME: process.env.APP_NAME ?? '',
     API_KEY: process.env.API_KEY,
@@ -70,6 +71,7 @@ const nextConfig = {
     AUTH_API_KEY: process.env.AUTH_API_KEY,
     ADMIN_EMAILS: process.env.ADMIN_EMAILS,
     CLIENT_URL: process.env.CLIENT_URL,
+    APP_DOMAIN: process.env.APP_DOMAIN,
   },
   publicRuntimeConfig: {
     APP_HOST: process.env.HOST,
@@ -81,6 +83,7 @@ const nextConfig = {
     AUTH_API_KEY: process.env.AUTH_API_KEY,
     ADMIN_EMAILS: process.env.ADMIN_EMAILS,
     CLIENT_URL: process.env.CLIENT_URL,
+    APP_DOMAIN: process.env.APP_DOMAIN,
   },
   async rewrites() {
     return [
