@@ -1,5 +1,5 @@
 import { IPost } from '@src/interfaces';
-import { getDirNamesAsync, serverSideBackendFetch } from '@src/utils';
+import { serverSideBackendFetch } from '@src/utils';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 const generateUrls = (pages: string[] | IPost[]) => {
@@ -20,8 +20,6 @@ const generateUrls = (pages: string[] | IPost[]) => {
 };
 
 export default async function handler(_: NextApiRequest, res: NextApiResponse) {
-  const pages = await getDirNamesAsync('/src/pages/admin/pages');
-
   const posts = await serverSideBackendFetch<{ data: IPost[] }>({
     endpoint: '/posts',
     method: 'GET',
@@ -41,11 +39,26 @@ export default async function handler(_: NextApiRequest, res: NextApiResponse) {
   // generate sitemap here
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
       <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"> 
-      <url>
-      <loc>${process.env.APP_DOMAIN}/</loc>
-      <lastmod>${Date.now().toLocaleString()}</lastmod>
-    </url>
-    ${generateUrls(pages)}
+        <url>
+            <loc>${process.env.APP_DOMAIN}/</loc>
+            <lastmod>${Date.now().toLocaleString()}</lastmod>
+        </url>
+        <url>
+            <loc>${process.env.APP_DOMAIN}/about</loc>
+            <lastmod>${Date.now().toLocaleString()}</lastmod>
+        </url>
+        <url>
+            <loc>${process.env.APP_DOMAIN}/blog</loc>
+            <lastmod>${Date.now().toLocaleString()}</lastmod>
+        </url>
+        <url>
+            <loc>${process.env.APP_DOMAIN}/services</loc>
+            <lastmod>${Date.now().toLocaleString()}</lastmod>
+        </url>
+        <url>
+            <loc>${process.env.APP_DOMAIN}/contact</loc>
+            <lastmod>${Date.now().toLocaleString()}</lastmod>
+        </url>    
     ${paths.length > 0 ? generateUrls(paths) : ''}
       </urlset>`;
   res.statusCode = 200;
