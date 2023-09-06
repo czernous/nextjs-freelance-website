@@ -46,7 +46,7 @@ export default async function handler(_: NextApiRequest, res: NextApiResponse) {
       <lastmod>${Date.now().toLocaleString()}</lastmod>
     </url>
     ${generateUrls(pages)}
-    ${generateUrls(paths)}
+    ${paths.length > 0 ? generateUrls(paths) : ''}
       </urlset>`;
   res.statusCode = 200;
   res.setHeader('Content-Type', 'text/xml');
