@@ -5,7 +5,7 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   poweredByHeader: false,
-  // output: 'standalone',
+  output: 'standalone',
   staticPageGenerationTimeout: 2000,
   pageExtensions: ['page.tsx', 'page.jsx', 'ts'],
   images: {
