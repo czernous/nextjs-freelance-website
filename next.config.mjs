@@ -1,15 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-// import webpack from 'webpack';
-// import dotenv from 'dotenv';
-
-// const {
-//   parsed: BACKEND_URL,
-//   HOST,
-//   API_KEY,
-// } = dotenv.config({
-//   path: '.env.local',
-// });
-import path from 'path';
 /**
  * @type {import('next').NextConfig}
  */
@@ -17,7 +5,7 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   poweredByHeader: false,
-  output: 'standalone',
+  // output: 'standalone',
   staticPageGenerationTimeout: 2000,
   pageExtensions: ['page.tsx', 'page.jsx', 'ts'],
   images: {
@@ -61,7 +49,7 @@ const nextConfig = {
     APP_DOMAIN: process.env.APP_DOMAIN,
   },
   serverRuntimeConfig: {
-    PROJECT_ROOT: path.resolve('.'),
+    PROJECT_ROOT: process.cwd(),
     APP_HOST: process.env.HOST,
     APP_NAME: process.env.APP_NAME ?? '',
     API_KEY: process.env.API_KEY,
