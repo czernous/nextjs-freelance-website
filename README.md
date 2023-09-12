@@ -12,23 +12,35 @@ yarn dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+This project is built as a part of a bigger project using Docker, however it can be used on it's own.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+It relies on data provided by [external API](https://github.com/czernous/dotnetcore-blog-api) and a simple JWT [auth API](https://github.com/czernous/email-auth). You might want to make some changes to the way Auth works in case if you want custom auth.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
 
-## Learn More
+In order for it to work, the following environment variables must be defined:
 
-To learn more about Next.js, take a look at the following resources:
+`CLIENT_URL` - the domain your app is hosted on, internal docker url (e.g.: http://frontend:3000), org url of your proxy in docker. Can be just the name of your domain without http or .com.
+`APP_DOMAIN` - full url of your domain (http://yourdomain.com) or url of your proxy.
+`CLOUDINARY_FOLDER` - cloudinary folder to save images to
+`ADMIN_EMAILS` - a list of emails that are allowed to access `/admin`
+`API_KEY` - value of apiKey header appended to API requests
+`AUTH_API_KEY` -value of authApiKey header appended to API requests
+`APP_NAME` - the name of the app shown in title and navbar
+`NODE_VERSION`
+`BLOG_API_URL`
+`AUTH_API_URL`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Cloudinary details:
+`CLOUDINARY_NAME`
+`CLOUDINARY_KEY`
+`CLOUDINARY_SECRET`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Auth details:
+`AUTH_JWT_SECRET`
+`SMTP_HOST`
+`SMTP_PORT`
+`SMTP_LOGIN`
+`SMTP_PASSWORD`
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+It runs on vercel and should run on netlify or any similar hosting. It will work on VPS with docker but there are caveats with creating production build using docker-compose as services have to be built in a specific order. API should be available (built) by the time the client starts building which is almost never the case as .NET app takes a lot longer to build. 
