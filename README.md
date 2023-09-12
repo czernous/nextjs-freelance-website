@@ -16,7 +16,6 @@ This project is built as a part of a bigger project using Docker, however it can
 
 It relies on data provided by [external API](https://github.com/czernous/dotnetcore-blog-api) and a simple JWT [auth API](https://github.com/czernous/email-auth). You might want to make some changes to the way Auth works in case if you want custom auth.
 
-
 In order for it to work, the following environment variables must be defined:
 
 `CLIENT_URL` - the domain your app is hosted on, internal docker url (e.g.: http://frontend:3000), org url of your proxy in docker. Can be just the name of your domain without http or .com.
@@ -42,5 +41,4 @@ Auth details:
 `SMTP_LOGIN`
 `SMTP_PASSWORD`
 
-
-It runs on vercel and should run on netlify or any similar hosting. It will work on VPS with docker but there are caveats with creating production build using docker-compose as services have to be built in a specific order. API should be available (built) by the time the client starts building which is almost never the case as .NET app takes a lot longer to build. 
+It runs on vercel and should run on netlify or any similar hosting. It will work on VPS with docker but there are caveats with creating production build using docker-compose as services have to be built in a specific order. API should be available (built) by the time the client starts building which is almost never the case as .NET app takes a lot longer to build.
