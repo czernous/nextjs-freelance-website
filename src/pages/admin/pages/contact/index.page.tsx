@@ -92,7 +92,7 @@ const ContactAdmin: NextPageWithLayout<IContactPageAdminProps> = ({
               label="Form action URL"
               required
               variant="outlined"
-              defaultValue={props?.data?.formActionUrl}
+              defaultValue={props?.data?.pageFields?.formActionUrl}
               multiline
               maxRows={4}
               sx={customMuiTextFieldBrick}

@@ -130,8 +130,8 @@ export interface IAboutPage extends IPage {
 export interface IContactPage extends IPage {
   pageFields: {
     description?: string;
+    formActionUrl: string; // where the form is going to be posted, i.e. Formspree url + id
   };
-  formActionUrl: string; // where the form is going to be posted, i.e. Formspree url + id
 }
 
 export interface IError {

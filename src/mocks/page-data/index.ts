@@ -67,8 +67,8 @@ export const aboutPageMock: IAboutPage = {
 export const contactPageMock: IContactPage = {
   pageFields: {
     description: '<p data-testid="paragraph">This is an about page</p>',
+    formActionUrl: 'example.com',
   },
-  formActionUrl: 'example.com',
   slug: 'contact',
   meta: {
     metaDescription: 'Test',

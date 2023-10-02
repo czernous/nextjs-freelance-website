@@ -21,7 +21,11 @@ const Contact: NextPageWithLayout<IContactProps> = ({
 
   return (
     <div id="contact" className="col-xs-12 col-md-6 mx-3 mb-4">
-      <form action={props?.data?.formActionUrl} method="POST" target="_blank">
+      <form
+        action={props?.data?.pageFields?.formActionUrl}
+        method="POST"
+        target="_blank"
+      >
         <InputField
           type={'input'}
           fieldLabel="Name"
@@ -86,8 +90,9 @@ export async function getStaticProps() {
             apiKey: process.env.API_KEY,
           })
         : null,
-      serverUrl: process.env.BACKEND_URL ?? null,
+      serverUrl: process.env.BLOG_API_URL ?? null,
     });
+
     return {
       props: {
         data,
@@ -98,7 +103,7 @@ export async function getStaticProps() {
       props: {
         error: {
           statusCode: 400,
-          message: JSON.stringify(error),
+          message: (error as Error).message,
         },
       },
     };
