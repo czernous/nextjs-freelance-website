@@ -99,18 +99,40 @@ export const serverSideBackendFetch = async <T>({
       'Headers are not provided or one of the headers is null or undefined',
     );
 
-  const response = await fetch(`${serverUrl}${endpoint}`, {
-    method,
-    headers,
-    body,
-  });
+  const maxRetries = 3;
+  let retries = 0;
 
-  const clonedRes = response.clone();
+  while (retries < maxRetries) {
+    const response = await fetch(`${serverUrl}${endpoint}`, {
+      method,
+      headers,
+      body,
+    });
+
+    const clonedRes = response.clone();
+
+    if (response.ok) {
+      return {
+        statusCode: response.status,
+        message: await createResponseMessage(clonedRes),
+        data: response.status !== 200 ? null : ((await response.json()) as T),
+      };
+    }
+    console.warn(
+      `Fetch attempt ${retries + 1}/${maxRetries} failed with status ${
+        response.status
+      }`,
+    );
+    retries += 1;
+  }
 
   return {
-    statusCode: response.status,
-    message: await createResponseMessage(clonedRes),
-    data: response.status !== 200 ? null : ((await response.json()) as T),
+    statusCode: 500,
+    message: {
+      severity: 'error',
+      text: `Fetch failed after ${maxRetries} retries`,
+    },
+    data: null,
   };
 };
 /* istanbul ignore next */
