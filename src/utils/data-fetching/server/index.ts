@@ -101,6 +101,7 @@ export const serverSideBackendFetch = async <T>({
 
   const maxRetries = 3;
   let retries = 0;
+  let lastResponse: Response | undefined;
 
   while (retries < maxRetries) {
     const response = await fetch(`${serverUrl}${endpoint}`, {
@@ -109,12 +110,12 @@ export const serverSideBackendFetch = async <T>({
       body,
     });
 
-    const clonedRes = response.clone();
+    lastResponse = response.clone();
 
     if (response.ok) {
       return {
         statusCode: response.status,
-        message: await createResponseMessage(clonedRes),
+        message: await createResponseMessage(lastResponse),
         data: response.status !== 200 ? null : ((await response.json()) as T),
       };
     }
@@ -128,10 +129,7 @@ export const serverSideBackendFetch = async <T>({
 
   return {
     statusCode: 500,
-    message: {
-      severity: 'error',
-      text: `Fetch failed after ${maxRetries} retries`,
-    },
+    message: await createResponseMessage(lastResponse as Response),
     data: null,
   };
 };
@@ -182,10 +180,7 @@ const createTextResponse = async (r: Response): Promise<string> => {
 };
 /* istanbul ignore next */
 const createResponseMessage = async (r: Response) => {
-  const severity =
-    r.status === 200 || r.status === 204 || r.status === 201
-      ? 'success'
-      : 'error';
+  const severity = r.ok ? 'success' : 'error';
 
   return {
     severity,
