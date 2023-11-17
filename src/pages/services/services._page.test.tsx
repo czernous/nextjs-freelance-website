@@ -1,7 +1,7 @@
 import { act, render, screen, waitFor } from '@testing-library/react';
 import { axe, toHaveNoViolations } from 'jest-axe';
 import '@testing-library/jest-dom';
-import Services from './index.page';
+import Services from './index._page';
 
 import React from 'react';
 import { servicesPageMock } from '../../mocks';

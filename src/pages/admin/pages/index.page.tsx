@@ -20,18 +20,22 @@ const PagesAdmin: NextPageWithLayout<IPagesAdminProps> = ({
 }: IPagesAdminProps) => {
   return (
     <div className="d-flex flex-column">
-      {props.data.map((route) => (
-        <Link
-          key={route}
-          href={`/admin/pages/${route}`}
-          style={{
-            color: colors.olive[500] as string,
-            textDecoration: 'underline',
-          }}
-        >
-          Edit {route} page
-        </Link>
-      ))}
+      {props.data.map((route) => {
+        if (!route.includes('services')) {
+          return (
+            <Link
+              key={route}
+              href={`/admin/pages/${route}`}
+              style={{
+                color: colors.olive[500] as string,
+                textDecoration: 'underline',
+              }}
+            >
+              Edit {route} page
+            </Link>
+          );
+        }
+      })}
     </div>
   );
 };

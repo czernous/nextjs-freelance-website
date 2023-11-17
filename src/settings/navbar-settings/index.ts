@@ -17,11 +17,11 @@ export const navItems: INavItem[] = [
     text: 'Blog',
     url: '/blog',
   },
-  {
-    uuid: nanoid(),
-    text: 'Services',
-    url: '/services',
-  },
+  // {
+  //   uuid: nanoid(),
+  //   text: 'Services',
+  //   url: '/services',
+  // },
   {
     uuid: nanoid(),
     text: 'Contact',

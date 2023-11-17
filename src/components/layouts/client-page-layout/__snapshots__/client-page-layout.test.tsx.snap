@@ -93,21 +93,6 @@ exports[`Client Page Layout is rendered unchanged 1`] = `
               </button>
             </a>
             <a
-              href="/services"
-              style="text-decoration: none;"
-            >
-              <button
-                class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium css-12b7yuv-MuiButtonBase-root-MuiButton-root"
-                tabindex="0"
-                type="button"
-              >
-                Services
-                <span
-                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                />
-              </button>
-            </a>
-            <a
               href="/contact"
               style="text-decoration: none;"
             >
