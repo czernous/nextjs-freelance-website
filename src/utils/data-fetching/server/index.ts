@@ -127,6 +127,8 @@ export const serverSideBackendFetch = async <T>({
     retries += 1;
   }
 
+  if (!lastResponse) throw new Error('Could not read Response object');
+
   return {
     statusCode: 500,
     message: await createResponseMessage(lastResponse as Response),
