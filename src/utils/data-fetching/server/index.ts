@@ -102,30 +102,41 @@ export const serverSideBackendFetch = async <T>({
       'Headers are not provided or one of the headers is null or undefined',
     );
 
-  const response = await fetch(`${serverUrl}${endpoint}`, {
-    method,
-    headers,
-    body,
-  });
-
-  if (!response.ok && typeof retries === 'number' && retries > 0) {
-    return serverSideBackendFetch({
-      serverUrl,
-      headers,
+  try {
+    const response = await fetch(`${serverUrl}${endpoint}`, {
       method,
-      endpoint,
+      headers,
       body,
-      retries: retries - 1,
     });
+
+    const clonedRes = response.clone();
+
+    return {
+      statusCode: response.status,
+      message: await createResponseMessage(clonedRes),
+      data: response.status !== 200 ? null : ((await response.json()) as T),
+    };
+  } catch (e) {
+    if (retries > 0) {
+      return serverSideBackendFetch({
+        serverUrl,
+        headers,
+        method,
+        endpoint,
+        body,
+        retries: retries - 1,
+      });
+    } else {
+      return {
+        statusCode: 500,
+        message: {
+          severity: 'error',
+          text: (e as unknown as Error).message,
+        },
+        data: null,
+      };
+    }
   }
-
-  const clonedRes = response.clone();
-
-  return {
-    statusCode: response.status,
-    message: await createResponseMessage(clonedRes),
-    data: response.status !== 200 ? null : ((await response.json()) as T),
-  };
 };
 /* istanbul ignore next */
 export const handleServerError = (res: ServerResponse, error: IError) => {
