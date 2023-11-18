@@ -78,7 +78,7 @@ exports[`Client Page Layout is rendered unchanged 1`] = `
               </button>
             </a>
             <a
-              href="/blog"
+              href="/case-studies"
               style="text-decoration: none;"
             >
               <button
@@ -86,7 +86,7 @@ exports[`Client Page Layout is rendered unchanged 1`] = `
                 tabindex="0"
                 type="button"
               >
-                Blog
+                Case studies
                 <span
                   class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
                 />

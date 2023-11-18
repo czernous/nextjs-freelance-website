@@ -1,51 +1,72 @@
-import { IBlogProps, IPost, IPaginatedData, IBlogPage } from '@src/interfaces';
 import { serverSideBackendFetch } from '@src/utils';
-import { NextPageWithLayout } from '../_app.page';
+import { NextPageWithLayout } from '../../_app.page';
 import ClientPageLayout from '@src/components/layouts/client-page-layout';
 import { ReactElement } from 'react';
 import StaticPageError from '@src/components/atoms/static-page-error';
-import { GetStaticProps } from 'next';
+import { IBlogProps, IPost } from '@src/interfaces';
+import { GetStaticProps, GetStaticPaths } from 'next';
 import PaginatedCards from '@src/components/organisms/paginated-cards';
 import SearchField from '@src/components/molecules/search-field';
 
-const Blog: NextPageWithLayout<IBlogProps> = ({ ...props }: IBlogProps) => {
+const PaginatedBlog: NextPageWithLayout<
+  IBlogProps & { currentPage: number }
+> = ({ ...props }: IBlogProps & { currentPage: number }) => {
   /* istanbul ignore next*/
   if (props.error) return <StaticPageError {...props.error} />;
 
-  // posts are stored in data.data
-
   return (
     <div id="blog" className="d-flex flex-column gap-5">
-      <SearchField searchUrl="/blog/search" />
-
+      <SearchField searchUrl="/case-studies/search" />
       {
         /* istanbul ignore next */
-        props?.data && (
+        props.data && (
           <PaginatedCards
-            currentPage={1}
-            currentUrl="/blog"
-            data={props?.data}
+            currentPage={props?.currentPage}
+            currentUrl="/case-studies"
             pageUrl="/page/"
+            data={props?.data}
           />
         )
       }
     </div>
-  );
+  ); // TODO: add DOMpurify
 };
 /* istanbul ignore next */
-Blog.getLayout = function getLayout(page: ReactElement) {
+PaginatedBlog.getLayout = function getLayout(page: ReactElement) {
   return (
-    <ClientPageLayout pageTitle={'Blog'} meta={page?.props?.meta}>
+    <ClientPageLayout pageTitle={'Case studies'} meta={page.props?.data?.meta}>
       {page}
     </ClientPageLayout>
   );
 };
 
 /* istanbul ignore next */
-export const getStaticProps: GetStaticProps = async () => {
+export const getStaticPaths: GetStaticPaths = async () => {
+  return {
+    paths: Array.from({ length: 5 }).map(
+      (_, i) => `/case-studies/page/${i + 2}`,
+    ),
+
+    fallback: 'blocking',
+  };
+};
+
+/* istanbul ignore next */
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  const page = Number(params?.page) || 1;
+
+  if (page === 1) {
+    return {
+      redirect: {
+        destination: '/case-studies',
+        permanent: false,
+      },
+    };
+  }
+
   try {
-    const { data } = await serverSideBackendFetch<IPaginatedData<IPost>>({
-      endpoint: '/posts?page=1&pagesize=10',
+    const { data } = await serverSideBackendFetch<{ data: IPost[] }>({
+      endpoint: `/posts?page=${page}&pagesize=10`,
       method: 'GET',
       headers: process.env.API_KEY
         ? new Headers({
@@ -55,26 +76,13 @@ export const getStaticProps: GetStaticProps = async () => {
         : null,
       serverUrl: process.env.BLOG_API_URL ?? null,
     });
-
-    const pageMetaDataRes = await serverSideBackendFetch<IBlogPage>({
-      endpoint: '/pages/blog',
-      method: 'GET',
-      headers: process.env.API_KEY
-        ? new Headers({
-            'Content-Type': 'application/json',
-            apiKey: process.env.API_KEY,
-          })
-        : null,
-      serverUrl: process.env.BLOG_API_URL ?? null,
-    });
-
     const publishedPosts = data?.data.filter((p) => p.isPublished);
     const filteredData = { ...data, data: publishedPosts };
 
     return {
       props: {
         data: filteredData,
-        meta: pageMetaDataRes?.data,
+        currentPage: page,
       },
     };
   } catch (error) {
@@ -88,4 +96,4 @@ export const getStaticProps: GetStaticProps = async () => {
     };
   }
 };
-export default Blog;
+export default PaginatedBlog;

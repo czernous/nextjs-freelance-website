@@ -14,8 +14,8 @@ export const navItems: INavItem[] = [
   },
   {
     uuid: nanoid(),
-    text: 'Blog',
-    url: '/blog',
+    text: 'Case studies',
+    url: '/case-studies',
   },
   // {
   //   uuid: nanoid(),

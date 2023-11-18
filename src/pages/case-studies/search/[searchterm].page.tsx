@@ -19,11 +19,11 @@ const BlogSearchResults: NextPageWithLayout<
 
   const isPaginated = props?.data?.totalPages > 1;
   /* istanbul ignore next*/
-  const baseUrl = isPaginated ? '/blog/search/' : '/blog';
+  const baseUrl = isPaginated ? '/case-studies/search/' : '/case-studies';
 
   return (
     <div id="blog-search" className="d-flex flex-column gap-5">
-      <SearchField searchUrl="/blog/search" />
+      <SearchField searchUrl="/case-studies/search" />
       <PaginatedCards
         currentPage={props?.currentPage}
         currentUrl={`${baseUrl}${
