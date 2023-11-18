@@ -73,6 +73,8 @@ interface IServerSideFetchProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   body?: any;
   duplex?: boolean;
+  /** Number of retries on failure @default 3 */
+  retries?: number;
 }
 
 export interface IServerSideFetchResult<T> {
@@ -91,6 +93,7 @@ export const serverSideBackendFetch = async <T>({
   method,
   endpoint,
   body,
+  retries = 3,
 }: IServerSideFetchProps): Promise<IServerSideFetchResult<T>> => {
   if (!serverUrl) throw new Error('Server url is not provided or null');
 
@@ -99,40 +102,29 @@ export const serverSideBackendFetch = async <T>({
       'Headers are not provided or one of the headers is null or undefined',
     );
 
-  const maxRetries = 3;
-  let retries = 0;
-  let lastResponse: Response | undefined;
+  const response = await fetch(`${serverUrl}${endpoint}`, {
+    method,
+    headers,
+    body,
+  });
 
-  while (retries < maxRetries) {
-    const response = await fetch(`${serverUrl}${endpoint}`, {
-      method,
+  if (!response.ok && typeof retries === 'number' && retries > 0) {
+    return serverSideBackendFetch({
+      serverUrl,
       headers,
+      method,
+      endpoint,
       body,
+      retries: retries - 1,
     });
-
-    lastResponse = response.clone();
-
-    if (response.ok) {
-      return {
-        statusCode: response.status,
-        message: await createResponseMessage(lastResponse),
-        data: response.status !== 200 ? null : ((await response.json()) as T),
-      };
-    }
-    console.warn(
-      `Fetch attempt ${retries + 1}/${maxRetries} failed with status ${
-        response.status
-      }`,
-    );
-    retries += 1;
   }
 
-  if (!lastResponse) throw new Error('Could not read Response object');
+  const clonedRes = response.clone();
 
   return {
-    statusCode: 500,
-    message: await createResponseMessage(lastResponse as Response),
-    data: null,
+    statusCode: response.status,
+    message: await createResponseMessage(clonedRes),
+    data: response.status !== 200 ? null : ((await response.json()) as T),
   };
 };
 /* istanbul ignore next */
@@ -182,7 +174,10 @@ const createTextResponse = async (r: Response): Promise<string> => {
 };
 /* istanbul ignore next */
 const createResponseMessage = async (r: Response) => {
-  const severity = r.ok ? 'success' : 'error';
+  const severity =
+    r.status === 200 || r.status === 204 || r.status === 201
+      ? 'success'
+      : 'error';
 
   return {
     severity,
