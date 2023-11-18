@@ -47,6 +47,7 @@ const nextConfig = {
     CLIENT_URL: process.env.CLIENT_URL,
     NEXT_PUBLIC_CLIENT_URL: process.env.NEXT_PUBLIC_CLIENT_URL,
     APP_DOMAIN: process.env.APP_DOMAIN,
+    CLOUDINARY_FOLDER: process.env.CLOUDINARY_FOLDER,
   },
   serverRuntimeConfig: {
     PROJECT_ROOT: process.cwd(),
@@ -60,6 +61,7 @@ const nextConfig = {
     ADMIN_EMAILS: process.env.ADMIN_EMAILS,
     CLIENT_URL: process.env.CLIENT_URL,
     APP_DOMAIN: process.env.APP_DOMAIN,
+    CLOUDINARY_FOLDER: process.env.CLOUDINARY_FOLDER,
   },
   publicRuntimeConfig: {
     APP_HOST: process.env.HOST,
@@ -72,6 +74,7 @@ const nextConfig = {
     ADMIN_EMAILS: process.env.ADMIN_EMAILS,
     CLIENT_URL: process.env.CLIENT_URL,
     APP_DOMAIN: process.env.APP_DOMAIN,
+    CLOUDINARY_FOLDER: process.env.CLOUDINARY_FOLDER,
   },
   async rewrites() {
     return [
