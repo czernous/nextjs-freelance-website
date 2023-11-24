@@ -8,6 +8,7 @@ import type { AppProps } from 'next/app';
 import { NextPage } from 'next';
 import { ReactElement, ReactNode } from 'react';
 import { StyledEngineProvider } from '@mui/material/styles';
+import { Analytics } from '@vercel/analytics/react';
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
@@ -22,7 +23,25 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page) => page);
   return (
     <StyledEngineProvider injectFirst>
-      {getLayout(<Component {...pageProps} />)}
+      {getLayout(
+        <>
+          <Component {...pageProps} />
+          <Analytics
+            beforeSend={(event) => {
+              switch (true) {
+                case event.url.includes('/admin'):
+                  return null;
+                case event.url.includes('/login'):
+                  return null;
+                case event.url.includes('/logout'):
+                  return null;
+                default:
+                  return event;
+              }
+            }}
+          />
+        </>,
+      )}
     </StyledEngineProvider>
   );
 }
