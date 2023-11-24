@@ -98,6 +98,12 @@ export default async function middleware(req: NextRequest) {
 
     if (cookie) {
       const res = NextResponse.next();
+      //invalidate & delete the cookie
+      res.cookies.set(COOKIE_NAME, '', {
+        path: '/',
+        httpOnly: true,
+        expires: new Date(0),
+      });
       res.cookies.delete(COOKIE_NAME);
       return res.ok ? res : NextResponse.redirect(new URL('/', req.url));
     }
