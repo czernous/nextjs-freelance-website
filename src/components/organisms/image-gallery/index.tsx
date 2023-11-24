@@ -81,181 +81,181 @@ const ImageGallery = memo(({ identifier }: IImageGalleryProps) => {
 
   if (!identifier) return null;
   return (
-    <>
-      <div data-testid="image-gallery">
-        <Dialog
-          fullScreen
-          open={isOpen}
-          onClose={toggleOpen}
-          TransitionComponent={Transition}
-        >
-          <AppBar sx={imageGalleryStyles.header}>
-            <Toolbar>
-              <IconButton
-                edge="start"
-                color="inherit"
-                onClick={toggleOpen}
-                aria-label="close"
-              >
-                <CloseIcon />
-              </IconButton>
-              <Typography
-                sx={imageGalleryStyles.headerText}
-                role="heading"
-                variant="h6"
-                component="div"
-              >
-                Image gallery
-              </Typography>
+    <div data-testid="image-gallery">
+      <Dialog
+        fullScreen
+        open={isOpen}
+        onClose={toggleOpen}
+        TransitionComponent={Transition}
+      >
+        <AppBar sx={imageGalleryStyles.header}>
+          <Toolbar>
+            <IconButton
+              edge="start"
+              color="inherit"
+              onClick={toggleOpen}
+              aria-label="close"
+            >
+              <CloseIcon />
+            </IconButton>
+            <Typography
+              sx={imageGalleryStyles.headerText}
+              role="heading"
+              variant="h6"
+              component="div"
+            >
+              Image gallery
+            </Typography>
 
-              <IconButton
-                component="span"
-                title="Upload image"
-                onClick={toggleImageUpload}
-              >
-                <AddAPhotoOutlined />
-              </IconButton>
-            </Toolbar>
-          </AppBar>
-          {isLoading || !images ? (
-            <CircularProgress
-              size={80}
-              sx={{
-                position: 'absolute',
-                top: '48%',
-                left: '48%',
-              }}
-            />
-          ) : (
-            <ImageList sx={imageGalleryStyles.imageList}>
-              {images?.map((image) => (
-                <ImageListItem key={image._id}>
-                  <Image
-                    src={image.secureUrl}
-                    data-testid="gallery-image"
-                    alt={image.altText ?? ''}
-                    loading="lazy"
-                    width={400}
-                    height={400}
-                    placeholder="blur"
-                    blurDataURL={image.blurredImageUrl}
-                    style={{
-                      width: '100%',
-                      objectFit: 'cover',
-                      maxHeight: '100%',
-                    }}
-                  />
-                  <ImageListItemBar
-                    sx={imageGalleryStyles.listItemActionBar}
-                    actionIcon={
-                      <SpeedDial
-                        direction="left"
-                        ariaLabel={'Image actions'}
-                        icon={<SpeedDialIcon />}
-                        sx={imageGalleryStyles.speedDial}
-                      >
-                        <SpeedDialAction
-                          icon={
-                            <Tooltip title="zoom" placement="bottom">
-                              <ZoomInIcon />
-                            </Tooltip>
-                          }
-                          onClick={
-                            /* istanbul ignore next */
-                            () => showZoomedImage(image)
-                          }
-                        />
-
-                        <SpeedDialAction
-                          data-testid="select-image"
-                          icon={
-                            <Tooltip title="select image" placement="bottom">
-                              <InsertPhotoIcon
-                                onClick={
-                                  /* istanbul ignore next */
-                                  () => selectImage(image)
-                                }
-                              />
-                            </Tooltip>
-                          }
-                        />
-
-                        <SpeedDialAction
-                          data-testid="delete-image"
-                          icon={
-                            <Tooltip title="delete image" placement="bottom">
-                              <DeleteOutline
-                                onClick={
-                                  /* istanbul ignore next */
-                                  () => {
-                                    (async () =>
-                                      await deleteImage(image._id))();
-                                  }
-                                }
-                              />
-                            </Tooltip>
-                          }
-                        />
-                      </SpeedDial>
-                    }
-                  />
-                </ImageListItem>
-              ))}
-            </ImageList>
-          )}
-          <Dialog
-            open={isZoomed}
+            <IconButton
+              component="span"
+              title="Upload image"
+              onClick={toggleImageUpload}
+            >
+              <AddAPhotoOutlined />
+            </IconButton>
+          </Toolbar>
+        </AppBar>
+        {isLoading || !images ? (
+          <CircularProgress
+            size={80}
             sx={{
-              '.MuiPaper-root': { maxWidth: 'unset' },
-              zIndex: 9999,
-              '.MuiButtonBase-root': imageGalleryStyles.closeZoomButton,
+              position: 'absolute',
+              top: '48%',
+              left: '48%',
+            }}
+          />
+        ) : (
+          <ImageList sx={imageGalleryStyles.imageList}>
+            {images?.map((image) => (
+              <ImageListItem
+                key={image._id}
+                sx={imageGalleryStyles.imageListItem}
+              >
+                <Image
+                  src={image.secureUrl}
+                  data-testid="gallery-image"
+                  alt={image.altText ?? ''}
+                  loading="lazy"
+                  width={400}
+                  height={400}
+                  placeholder="blur"
+                  blurDataURL={image.blurredImageUrl}
+                  style={{
+                    width: '100%',
+                    objectFit: 'cover',
+                    maxHeight: '100%',
+                  }}
+                />
+                <ImageListItemBar
+                  sx={imageGalleryStyles.listItemActionBar}
+                  actionIcon={
+                    <SpeedDial
+                      direction="left"
+                      ariaLabel={'Image actions'}
+                      icon={<SpeedDialIcon />}
+                      sx={imageGalleryStyles.speedDial}
+                    >
+                      <SpeedDialAction
+                        icon={
+                          <Tooltip title="zoom" placement="bottom">
+                            <ZoomInIcon />
+                          </Tooltip>
+                        }
+                        onClick={
+                          /* istanbul ignore next */
+                          () => showZoomedImage(image)
+                        }
+                      />
+
+                      <SpeedDialAction
+                        data-testid="select-image"
+                        icon={
+                          <Tooltip title="select image" placement="bottom">
+                            <InsertPhotoIcon
+                              onClick={
+                                /* istanbul ignore next */
+                                () => selectImage(image)
+                              }
+                            />
+                          </Tooltip>
+                        }
+                      />
+
+                      <SpeedDialAction
+                        data-testid="delete-image"
+                        icon={
+                          <Tooltip title="delete image" placement="bottom">
+                            <DeleteOutline
+                              onClick={
+                                /* istanbul ignore next */
+                                () => {
+                                  (async () => await deleteImage(image._id))();
+                                }
+                              }
+                            />
+                          </Tooltip>
+                        }
+                      />
+                    </SpeedDial>
+                  }
+                />
+              </ImageListItem>
+            ))}
+          </ImageList>
+        )}
+        <Dialog
+          open={isZoomed}
+          sx={{
+            '.MuiPaper-root': { maxWidth: 'unset' },
+            zIndex: 9999,
+            '.MuiButtonBase-root': imageGalleryStyles.closeZoomButton,
+          }}
+        >
+          <DialogActions>
+            <IconButton
+              sx={{
+                zIndex: 9999,
+              }}
+              onClick={handleZoomClose}
+            >
+              <CloseIcon />
+            </IconButton>
+          </DialogActions>
+          <DialogContent
+            sx={{
+              minWidth: '60vw',
+              aspectRatio: '16/9',
+              maxHeight: '70vh',
             }}
           >
-            <DialogActions>
-              <IconButton
-                sx={{
-                  zIndex: 9999,
-                }}
-                onClick={handleZoomClose}
-              >
-                <CloseIcon />
-              </IconButton>
-            </DialogActions>
-            <DialogContent
-              sx={{
-                minWidth: '60vw',
-                aspectRatio: '16/9',
-                maxHeight: '70vh',
-              }}
-            >
-              {
-                /* istanbul ignore next */
-                zoomedImage && (
-                  <Image
-                    src={zoomedImage?.secureUrl}
-                    alt={
-                      /* istanbul ignore next */
-                      zoomedImage.altText ?? ''
-                    }
-                    style={{
-                      display: 'flex',
-                      height: '100%',
-                      width: '100%',
-                      objectFit: 'cover',
-                    }}
-                    fill
-                    loading="lazy"
-                    placeholder="blur"
-                    blurDataURL={zoomedImage.blurredImageUrl}
-                  />
-                )
-              }
-            </DialogContent>
-          </Dialog>
-          <ImageUpload isOpen={hasImageUpload} toggleOpen={toggleImageUpload} />
+            {
+              /* istanbul ignore next */
+              zoomedImage && (
+                <Image
+                  src={zoomedImage?.secureUrl}
+                  alt={
+                    /* istanbul ignore next */
+                    zoomedImage.altText ?? ''
+                  }
+                  style={{
+                    display: 'flex',
+                    height: '100%',
+                    width: '100%',
+                    objectFit: 'cover',
+                  }}
+                  fill
+                  loading="lazy"
+                  placeholder="blur"
+                  blurDataURL={zoomedImage.blurredImageUrl}
+                />
+              )
+            }
+          </DialogContent>
         </Dialog>
-      </div>
-    </>
+        <ImageUpload isOpen={hasImageUpload} toggleOpen={toggleImageUpload} />
+      </Dialog>
+    </div>
   );
 });
 

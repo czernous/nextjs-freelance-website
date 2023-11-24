@@ -95,6 +95,9 @@ export const imageGalleryStyles = {
     height: '100%',
     gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))!important',
   },
+  imageListItem: {
+    height: 'fit-content',
+  },
   listItemActionBar: {
     background: colors.gray[600],
   },
