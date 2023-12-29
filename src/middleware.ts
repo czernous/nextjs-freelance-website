@@ -101,6 +101,7 @@ export default async function middleware(req: NextRequest) {
       res.cookies.set(COOKIE_NAME, '', {
         path: '/',
         httpOnly: true,
+        maxAge: -1,
       });
 
       return res.ok ? res : NextResponse.redirect(new URL('/', req.url));
