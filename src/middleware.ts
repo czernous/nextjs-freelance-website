@@ -94,18 +94,12 @@ export default async function middleware(req: NextRequest) {
   }
 
   if (req?.url.endsWith('/logout')) {
-    const cookie = req.cookies.get(COOKIE_NAME);
-
-    if (cookie) {
       const res = NextResponse.next();
       res.cookies.set(COOKIE_NAME, '', {
         path: '/',
         httpOnly: true,
         maxAge: -1,
       });
-
-      return res.ok ? res : NextResponse.redirect(new URL('/', req.url));
-    }
     return NextResponse.redirect(new URL('/', req.url));
   }
 }
