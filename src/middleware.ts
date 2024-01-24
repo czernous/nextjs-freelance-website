@@ -50,7 +50,7 @@ export default async function middleware(req: NextRequest) {
     const { headers } = req;
     const referer = headers.get('referer');
 
-    console.log(referer, req.url);
+    // console.log(referer, req.url);
     return process.env?.CLIENT_URL &&
       !referer?.includes(process.env?.CLIENT_URL)
       ? NextResponse.json(
@@ -94,12 +94,13 @@ export default async function middleware(req: NextRequest) {
   }
 
   if (req?.url.endsWith('/logout')) {
-      const res = NextResponse.next();
-      res.cookies.set(COOKIE_NAME, '', {
-        path: '/',
-        httpOnly: true,
-        maxAge: -1,
-      });
+    const res = NextResponse.next();
+    res.cookies.set(COOKIE_NAME, '', {
+      path: '/',
+      httpOnly: true,
+      expires: -1,
+      maxAge: -1,
+    });
     return NextResponse.redirect(new URL('/', req.url));
   }
 }

@@ -40,8 +40,8 @@ const BlogSearchResults: NextPageWithLayout<
 BlogSearchResults.getLayout = function getLayout(page: ReactElement) {
   return (
     <ClientPageLayout
-      pageTitle={`You've searched for: ${page.props.query}`}
-      meta={page.props.data?.meta}
+      pageTitle={`You've searched for: ${page.props?.children[0]?.props.query}`}
+      meta={page.props.data?.meta} // TODO: this is undefined, define own meta
     >
       {page}
     </ClientPageLayout>
@@ -67,7 +67,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     });
     const publishedPosts = data?.data.filter((p) => p.isPublished);
     const filteredData = { ...data, data: publishedPosts };
-
     return {
       props: {
         data: filteredData,

@@ -19,6 +19,8 @@ const Contact: NextPageWithLayout<IContactProps> = ({
   /* istanbul ignore next*/
   if (props.error) return <StaticPageError {...props.error} />;
 
+  console.log(props.data);
+
   return (
     <div id="contact" className="col-xs-12 col-md-6 mx-3 mb-4">
       <form

@@ -49,12 +49,12 @@ ENV APP_NAME=${APP_NAME}
 ENV ADMIN_EMAILS=${ADMIN_EMAILS}
 ENV APP_DOMAIN=${APP_DOMAIN}
 
-RUN apk add bash curl
+RUN apk --no-cache add bash curl
 
-RUN npm run build && \
-    npm i sharp
+RUN npm run build
 
 RUN rm -rf node_modules
+ENV NEXT_SHARP_PATH /tmp/node_modules/sharp
 RUN npm i --production --frozen-lockfile --ignore-scripts --prefer-offline
 
 FROM node:${NODE_VERSION} AS runner
