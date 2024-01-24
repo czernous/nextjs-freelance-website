@@ -88,7 +88,7 @@ const ContactAdmin: NextPageWithLayout<IContactPageAdminProps> = ({
             />
             <TextField
               id="formActionUrl"
-              name="formActionUrl"
+              name="pageFields.formActionUrl"
               label="Form action URL"
               required
               variant="outlined"

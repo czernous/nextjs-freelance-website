@@ -101,11 +101,11 @@ export const revalidatePosts = async (
   const totalPages = Math.ceil(totalDocuments / pageSize); //TODO: pageSize comes in null and pageSIze is 1, find other way
 
   for (let i = totalPages; i > 0; i--) {
-    pagePaths.push(`/blog/page/${i}`);
+    pagePaths.push(`/case-studies/page/${i}`);
   }
 
-  const revalidatePaths = [`/blog`, ...pagePaths];
-  if (post) revalidatePaths.push(`/blog/${post.slug}`);
+  const revalidatePaths = [`/case-studies`, ...pagePaths];
+  if (post) revalidatePaths.push(`/case-studies/${post.slug}`);
   const revalidatePostsResposne = await Promise.all(
     revalidatePaths.map(
       async (path) =>
