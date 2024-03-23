@@ -75,6 +75,7 @@ interface IServerSideFetchProps {
   duplex?: boolean;
   /** Number of retries on failure @default 3 */
   retries?: number;
+  timeout?: number;
 }
 
 export interface IServerSideFetchResult<T> {
@@ -93,6 +94,7 @@ export const serverSideBackendFetch = async <T>({
   method,
   endpoint,
   body,
+  timeout = 5000,
   retries = 3,
 }: IServerSideFetchProps): Promise<IServerSideFetchResult<T>> => {
   if (!serverUrl) throw new Error('Server url is not provided or null');
@@ -101,13 +103,30 @@ export const serverSideBackendFetch = async <T>({
     throw new Error(
       'Headers are not provided or one of the headers is null or undefined',
     );
-
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), timeout);
   try {
     const response = await fetch(`${serverUrl}${endpoint}`, {
       method,
       headers,
       body,
+      signal: controller.signal,
     });
+
+    clearTimeout(timeoutId);
+
+    if (!response.ok && retries > 0) {
+      // Retry if the response is not ok and retries are available
+      return serverSideBackendFetch({
+        serverUrl,
+        headers,
+        method,
+        endpoint,
+        body,
+        timeout,
+        retries: retries - 1,
+      });
+    }
 
     const clonedRes = response.clone();
 
@@ -124,6 +143,7 @@ export const serverSideBackendFetch = async <T>({
         method,
         endpoint,
         body,
+        timeout,
         retries: retries - 1,
       });
     } else {
@@ -136,6 +156,8 @@ export const serverSideBackendFetch = async <T>({
         data: null,
       };
     }
+  } finally {
+    clearTimeout(timeoutId);
   }
 };
 /* istanbul ignore next */
