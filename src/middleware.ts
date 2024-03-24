@@ -1,15 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { cookies } from 'next/headers';
 
 const COOKIE_NAME = `${process.env.HOST}-auth-token`;
-
-const deleteCookie = (cName: string, cValue: string, res: NextResponse) => {
-  const day = 24 * 60 * 60 * 1000;
-  res.cookies.set(cName, cValue, {
-    path: '/',
-    httpOnly: true,
-    maxAge: Date.now() - day,
-  });
-};
 
 const validateToken = async (token: string) => {
   const response = await fetch(
@@ -83,38 +75,29 @@ export default async function middleware(req: NextRequest) {
     // redirect to /login if no cookie or invalid
 
     // verify new token and set cookie
-    const res = NextResponse.next();
 
     const token = tryGetToken(req) ?? req?.nextUrl.searchParams.get('token');
 
     const mustLogin = await loginIfTokenIsInValid(token);
 
     if (mustLogin) {
-      req.cookies.delete(COOKIE_NAME);
-      deleteCookie(COOKIE_NAME, '', res);
+      cookies().delete(COOKIE_NAME);
+
       return NextResponse.redirect(new URL('/login', req.url));
     }
 
     if (token) {
-      res.cookies.set(COOKIE_NAME, token, {
+      cookies().set(COOKIE_NAME, token, {
         path: '/',
         httpOnly: true,
       });
 
-      return res;
+      return NextResponse.next();
     }
   }
 
   if (req?.url.endsWith('/logout')) {
-    req.cookies.delete(COOKIE_NAME);
-    const cookie = req.cookies.get(COOKIE_NAME);
-
-    if (cookie) {
-      const res = NextResponse.next();
-      deleteCookie(COOKIE_NAME, '', res);
-
-      return res.ok ? res : NextResponse.redirect(new URL('/', req.url));
-    }
+    cookies().delete(COOKIE_NAME);
     return NextResponse.redirect(new URL('/', req.url));
   }
 }
