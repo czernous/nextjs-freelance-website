@@ -94,7 +94,7 @@ export const serverSideBackendFetch = async <T>({
   method,
   endpoint,
   body,
-  timeout = 5000,
+  timeout = 4000,
   retries = 3,
 }: IServerSideFetchProps): Promise<IServerSideFetchResult<T>> => {
   if (!serverUrl) throw new Error('Server url is not provided or null');
