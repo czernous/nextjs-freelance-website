@@ -6,7 +6,7 @@ const deleteCookie = (cName: string, res: NextResponse) => {
   res.cookies.set(cName, '', {
     path: '/',
     httpOnly: true,
-    expires: new Date(0),
+    maxAge: -1,
   });
 };
 const validateToken = async (token: string) => {
@@ -96,6 +96,7 @@ export default async function middleware(req: NextRequest) {
       res.cookies.set(COOKIE_NAME, token, {
         path: '/',
         httpOnly: true,
+        maxAge: 24 * 60 * 60,
       });
 
       return res;
