@@ -122,8 +122,8 @@ export const revalidatePosts = async (
 };
 
 export const handleClientError = (error: IError, router: NextRouter) => {
-  const errorMessage = error?.message || JSON.stringify(error);
-  const statusCode = error?.statusCode || 400;
+  const errorMessage = error?.message ?? JSON.stringify(error);
+  const statusCode = error?.statusCode ?? 400;
   router.push({
     pathname: '/error',
     query: { statusCode, errorMessage },
@@ -185,7 +185,7 @@ export const handlePageChange = (
 export const base64toFileObject = async (url: string): Promise<Blob | null> => {
   try {
     const base64Response = await fetch(url);
-    const mimeType = base64Response.headers.get('content-type') || 'image/jpeg'; // Default MIME type
+    const mimeType = base64Response.headers.get('content-type') ?? 'image/jpeg'; // Default MIME type
     const base64Image = await base64Response.text();
     const blob = new Blob([Buffer.from(base64Image, 'base64')], {
       type: mimeType,

@@ -74,16 +74,18 @@ export default async function middleware(req: NextRequest) {
     // redirect to /login if no cookie or invalid
 
     // verify new token and set cookie
+    const res = NextResponse.next();
 
     const token = tryGetToken(req) ?? req?.nextUrl.searchParams.get('token');
 
     const mustLogin = await loginIfTokenIsInValid(token);
 
-    if (mustLogin) return NextResponse.redirect(new URL('/login', req.url));
+    if (mustLogin) {
+      res.cookies.delete(COOKIE_NAME);
+      return NextResponse.redirect(new URL('/login', req.url));
+    }
 
     if (token) {
-      const res = NextResponse.next();
-
       res.cookies.set(COOKIE_NAME, token, {
         path: '/',
         httpOnly: true,

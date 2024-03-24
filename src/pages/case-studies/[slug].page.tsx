@@ -75,11 +75,13 @@ const BlogPost: NextPage<IBlogPostProps> = ({ ...props }: IBlogPostProps) => {
             </div>
           </div>
           <div className={style.gradient}></div>
-          <Image
-            src={props?.data?.imageUrl}
-            alt={props?.data?.imageAltText}
-            fill
-          />
+          {props?.data?.imageUrl && (
+            <Image
+              src={props?.data?.imageUrl}
+              alt={props?.data?.imageAltText}
+              fill
+            />
+          )}
         </div>
         <div className={`custom-container w-100 ${style.body}`}>
           <h1 className={style.title}>{props?.data?.title}</h1>

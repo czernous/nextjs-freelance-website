@@ -29,9 +29,9 @@ const PaginatedCards = ({
           return (
             <ArticleCard
               key={post._id}
-              imageUrl={post.imageUrl}
-              imageAltText={post.imageAltText}
-              blurredImageUrl={post.blurredImageUrl}
+              imageUrl={post.imageUrl ?? ''}
+              imageAltText={post.imageAltText ?? ''}
+              blurredImageUrl={post.blurredImageUrl ?? ''}
               title={post.title}
               description={post.shortDescription}
               ctaText={'read more'}
