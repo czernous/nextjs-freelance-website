@@ -90,6 +90,7 @@ export default async function middleware(req: NextRequest) {
     const mustLogin = await loginIfTokenIsInValid(token);
 
     if (mustLogin) {
+      req.cookies.delete(COOKIE_NAME);
       deleteCookie(COOKIE_NAME, '', res);
       return NextResponse.redirect(new URL('/login', req.url));
     }
@@ -105,6 +106,7 @@ export default async function middleware(req: NextRequest) {
   }
 
   if (req?.url.endsWith('/logout')) {
+    req.cookies.delete(COOKIE_NAME);
     const cookie = req.cookies.get(COOKIE_NAME);
 
     if (cookie) {
