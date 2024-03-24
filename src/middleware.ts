@@ -2,13 +2,6 @@ import { NextRequest, NextResponse } from 'next/server';
 
 const COOKIE_NAME = `${process.env.HOST}-auth-token`;
 
-const deleteCookie = (cName: string, res: NextResponse) => {
-  res.cookies.set(cName, '', {
-    path: '/',
-    httpOnly: true,
-    maxAge: -1,
-  });
-};
 const validateToken = async (token: string) => {
   const response = await fetch(
     `${process.env.AUTH_API_URL}/api/token?validate=${token}`,
@@ -88,7 +81,14 @@ export default async function middleware(req: NextRequest) {
     const mustLogin = await loginIfTokenIsInValid(token);
 
     if (mustLogin) {
-      deleteCookie(COOKIE_NAME, NextResponse.next());
+      NextResponse.next({
+        headers: {
+          'Set-Cookie': `${COOKIE_NAME}=;Max-Age=0`,
+        },
+      });
+
+      res.cookies.delete(COOKIE_NAME);
+
       return NextResponse.redirect(new URL('/login', req.url));
     }
 
@@ -96,7 +96,6 @@ export default async function middleware(req: NextRequest) {
       res.cookies.set(COOKIE_NAME, token, {
         path: '/',
         httpOnly: true,
-        maxAge: 24 * 60 * 60,
       });
 
       return res;
@@ -104,7 +103,14 @@ export default async function middleware(req: NextRequest) {
   }
 
   if (req?.url.endsWith('/logout')) {
-    deleteCookie(COOKIE_NAME, NextResponse.next());
+    const res = NextResponse.next({
+      headers: {
+        'Set-Cookie': `${COOKIE_NAME}=;Max-Age=0`,
+      },
+    });
+
+    res.cookies.delete(COOKIE_NAME);
+
     return NextResponse.redirect(new URL('/', req.url));
   }
 }
