@@ -1,8 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { cookies } from 'next/headers';
 
 const COOKIE_NAME = `${process.env.HOST}-auth-token`;
 
+const deleteCookie = (cName: string, res: NextResponse) => {
+  res.cookies.set(cName, '', {
+    path: '/',
+    httpOnly: true,
+    expires: new Date(0),
+  });
+};
 const validateToken = async (token: string) => {
   const response = await fetch(
     `${process.env.AUTH_API_URL}/api/token?validate=${token}`,
@@ -75,29 +81,29 @@ export default async function middleware(req: NextRequest) {
     // redirect to /login if no cookie or invalid
 
     // verify new token and set cookie
+    const res = NextResponse.next();
 
     const token = tryGetToken(req) ?? req?.nextUrl.searchParams.get('token');
 
     const mustLogin = await loginIfTokenIsInValid(token);
 
     if (mustLogin) {
-      cookies().delete(COOKIE_NAME);
-
+      deleteCookie(COOKIE_NAME, NextResponse.next());
       return NextResponse.redirect(new URL('/login', req.url));
     }
 
     if (token) {
-      cookies().set(COOKIE_NAME, token, {
+      res.cookies.set(COOKIE_NAME, token, {
         path: '/',
         httpOnly: true,
       });
 
-      return NextResponse.next();
+      return res;
     }
   }
 
   if (req?.url.endsWith('/logout')) {
-    cookies().delete(COOKIE_NAME);
+    deleteCookie(COOKIE_NAME, NextResponse.next());
     return NextResponse.redirect(new URL('/', req.url));
   }
 }
