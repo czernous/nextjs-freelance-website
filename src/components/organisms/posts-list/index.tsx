@@ -214,9 +214,8 @@ const PostsList = memo(({ ...props }: IPostsListProps) => {
                       {post.responsiveImgs?.length !== 0 && (
                         <Image
                           src={
-                            post.responsiveImgs?.find(
-                              (img) => img.width === 768,
-                            )?.url ?? ''
+                            post.responsiveImgs?.find((img) => img.width === 768)
+                              ?.url ?? ''
                           }
                           alt={post?.imageAltText ?? ''}
                           width={150}
