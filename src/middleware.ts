@@ -2,6 +2,15 @@ import { NextRequest, NextResponse } from 'next/server';
 
 const COOKIE_NAME = `${process.env.HOST}-auth-token`;
 
+const deleteCookie = (cName: string, cValue: string, res: NextResponse) => {
+  const day = 24 * 60 * 60 * 1000;
+  res.cookies.set(cName, cValue, {
+    path: '/',
+    httpOnly: true,
+    maxAge: Date.now() - day,
+  });
+};
+
 const validateToken = async (token: string) => {
   const response = await fetch(
     `${process.env.AUTH_API_URL}/api/token?validate=${token}`,
@@ -81,7 +90,7 @@ export default async function middleware(req: NextRequest) {
     const mustLogin = await loginIfTokenIsInValid(token);
 
     if (mustLogin) {
-      res.cookies.delete(COOKIE_NAME);
+      deleteCookie(COOKIE_NAME, '', res);
       return NextResponse.redirect(new URL('/login', req.url));
     }
 
@@ -100,7 +109,7 @@ export default async function middleware(req: NextRequest) {
 
     if (cookie) {
       const res = NextResponse.next();
-      res.cookies.delete(COOKIE_NAME);
+      deleteCookie(COOKIE_NAME, '', res);
 
       return res.ok ? res : NextResponse.redirect(new URL('/', req.url));
     }
