@@ -81,9 +81,12 @@ export default async function middleware(req: NextRequest) {
     const mustLogin = await loginIfTokenIsInValid(token);
 
     if (mustLogin) {
-      NextResponse.next({
-        headers: {
-          'Set-Cookie': `${COOKIE_NAME}=;Max-Age=0`,
+      const headers = new Headers(req.headers);
+      headers.set('Set-Cookie', `${COOKIE_NAME}=; Path=/; Max-Age=0; HttpOnly`);
+
+      const res = NextResponse.next({
+        request: {
+          headers,
         },
       });
 
@@ -103,9 +106,12 @@ export default async function middleware(req: NextRequest) {
   }
 
   if (req?.url.endsWith('/logout')) {
+    const headers = new Headers(req.headers);
+    headers.set('Set-Cookie', `${COOKIE_NAME}=; Path=/; Max-Age=0; HttpOnly`);
+
     const res = NextResponse.next({
-      headers: {
-        'Set-Cookie': `${COOKIE_NAME}=;Max-Age=0`,
+      request: {
+        headers,
       },
     });
 
