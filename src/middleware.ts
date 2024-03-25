@@ -74,31 +74,28 @@ export default async function middleware(req: NextRequest) {
     // redirect to /login if no cookie or invalid
 
     // verify new token and set cookie
-    const res = NextResponse.next();
 
     const token = tryGetToken(req) ?? req?.nextUrl.searchParams.get('token');
 
     const mustLogin = await loginIfTokenIsInValid(token);
 
     if (mustLogin) {
-      const headers = new Headers(req.headers);
-      headers.set('Set-Cookie', `${COOKIE_NAME}=; Path=/; Max-Age=0; HttpOnly`);
-
-      const res = NextResponse.next({
-        request: {
-          headers,
-        },
+      const res = NextResponse.next();
+      res.cookies.set(COOKIE_NAME, '', {
+        path: '/',
+        httpOnly: true,
+        maxAge: -1,
       });
-
-      res.cookies.delete(COOKIE_NAME);
 
       return NextResponse.redirect(new URL('/login', req.url));
     }
 
-    if (token) {
+    if (token && !mustLogin) {
+      const res = NextResponse.next();
       res.cookies.set(COOKIE_NAME, token, {
         path: '/',
         httpOnly: true,
+        maxAge: 1000 * 60 * 60 * 24,
       });
 
       return res;
@@ -106,17 +103,12 @@ export default async function middleware(req: NextRequest) {
   }
 
   if (req?.url.endsWith('/logout')) {
-    const headers = new Headers(req.headers);
-    headers.set('Set-Cookie', `${COOKIE_NAME}=; Path=/; Max-Age=0; HttpOnly`);
-
-    const res = NextResponse.next({
-      request: {
-        headers,
-      },
+    const res = NextResponse.next();
+    res.cookies.set(COOKIE_NAME, '', {
+      path: '/',
+      httpOnly: true,
+      maxAge: -1,
     });
-
-    res.cookies.delete(COOKIE_NAME);
-
     return NextResponse.redirect(new URL('/', req.url));
   }
 }
