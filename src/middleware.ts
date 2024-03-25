@@ -45,6 +45,7 @@ const loginIfTokenIsInValid = async (
 };
 
 export default async function middleware(req: NextRequest) {
+  const res = NextResponse.next();
   // restrict /api routes to only be used from /admin
   if (req?.url?.includes('/api/')) {
     const { headers } = req;
@@ -74,28 +75,20 @@ export default async function middleware(req: NextRequest) {
     // redirect to /login if no cookie or invalid
 
     // verify new token and set cookie
-
     const token = tryGetToken(req) ?? req?.nextUrl.searchParams.get('token');
 
     const mustLogin = await loginIfTokenIsInValid(token);
 
     if (mustLogin) {
-      const res = NextResponse.next();
-      res.cookies.set(COOKIE_NAME, '', {
-        path: '/',
-        httpOnly: true,
-        maxAge: -1,
-      });
+      res.cookies.delete(COOKIE_NAME);
 
       return NextResponse.redirect(new URL('/login', req.url));
     }
 
-    if (token && !mustLogin) {
-      const res = NextResponse.next();
+    if (token) {
       res.cookies.set(COOKIE_NAME, token, {
         path: '/',
         httpOnly: true,
-        maxAge: 1000 * 60 * 60 * 24,
       });
 
       return res;
@@ -103,12 +96,7 @@ export default async function middleware(req: NextRequest) {
   }
 
   if (req?.url.endsWith('/logout')) {
-    const res = NextResponse.next();
-    res.cookies.set(COOKIE_NAME, '', {
-      path: '/',
-      httpOnly: true,
-      maxAge: -1,
-    });
+    res.cookies.delete(COOKIE_NAME);
     return NextResponse.redirect(new URL('/', req.url));
   }
 }
