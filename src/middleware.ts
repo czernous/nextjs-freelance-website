@@ -97,6 +97,7 @@ export default async function middleware(req: NextRequest) {
 
   if (req?.url.endsWith('/logout')) {
     res.cookies.delete(COOKIE_NAME);
+    req.cookies.delete(COOKIE_NAME);
     return NextResponse.redirect(new URL('/', req.url));
   }
 }
