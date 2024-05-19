@@ -33,7 +33,7 @@
     "nanoid": "^5.0.5",
     "next": "14.0.3",
     "react": "18.2.0",
-    "react-dom": "18.2.0",
+    "react-dom": "18.3.1",
     "sharp": "^0.33.3"
   },
   "devDependencies": {
@@ -55,7 +55,7 @@
     "@types/jest-axe": "^3.5.9",
     "@types/node": "20.11.6",
     "@types/react": "18.2.43",
-    "@types/react-dom": "18.2.22",
+    "@types/react-dom": "18.3.0",
     "@typescript-eslint/eslint-plugin": "^6.17.0",
     "ajv": "^8.12.0",
     "babel-jest": "^29.7.0",
@@ -73,7 +73,7 @@
     "jest-environment-jsdom": "^29.7.0",
     "postcss": "^8.4.31",
     "prettier": "^3.2.5",
-    "react-test-renderer": "^18.2.0",
+    "react-test-renderer": "^18.3.1",
     "rimraf": "5.0.5",
     "sass": "^1.72.0",
     "sass-loader": "^14.1.0",
