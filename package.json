@@ -73,7 +73,7 @@
     "jest-environment-jsdom": "^29.7.0",
     "postcss": "^8.4.31",
     "prettier": "^3.2.5",
-    "react-test-renderer": "^18.2.0",
+    "react-test-renderer": "^18.3.1",
     "rimraf": "5.0.5",
     "sass": "^1.72.0",
     "sass-loader": "^14.1.0",
